@@ -1,0 +1,165 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+
+// --- ICONS (Minimal thickness) ---
+const IntegrityIcon = () => (
+  <svg width="30" height="30" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M35.3728 11.0044H36.6722C37.6848 11.0044 38.5056 11.8253 38.5056 12.8378V25.671C38.5056 26.6836 37.6848 27.5044 36.6722 27.5044H33.0056L25.3637 16.8057C24.4518 15.5292 22.8289 14.9741 21.3263 15.4249L16.77 16.7918C15.478 17.1794 14.0775 16.8263 13.1237 15.8725L12.587 15.3357C11.7689 14.5177 11.9037 13.1557 12.8664 12.514L22.7682 5.91269C23.9764 5.10733 25.5457 5.09062 26.7708 5.87012L34.3886 10.7178C34.6827 10.905 35.0243 11.0044 35.3728 11.0044ZM9.22152 26.2115L6.25929 28.8035C5.39504 29.5595 5.43087 30.9151 6.33389 31.6248L15.7586 39.0298C16.6387 39.7213 17.9277 39.4696 18.483 38.4978L19.7735 36.2395C20.5618 34.8599 20.3719 33.1296 19.3031 31.9539L14.3492 26.5045C13.0052 25.0261 10.7251 24.8959 9.22152 26.2115ZM12.9221 9.17122H5.50521C4.49269 9.17122 3.67188 9.99204 3.67188 11.0046V24.7835C3.67188 25.5323 3.90058 26.2529 4.31389 26.8563C4.35772 26.8149 4.40257 26.774 4.44842 26.7338L7.41065 24.1419C10.0419 21.8396 14.0321 22.0674 16.384 24.6546L21.3381 30.104C23.2084 32.1614 23.5408 35.1895 22.1612 37.6038L20.9617 39.7032C21.9937 40.0942 23.1694 40.0061 24.1484 39.4187L32.2319 34.5686C33.1493 34.018 33.4023 32.8022 32.7808 31.9313L23.1252 18.4041C22.8971 18.085 22.4914 17.9462 22.1158 18.0589L17.5595 19.4258C15.2984 20.1041 12.8476 19.4863 11.1784 17.817L10.6416 17.2803C8.59648 15.2351 8.93363 11.8302 11.3402 10.2258L12.9221 9.17122Z" fill="white" fillOpacity="0.8"/>
+  </svg>
+);
+
+const SpeedIcon = () => (
+  <svg width="26" height="34" viewBox="0 0 30 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M16.5 16.5H29.3333L12.8333 40.3333V23.8333H0L16.5 0V16.5Z" fill="white" fillOpacity="0.8"/>
+  </svg>
+);
+
+const InnovationIcon = () => (
+  <svg width="30" height="30" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20.1615 32.9974H14.5533C14.0086 30.6643 11.5523 28.7545 10.5437 27.4959C8.53162 24.9852 7.32812 21.7985 7.32812 18.3307C7.32812 10.2305 13.8946 3.66406 21.9948 3.66406C30.095 3.66406 36.6615 10.2305 36.6615 18.3307C36.6615 21.8003 35.4566 24.9885 33.4427 27.5C32.4345 28.7569 29.9804 30.6647 29.4363 32.9974H23.8281V23.8307H20.1615V32.9974ZM29.3281 36.6641V38.4974C29.3281 40.5225 27.6866 42.1641 25.6615 42.1641H18.3281C16.3031 42.1641 14.6615 40.5225 14.6615 38.4974V36.6641H29.3281Z" fill="white" fillOpacity="0.8"/>
+  </svg>
+);
+
+const CustomerIcon = () => (
+  <svg width="30" height="34" viewBox="0 0 33 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M26.7991 9.10818L29.4637 6.44365L32.0564 9.03637L29.3918 11.7009C31.6498 14.5236 33 18.1042 33 22C33 31.1128 25.6128 38.5 16.5 38.5C7.38731 38.5 0 31.1128 0 22C0 12.8873 7.38731 5.5 16.5 5.5C20.3958 5.5 23.9763 6.8502 26.7991 9.10818ZM14.6667 12.8333V23.8333H18.3333V12.8333H14.6667ZM9.16667 0H23.8333V3.66667H9.16667V0Z" fill="white" fillOpacity="0.8"/>
+  </svg>
+);
+
+const SustainabilityIcon = () => (
+  <svg width="30" height="30" viewBox="0 0 37 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18.3333 0C28.4585 0 36.6667 8.20811 36.6667 18.3333C36.6667 28.4585 28.4585 36.6667 18.3333 36.6667C8.20811 36.6667 0 28.4585 0 18.3333C0 8.20811 8.20811 0 18.3333 0ZM25.6745 19.9424C25.0413 18.9811 24.5845 18.2868 22.8474 18.5621C19.5648 19.0832 19.2009 19.6577 19.0441 20.6021L18.9999 20.8896L18.9554 21.1928C18.7763 22.4451 18.7831 22.9189 19.358 23.5231C21.6775 25.9567 23.067 27.7108 23.4879 28.7368C23.6935 29.2387 24.2218 30.7543 23.8583 32.2533C26.1015 31.3621 28.0786 29.9442 29.6364 28.1525C29.8384 27.4672 29.9844 26.6138 29.9844 25.5783V25.3865C29.9844 23.6953 29.9844 22.924 28.789 22.2409C28.2847 21.9544 27.9083 21.7818 27.6067 21.6451C26.9335 21.3389 26.4878 21.1378 25.8863 20.2582C25.8146 20.1535 25.7446 20.049 25.6745 19.9424ZM18.3333 3.3611C14.0847 3.3611 10.2495 5.13073 7.52437 7.97309C7.84879 8.19841 8.13151 8.51497 8.3257 8.95136C8.6997 9.79053 8.6997 10.6539 8.6997 11.4173C8.69895 12.0197 8.6981 12.5899 8.89152 13.0039C9.15646 13.5691 10.2967 13.8092 11.3034 14.0202C11.663 14.0959 12.0339 14.1732 12.3713 14.2666C13.2991 14.5243 14.0168 15.3569 14.5922 16.0255C14.8309 16.304 15.1835 16.7132 15.3602 16.8148C15.4524 16.7486 15.7483 16.4281 15.8948 15.9014C16.0063 15.5003 15.9746 15.1428 15.8105 14.9495C14.7855 13.7398 14.8412 11.4092 15.158 10.5507C15.657 9.19611 17.2159 9.29606 18.3553 9.37011C18.7803 9.39747 19.1814 9.42376 19.4804 9.38623C20.6217 9.24304 20.9726 7.5082 21.2208 7.16833C21.7563 6.43465 23.3946 5.32968 24.4123 4.64666C22.5546 3.82034 20.4976 3.3611 18.3333 3.3611Z" fill="white" fillOpacity="0.8"/>
+  </svg>
+);
+
+const PeopleIcon = () => (
+  <svg width="30" height="28" viewBox="0 0 37 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18.3352 2.80231C22.6417 -1.06333 29.2967 -0.934999 33.4448 3.22183C37.593 7.37865 37.7355 14.0012 33.8774 18.3205L18.3331 33.8892L2.78919 18.3205C-1.06874 14.0012 -0.924535 7.36819 3.22182 3.22183C7.37287 -0.929224 14.0162 -1.06907 18.3352 2.80231Z" fill="white" fillOpacity="0.8"/>
+  </svg>
+);
+
+const values = [
+  { icon: <IntegrityIcon />, title: "Integrity in Every Mile", desc: "We do what's right — even when no one's watching." },
+  { icon: <SpeedIcon />, title: "Speed with Precision", desc: "Fast is good; accurate is better. We strive for both." },
+  { icon: <InnovationIcon />, title: "Innovation Everyday", desc: "From AI-driven tracking to eco-delivery, we lead with ideas." },
+  { icon: <CustomerIcon />, title: "Customer-First Mindset", desc: "Every parcel, every client, every moment — we care." },
+  { icon: <SustainabilityIcon />, title: "Sustainability Commitment", desc: "Reducing waste, optimizing routes, and going green." },
+  { icon: <PeopleIcon />, title: "People Over Processes", desc: "Because great teams make great deliveries." }
+];
+
+const CareerHero: React.FC = () => {
+  const smoothTransition = { 
+    duration: 0.8, 
+    ease: [0.04, 0.62, 0.23, 0.98] as [number, number, number, number] 
+  };
+
+  return (
+    <section
+      className="relative w-full min-h-screen bg-gradient-to-br from-[#36B936] via-[#32A832] to-[#247A24] overflow-hidden"
+      style={{ fontFamily: '"Manrope", sans-serif' }}
+    >
+      {/* TOP RIGHT ARCHITECTURAL BOXES */}
+      <div className="absolute top-0 right-0 select-none pointer-events-none z-0">
+        <svg width="258" height="260" viewBox="0 0 258 260" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-[90px] sm:w-[130px] lg:w-[180px] h-auto opacity-20">
+          <path d="M112.852 4V147.57H256.412V4H112.842M108.842 0H260.412V151.57H108.842V0Z" fill="#004E09"/>
+          <path d="M49.9996 102.625V213.975H161.35V102.625H49.9996ZM45.9996 98.625H165.35V217.975H45.9996V98.625Z" fill="#004E09"/>
+          <path d="M4.00023 171.312V255.303H87.9902V171.312H4.00023ZM0.000228882 167.312H91.9902V259.303H0.000228882V167.312Z" fill="#004E09"/>
+        </svg>
+      </div>
+
+      {/* BOTTOM LEFT STAIRCASE BOXES */}
+      <div className="absolute bottom-0 left-0 select-none pointer-events-none z-0">
+        <div className="relative w-[100px] h-[115px] sm:w-[160px] sm:h-[185px] lg:w-[280px] lg:h-[320px]">
+          <div className="absolute bottom-0 left-0 bg-white/90
+                          w-10 h-10 sm:w-16 sm:h-16 lg:w-28 lg:h-28"></div>
+          <div
+            className="absolute
+                       bottom-5 left-5 w-10 h-10
+                       sm:bottom-8 sm:left-8 sm:w-16 sm:h-16
+                       lg:bottom-14 lg:left-14 lg:w-28 lg:h-28"
+            style={{ 
+              background: 'radial-gradient(circle, #2BA735 0%, #4EED5B 100%)',
+              boxShadow: '10px 10px 30px rgba(0,0,0,0.12)' 
+            }}
+          ></div>
+          <div className="absolute bg-white shadow-sm
+                          bottom-10 left-10 w-10 h-10
+                          sm:bottom-16 sm:left-16 sm:w-16 sm:h-16
+                          lg:bottom-28 lg:left-28 lg:w-22 lg:h-22"></div>
+        </div>
+      </div>
+
+      {/* Inner wrapper: padding scales with breakpoint */}
+      <div className="relative z-10 w-full min-h-screen flex items-center py-28 pb-48 sm:py-32 sm:pb-52 lg:py-24 lg:pb-24 px-5 sm:px-8 md:px-12 lg:px-24">
+
+        {/* CONTENT GRID */}
+        <div className="max-w-[1300px] w-full mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+
+          {/* ANIMATED TEXT CONTENT */}
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={smoothTransition}
+          >
+            <h1 className="text-white font-light leading-[1.05] tracking-tight mb-6 sm:mb-8
+                           text-[2.6rem] sm:text-[3.2rem] md:text-[3.8rem] lg:text-[4.8rem]">
+              A Place Where <br /> Passion Meets Purpose
+            </h1>
+            <p className="text-white/70 font-light leading-relaxed max-w-[480px]
+                          text-[13px] sm:text-[14px]">
+              At Zajel, we believe logistics isn't just about movement — it's about momentum. Every member of our team contributes to delivering reliability, innovation, and human connection.
+            </p>
+          </motion.div>
+
+          {/* ANIMATED VALUES GRID */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={{
+              visible: {
+                transition: {
+                  staggerChildren: 0.15,
+                  delayChildren: 0.2
+                }
+              }
+            }}
+            className="grid grid-cols-2 gap-x-8 gap-y-10 sm:gap-x-10 sm:gap-y-12"
+          >
+            {values.map((val, idx) => (
+              <motion.div
+                key={idx}
+                variants={{
+                  hidden: { opacity: 0, y: 30 },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    transition: smoothTransition
+                  }
+                }}
+                className="flex flex-col items-start group"
+              >
+                <div className="mb-3 sm:mb-4 transform group-hover:scale-105 transition-transform duration-500 opacity-90">
+                  {val.icon}
+                </div>
+                <h3 className="text-white font-normal mb-1.5 sm:mb-2 tracking-tight
+                               text-[14px] sm:text-[15px] md:text-[17px]">
+                  {val.title}
+                </h3>
+                <p className="text-white/60 font-light leading-relaxed
+                              text-[11px] sm:text-[12px] md:text-[12.5px]
+                              max-w-full sm:max-w-[210px]">
+                  {val.desc}
+                </p>
+              </motion.div>
+            ))}
+          </motion.div>
+
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default CareerHero;
