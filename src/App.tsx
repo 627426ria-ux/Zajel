@@ -18,6 +18,7 @@ import CareersPage from './pages/Careers';
 import TrackShipment from './components/TrackShipment';
 import TrackingResults from './pages/TrackingResults';
 import QuotationPage from './pages/Quotation';
+import EcommercerPage from './pages/Ecommerce';
 
 function App() {
   return (
@@ -58,6 +59,8 @@ function App() {
           <Route path="/quotation" element={<QuotationPage />} />
           <Route path="/track" element={<TrackShipment />} />
           <Route path="/trackresults" element={<TrackingResults />} />
+
+          <Route path="/ecommerce" element={<EcommercerPage />} />
 
 
 

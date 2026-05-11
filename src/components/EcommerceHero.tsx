@@ -1,6 +1,6 @@
 import React from 'react';
 
-const FreightHero: React.FC = () => {
+const EcommerceHero: React.FC = () => {
   return (
     <section
       className="w-full px-4 md:px-6 lg:px-12 pt-24 lg:pt-[104px]
@@ -9,7 +9,7 @@ const FreightHero: React.FC = () => {
     >
       <div
         className="max-w-[1400px] w-full mx-auto relative overflow-hidden
-                   h-[90svh] sm:h-[60svh] lg:h-[70svh]
+                   h-[80svh] sm:h-[60svh] lg:h-[70svh]
                    flex items-end shadow-lg rounded-[2rem] lg:rounded-[2.5rem]"
       >
         {/* LAYER 1: Background Images */}
@@ -17,13 +17,13 @@ const FreightHero: React.FC = () => {
         {/* Mobile Image (Hidden on medium screens and larger) */}
         <div
           className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat z-0 block md:hidden"
-          style={{ backgroundImage: "url('/ChatGPT Image May 12, 2026 at 02_10_47 AM.png')" }}
+          style={{ backgroundImage: "url('/ChatGPT Image May 12, 2026 at 02_04_41 AM.png')" }}
         />
         
         {/* Desktop Image (Hidden on small screens) */}
         <div
           className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat z-0 hidden md:block"
-          style={{ backgroundImage: "url('/ChatGPT Image Apr 24, 2026 at 01_16_23 PM.png')" }}
+          style={{ backgroundImage: "url('/ChatGPT Image May 12, 2026 at 01_42_28 AM.png')" }}
         />
 
         {/* LAYER 2: Gradient */}
@@ -34,21 +34,16 @@ const FreightHero: React.FC = () => {
         <div className="relative z-20 w-full sm:w-[80%] md:w-[60%] lg:w-[50%]
                         p-6 sm:p-8 lg:p-12 xl:p-16
                         flex flex-col items-start">
-          {/* Heading — font-light matching original */}
           <h1 className="text-white font-light leading-[1.05] tracking-tight
                          text-[2rem] sm:text-[2.8rem] md:text-[3.2rem] lg:text-[4rem]
                          mb-3 md:mb-4">
-            Freight <br /> Forwarding Services
+            E-commerce <br /> Solutions
           </h1>
-          
-          {/* Description — font-light matching original */}
-          <p className="text-white/70 font-light leading-relaxed
+          <p className="text-white/75 font-extralight leading-relaxed
                         text-[12px] sm:text-[14px] lg:text-[16px]
                         mb-6 md:mb-8 max-w-[400px]">
-            Whether you're an SME or a large enterprise, our services connect you seamlessly with your customers — with complete visibility over every parcel and document.
+            End-to-end fulfillment, seamless platform integrations, and rapid last-mile delivery — built to scale your online business and delight your customers.
           </p>
-          
-          {/* Button — font-medium text, font-extralight icon, matching original */}
           <button className="bg-[#05361A] hover:bg-[#03200F] transition-colors duration-300
                              text-[#36B936] rounded-full
                              flex items-center gap-2
@@ -64,4 +59,4 @@ const FreightHero: React.FC = () => {
   );
 };
 
-export default FreightHero;
+export default EcommerceHero;

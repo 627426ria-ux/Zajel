@@ -1,6 +1,28 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Search, ChevronRight, ChevronLeft } from 'lucide-react';
 
+// --- SLIDER DATA FOR BACKGROUND & TEXT ---
+const HERO_SLIDES = [
+  {
+    title: 'Global\nCourier',
+    desc: 'Seamless international shipping and logistics.\nConnecting you to the world.',
+    bgDesktop: '/ChatGPT Image May 12, 2026 at 02_03_10 AM.png',        // <-- DESKTOP IMAGE FOR SLIDE 1
+    bgMobile: '/ChatGPT Image May 12, 2026 at 02_04_41 AM.png'        // <-- MOBILE IMAGE FOR SLIDE 1
+  },
+  {
+    title: 'Intelligent\nmovement',
+    desc: 'Reliable Courier & Logistics Solutions.\nBuilt for Speed',
+    bgDesktop: '/ChatGPT Image May 12, 2026, 02_58_21 AM.png', // <-- DESKTOP IMAGE FOR SLIDE 2
+    bgMobile: '/ChatGPT Image May 12, 2026, 02_58_25 AM.png'   // <-- MOBILE IMAGE FOR SLIDE 2
+  },
+  {
+    title: 'E-commerce\nSolutions',
+    desc: 'End-to-end fulfillment and rapid delivery.\nBuilt to scale your online business.',
+    bgDesktop: '/ChatGPT Image May 12, 2026, 02_30_58 AM.png',          // <-- DESKTOP IMAGE FOR SLIDE 3
+    bgMobile: '/ChatGPT Image May 12, 2026, 02_26_18 AM.png'          // <-- MOBILE IMAGE FOR SLIDE 3
+  }
+];
+
 const STATISTICS = [
   { value: '15+',   label: 'Years of\nSuccess' },
   { value: '45M+',  label: 'Shipments\nDelivered' },
@@ -14,10 +36,11 @@ const TrackIcon = ({ size = 24 }: { size?: number }) => (
   </svg>
 );
 
-const QuotationIcon = ({ size = 24 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 35 35" fill="none">
-    <path d="M33.7514 33.7514L24.2236 24.2236M24.2236 24.2236C26.8023 21.6449 28.251 18.1474 28.251 14.5005C28.251 10.8537 26.8023 7.35616 24.2236 4.77743C21.6449 2.19871 18.1474 0.75 14.5005 0.75C10.8537 0.75 7.35616 2.19871 4.77743 4.77743C2.19871 7.35616 0.75 10.8537 0.75 14.5005C0.75 18.1474 2.19871 21.6449 4.77743 24.2236C7.35616 26.8023 10.8537 28.251 14.5005 28.251C18.1474 28.251 21.6449 26.8023 24.2236 24.2236Z" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
+const QuotationIcon = ({ }: { size?: number }) => (
+  <svg width="24" height="24" viewBox="0 0 29 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M22.6875 5.5H6.1875C6.00516 5.5 5.83029 5.57243 5.70136 5.70136C5.57243 5.8303 5.5 6.00516 5.5 6.1875V14.4375C5.5 14.6198 5.57243 14.7947 5.70136 14.9236C5.83029 15.0526 6.00516 15.125 6.1875 15.125H22.6875C22.8698 15.125 23.0447 15.0526 23.1736 14.9236C23.3026 14.7947 23.375 14.6198 23.375 14.4375V6.1875C23.375 6.00516 23.3026 5.8303 23.1736 5.70136C23.0447 5.57243 22.8698 5.5 22.6875 5.5ZM22 13.75H6.875V6.875H22V13.75ZM26.8125 0H2.0625C1.51549 0 0.990886 0.217299 0.604092 0.604092C0.217298 0.990886 0 1.51549 0 2.0625V32.3125C0 32.8595 0.217298 33.3841 0.604092 33.7709C0.990886 34.1577 1.51549 34.375 2.0625 34.375H26.8125C27.3595 34.375 27.8841 34.1577 28.2709 33.7709C28.6577 33.3841 28.875 32.8595 28.875 32.3125V2.0625C28.875 1.51549 28.6577 0.990886 28.2709 0.604092C27.8841 0.217299 27.3595 0 26.8125 0ZM27.5 32.3125C27.5 32.4948 27.4276 32.6697 27.2986 32.7986C27.1697 32.9276 26.9948 33 26.8125 33H2.0625C1.88016 33 1.7053 32.9276 1.57636 32.7986C1.44743 32.6697 1.375 32.4948 1.375 32.3125V2.0625C1.375 1.88016 1.44743 1.7053 1.57636 1.57636C1.7053 1.44743 1.88016 1.375 2.0625 1.375H26.8125C26.9948 1.375 27.1697 1.44743 27.2986 1.57636C27.4276 1.7053 27.5 1.88016 27.5 2.0625V32.3125ZM8.9375 20.625C8.9375 20.8969 8.85686 21.1628 8.70577 21.3889C8.55468 21.615 8.33994 21.7913 8.08869 21.8953C7.83744 21.9994 7.56097 22.0266 7.29425 21.9736C7.02753 21.9205 6.78253 21.7896 6.59023 21.5973C6.39793 21.405 6.26697 21.16 6.21392 20.8932C6.16087 20.6265 6.1881 20.3501 6.29217 20.0988C6.39624 19.8476 6.57247 19.6328 6.79859 19.4817C7.02471 19.3306 7.29055 19.25 7.5625 19.25C7.92717 19.25 8.27691 19.3949 8.53477 19.6527C8.79263 19.9106 8.9375 20.2603 8.9375 20.625ZM15.8125 20.625C15.8125 20.8969 15.7319 21.1628 15.5808 21.3889C15.4297 21.615 15.2149 21.7913 14.9637 21.8953C14.7124 21.9994 14.436 22.0266 14.1693 21.9736C13.9025 21.9205 13.6575 21.7896 13.4652 21.5973C13.2729 21.405 13.142 21.16 13.0889 20.8932C13.0359 20.6265 13.0631 20.3501 13.1672 20.0988C13.2712 19.8476 13.4475 19.6328 13.6736 19.4817C13.8997 19.3306 14.1656 19.25 14.4375 19.25C14.8022 19.25 15.1519 19.3949 15.4098 19.6527C15.6676 19.9106 15.8125 20.2603 15.8125 20.625ZM22.6875 20.625C22.6875 20.8969 22.6069 21.1628 22.4558 21.3889C22.3047 21.615 22.0899 21.7913 21.8387 21.8953C21.5874 21.9994 21.311 22.0266 21.0443 21.9736C20.7775 21.9205 20.5325 21.7896 20.3402 21.5973C20.1479 21.405 20.017 21.16 19.9639 20.8932C19.9109 20.6265 19.9381 20.3501 20.0422 20.0988C20.1462 19.8476 20.3225 19.6328 20.5486 19.4817C20.7747 19.3306 21.0406 19.25 21.3125 19.25C21.6772 19.25 22.0269 19.3949 22.2848 19.6527C22.5426 19.9106 22.6875 20.2603 22.6875 20.625ZM8.9375 27.5C8.9375 27.7719 8.85686 28.0378 8.70577 28.2639C8.55468 28.49 8.33994 28.6663 8.08869 28.7703C7.83744 28.8744 7.56097 28.9016 7.29425 28.8486C7.02753 28.7955 6.78253 28.6646 6.59023 28.4723C6.39793 28.28 6.26697 28.035 6.21392 27.7682C6.16087 27.5015 6.1881 27.2251 6.29217 26.9738C6.39624 26.7226 6.57247 26.5078 6.79859 26.3567C7.02471 26.2056 7.29055 26.125 7.5625 26.125C7.92717 26.125 8.27691 26.2699 8.53477 26.5277C8.79263 26.7856 8.9375 27.1353 8.9375 27.5ZM15.8125 27.5C15.8125 27.7719 15.7319 28.0378 15.5808 28.2639C15.4297 28.49 15.2149 28.6663 14.9637 28.7703C14.7124 28.8744 14.436 28.9016 14.1693 28.8486C13.9025 28.7955 13.6575 28.6646 13.4652 28.4723C13.2729 28.28 13.142 28.035 13.0889 27.7682C13.0359 27.5015 13.0631 27.2251 13.1672 26.9738C13.2712 26.7226 13.4475 26.5078 13.6736 26.3567C13.8997 26.2056 14.1656 26.125 14.4375 26.125C14.8022 26.125 15.1519 26.2699 15.4098 26.5277C15.6676 26.7856 15.8125 27.1353 15.8125 27.5ZM22.6875 27.5C22.6875 27.7719 22.6069 28.0378 22.4558 28.2639C22.3047 28.49 22.0899 28.6663 21.8387 28.7703C21.5874 28.8744 21.311 28.9016 21.0443 28.8486C20.7775 28.7955 20.5325 28.6646 20.3402 28.4723C20.1479 28.28 20.017 28.035 19.9639 27.7682C19.9109 27.5015 19.9381 27.2251 20.0422 26.9738C20.1462 26.7226 20.3225 26.5078 20.5486 26.3567C20.7747 26.2056 21.0406 26.125 21.3125 26.125C21.6772 26.125 22.0269 26.2699 22.2848 26.5277C22.5426 26.7856 22.6875 27.1353 22.6875 27.5Z" fill="white"/>
+</svg>
+
 );
 
 const DomesticIcon = ({ size = 24 }: { size?: number }) => (
@@ -43,6 +66,7 @@ const DOT_COUNT = QUICK_ACTIONS.length;
 
 const HeroSection: React.FC = () => {
   const [activeIdx, setActiveIdx] = useState(0);
+  const [heroIdx, setHeroIdx] = useState(0);
   const [animDir, setAnimDir]     = useState<'left' | 'right'>('right');
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -55,10 +79,19 @@ const HeroSection: React.FC = () => {
   const prev = () => goTo((activeIdx - 1 + DOT_COUNT) % DOT_COUNT, 'left');
   const next = () => goTo((activeIdx + 1) % DOT_COUNT, 'right');
 
+  // Quick Actions Carousel interval
   useEffect(() => {
     const t = setInterval(() => goTo((activeIdx + 1) % DOT_COUNT, 'right'), 3200);
     return () => clearInterval(t);
   }, [activeIdx, goTo]);
+
+  // Hero Slider interval
+  useEffect(() => {
+    const t = setInterval(() => {
+      setHeroIdx((prev) => (prev + 1) % HERO_SLIDES.length);
+    }, 5000);
+    return () => clearInterval(t);
+  }, []);
 
   const action = QUICK_ACTIONS[activeIdx];
   const { Icon } = action;
@@ -129,22 +162,38 @@ const HeroSection: React.FC = () => {
       <div
         className="relative w-full overflow-hidden bg-[#e6f0e9]"
         style={{
-          backgroundImage: "url('/ChatGPT Image Apr 22, 2026 at 05_56_28 PM.png')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
           fontFamily: '"Manrope", sans-serif',
           minHeight: '100svh',
         }}
       >
+        {/* Animated Background Layers */}
+        {HERO_SLIDES.map((slide, idx) => (
+          <div
+            key={idx}
+            className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${idx === heroIdx ? 'opacity-100 z-0' : 'opacity-0 -z-10'}`}
+          >
+            {/* Mobile Image Layer */}
+            <div
+              className="block lg:hidden absolute inset-0 bg-cover bg-center bg-no-repeat"
+              style={{ backgroundImage: `url('${slide.bgMobile}')` }}
+            />
+            {/* Desktop Image Layer */}
+            <div
+              className="hidden lg:block absolute inset-0 bg-cover bg-center bg-no-repeat"
+              style={{ backgroundImage: `url('${slide.bgDesktop}')` }}
+            />
+          </div>
+        ))}
+
         {/* Mobile gradient — darkened bottom area for white text readability */}
         <div
-          className="mobile-only absolute inset-0 z-0 pointer-events-none"
+          className="mobile-only absolute inset-0 z-[1] pointer-events-none"
           style={{ background: 'linear-gradient(to bottom, rgba(255,255,255,.7) 0%, transparent 40%, rgba(0,0,0,.2) 60%, rgba(0,0,0,.6) 100%)' }}
         />
 
         {/* Desktop gradient — strong left fade */}
         <div
-          className="desktop-only absolute inset-0 z-0 pointer-events-none"
+          className="desktop-only absolute inset-0 z-[1] pointer-events-none"
           style={{ background: 'linear-gradient(110deg, rgba(255,255,255,.97) 0%, rgba(255,255,255,.88) 22%, rgba(255,255,255,0) 50%)' }}
         />
 
@@ -174,13 +223,13 @@ const HeroSection: React.FC = () => {
           {/* bottom area: Headline + Description + Quick Actions + Stats */}
           <div className="px-5 pb-9 flex flex-col gap-6">
             
-            {/* White text for mobile headline and description */}
-            <div>
-              <h1 className="hf2 font-light text-white leading-[1.08] tracking-tight mb-3" style={{ fontSize: 'clamp(2.6rem, 11vw, 3.5rem)' }}>
-                Intelligent<br />movement
+            {/* White text for mobile headline and description (Animated via Key change) */}
+            <div key={`mob-${heroIdx}`} className="min-h-[120px]">
+              <h1 className="hf2 font-light text-white leading-[1.08] tracking-tight mb-3 whitespace-pre-line" style={{ fontSize: 'clamp(2.6rem, 11vw, 3.5rem)' }}>
+                {HERO_SLIDES[heroIdx].title}
               </h1>
-              <p className="hf3 text-white/90 font-normal leading-snug" style={{ fontSize: 'clamp(14px, 3.8vw, 17px)' }}>
-                Reliable Courier & Logistics Solutions.<br />Built for Speed
+              <p className="hf3 text-white/90 font-normal leading-snug whitespace-pre-line" style={{ fontSize: 'clamp(14px, 3.8vw, 17px)' }}>
+                {HERO_SLIDES[heroIdx].desc}
               </p>
             </div>
 
@@ -239,7 +288,7 @@ const HeroSection: React.FC = () => {
           </div>
         </div>
 
-        {/* ── DESKTOP (Unchanged) ── */}
+        {/* ── DESKTOP (Unchanged structure, Animated text) ── */}
         <main className="desktop-only relative z-10 h-screen flex flex-col justify-between px-6 md:px-10 lg:px-14 pt-36 pb-12">
           <div>
             <form
@@ -254,12 +303,15 @@ const HeroSection: React.FC = () => {
               </button>
             </form>
 
-            <h1 className="hf2 text-[5rem] lg:text-[6.5rem] font-light text-[#0A4D26] leading-[1.05] tracking-tight mb-5">
-              Intelligent <br /> movement
-            </h1>
-            <p className="hf3 text-[18px] text-[#0A4D26] font-normal max-w-sm leading-snug">
-              Reliable Courier & Logistics Solutions. <br /> Built for Speed
-            </p>
+            {/* Animated Title & Description (Triggered by Key Change) */}
+            <div key={`dt-${heroIdx}`} className="min-h-[200px]">
+              <h1 className="hf2 text-[5rem] lg:text-[6.5rem] font-light text-[#0A4D26] leading-[1.05] tracking-tight mb-5 whitespace-pre-line">
+                {HERO_SLIDES[heroIdx].title}
+              </h1>
+              <p className="hf3 text-[18px] text-[#0A4D26] font-normal max-w-sm leading-snug whitespace-pre-line">
+                {HERO_SLIDES[heroIdx].desc}
+              </p>
+            </div>
           </div>
 
           <div className="flex flex-row justify-between items-end w-full">
