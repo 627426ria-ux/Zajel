@@ -216,7 +216,7 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="lg:absolute lg:bottom-0 lg:right-0 relative ml-auto mt-6 lg:mt-0 w-[px] lg:w-[540px] pointer-events-none z-0">
+        <div className="hidden lg:block lg:absolute lg:bottom-0 lg:right-0 lg:w-[540px] pointer-events-none z-0">
   <WatermarkPattern />
   <div className="absolute bottom-4 right-4 lg:bottom-8 lg:right-8 w-[200px] lg:w-[260px] h-[140px] lg:h-[180px]">
     <BirdFlock />
