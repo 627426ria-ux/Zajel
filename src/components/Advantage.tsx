@@ -31,7 +31,7 @@ const AdvantageSection: React.FC = () => {
   return (
     <section 
       ref={sectionRef}
-      className="w-full py-16 md:py-24 px-5 lg:px-12 bg-[#F6F8F6] overflow-hidden" 
+      className="w-full py-16 md:py-24 px-5 lg:px-12 bg-[#FFFFFF] overflow-hidden" 
       style={{ fontFamily: '"Manrope", sans-serif' }}
     >
       <div className="max-w-[1200px] mx-auto">

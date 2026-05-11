@@ -67,14 +67,13 @@ const ServicesSection: React.FC = () => {
         }
         .animate-content { animation: contentFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
-        /* Hide scrollbar on tab strip */
         .tab-strip::-webkit-scrollbar { display: none; }
         .tab-strip { -ms-overflow-style: none; scrollbar-width: none; }
       `}</style>
 
       <section
         ref={sectionRef}
-        className="w-full py-16 md:py-24 px-5 sm:px-6 lg:px-12 bg-[#F6F8F6] overflow-hidden"
+        className="w-full py-16 md:py-24 px-5 sm:px-6 lg:px-12 bg-white overflow-hidden"
         style={{ fontFamily: '"Manrope", sans-serif' }}
       >
         <div className="max-w-[1400px] mx-auto">
@@ -84,7 +83,6 @@ const ServicesSection: React.FC = () => {
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}>
             <p className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.18em] uppercase text-[#0A4D26] mb-4">
-              
               Our Services
             </p>
             <h2 className="text-[1.75rem] sm:text-[2.1rem] lg:text-[2.75rem] font-medium text-[#0A4D26] leading-[1.15] tracking-tight mb-10 md:mb-16">
@@ -93,11 +91,9 @@ const ServicesSection: React.FC = () => {
           </div>
 
           {/* ══════════════════════════════════════
-              MOBILE LAYOUT  (below lg)
+              MOBILE LAYOUT
           ══════════════════════════════════════ */}
           <div className="block lg:hidden">
-
-            {/* Horizontal pill tab strip */}
             <div className={`transform transition-all duration-1000 delay-200 ease-out ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}>
@@ -111,7 +107,7 @@ const ServicesSection: React.FC = () => {
                       className={`flex-shrink-0 px-5 py-2.5 rounded-full text-[13px] font-medium transition-all duration-300 focus:outline-none ${
                         isActive
                           ? 'bg-[#0A4D26] text-white shadow-md'
-                          : 'bg-white text-[#0A4D26] border border-gray-200'
+                          : 'bg-gray-50 text-[#0A4D26] border border-gray-100'
                       }`}
                     >
                       {service.shortTitle}
@@ -121,21 +117,18 @@ const ServicesSection: React.FC = () => {
               </div>
             </div>
 
-            {/* Card: image on top, content below */}
             <div
               key={`mobile-${activeTab}`}
-              className={`animate-content rounded-[2rem] overflow-hidden bg-[#36B936] shadow-lg transform transition-all duration-1000 delay-400 ease-out ${
+              className={`animate-content rounded-[2rem] overflow-hidden bg-[#36B936] border border-gray-100 shadow-xl transform transition-all duration-1000 delay-400 ease-out ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
               }`}
             >
-              {/* Image — top portion */}
               <div className="relative w-full h-[260px] sm:h-[320px]">
                 <img
                   src={active.image}
                   alt={active.title}
                   className="w-full h-full object-cover object-center"
                 />
-                {/* Fade into green at the bottom */}
                 <div
                   className="absolute inset-0 pointer-events-none"
                   style={{
@@ -144,7 +137,6 @@ const ServicesSection: React.FC = () => {
                 />
               </div>
 
-              {/* Text content — below image */}
               <div className="px-7 pt-4 pb-8 flex flex-col">
                 <h3 className="text-white text-[1.9rem] sm:text-[2.25rem] font-normal leading-[1.15] tracking-tight mb-4">
                   {active.title}
@@ -163,11 +155,9 @@ const ServicesSection: React.FC = () => {
           </div>
 
           {/* ══════════════════════════════════════
-              DESKTOP LAYOUT  (lg and above)
+              DESKTOP LAYOUT
           ══════════════════════════════════════ */}
           <div className="hidden lg:grid grid-cols-12 gap-16">
-
-            {/* Left: vertical tab list */}
             <div className={`col-span-4 flex flex-col justify-between h-full py-1 transform transition-all duration-1000 delay-300 ease-out ${
               isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'
             }`}>
@@ -177,10 +167,10 @@ const ServicesSection: React.FC = () => {
                   <button
                     key={service.id}
                     onClick={() => setActiveTab(index)}
-                    className={`w-full group flex items-center justify-between px-8 py-5 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0A4D26] ${
+                    className={`w-full group flex items-center justify-between px-8 py-5 rounded-full transition-all duration-300 focus:outline-none ${
                       isActive
-                        ? 'bg-[#0A4D26] text-[#36B936] border-transparent shadow-lg scale-[1.02]'
-                        : 'bg-transparent text-gray-700 border border-gray-200 hover:border-gray-300 hover:bg-white'
+                        ? 'bg-[#0A4D26] text-[#36B936] shadow-xl scale-[1.02]'
+                        : 'bg-white text-gray-700 border border-gray-100 hover:border-gray-200 hover:bg-gray-50'
                     }`}
                   >
                     <span className={`text-[16px] font-medium transition-colors ${isActive ? 'text-[#36B936]' : 'text-[#0A4D26]'}`}>
@@ -194,13 +184,12 @@ const ServicesSection: React.FC = () => {
               })}
             </div>
 
-            {/* Right: content card */}
             <div className={`col-span-8 h-full transform transition-all duration-1000 delay-500 ease-out ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
             }`}>
               <div
                 key={`desktop-${activeTab}`}
-                className="relative w-full min-h-[480px] h-full rounded-[2.5rem] overflow-hidden bg-[#36B936] shadow-xl animate-content flex items-center"
+                className="relative w-full min-h-[480px] h-full rounded-[2.5rem] overflow-hidden bg-[#36B936] border border-gray-100 shadow-2xl animate-content flex items-center"
               >
                 <div className="absolute top-0 right-0 w-[65%] h-full z-0">
                   <img
@@ -229,14 +218,13 @@ const ServicesSection: React.FC = () => {
                   </p>
                   <Link
                     to={active.path}
-                    className="bg-[#0A4D26] hover:bg-black transition-colors duration-300 text-[#36B936] w-fit px-6 py-3 rounded-full text-[13px] font-bold flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#36B936] focus:ring-[#0A4D26]"
+                    className="bg-[#0A4D26] hover:bg-black transition-colors duration-300 text-[#36B936] w-fit px-6 py-3 rounded-full text-[13px] font-bold flex items-center gap-2 focus:outline-none"
                   >
                     + Learn More
                   </Link>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </section>

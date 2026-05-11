@@ -4,6 +4,8 @@ import JobOpenings from '../components/JobOpenings';
 import LifeAtZajel from '../components/LifeAtZajel';
 import BenefitsSection from '../components/BenefitsSection';
 import CareersHeroMain from '../components/CareersHero';
+import RatesSection from '../components/RatesSection';
+import Footer from '../components/Footer';
 
 const CareersPage: React.FC = () => {
   return (
@@ -19,6 +21,10 @@ const CareersPage: React.FC = () => {
       <LifeAtZajel/>
 
       <BenefitsSection/>
+
+      <RatesSection/>
+
+      <Footer/>
       
       {/* Future sections like <JobOpenings />, <Culture />, etc. can go here */}
     </main>

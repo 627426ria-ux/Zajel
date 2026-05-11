@@ -1,15 +1,42 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const TrustedSection: React.FC = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  // --- SCROLL REVEAL LOGIC ---
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect(); // Fires only once
+        }
+      },
+      { threshold: 0.2 } // Triggers when 20% of the section is visible
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Smooth easing bezier curve
+  const smoothEase = "transition-all duration-1000 ease-[cubic-bezier(0.2,0.8,0.2,1)]";
+
   return (
     <section 
-      className="w-full pt-30 pb-10 md:pb-16 lg:pb-20 px-5 sm:px-6 lg:px-12 bg-[#F6F8F6]" 
+      ref={sectionRef}
+      // Changed bg-[#F6F8F6] to bg-white
+      className="w-full pt-30 pb-10 md:pb-16 lg:pb-20 px-5 sm:px-6 lg:px-12 bg-white overflow-hidden" 
       style={{ fontFamily: '"Manrope", sans-serif' }}
     >
       <div className="max-w-[1000px] mx-auto">
         
-        {/* --- HEADER AREA --- */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-6 mb-8 md:mb-12">
+        {/* --- HEADER AREA (Animated) --- */}
+        <div className={`flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-6 mb-8 md:mb-12 transform ${smoothEase} ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           
           {/* Left: Main Heading */}
           <h2 className="text-[#0A4D26] text-[1.8rem] md:text-[2.2rem] lg:text-[2.8rem] font-medium leading-[1.1] tracking-tight">
@@ -25,8 +52,8 @@ const TrustedSection: React.FC = () => {
           
         </div>
 
-        {/* --- STATS GRID --- */}
-        <div className="w-full rounded-[1.2rem] md:rounded-[1.5rem] border border-[#36B936]/30 overflow-hidden bg-white shadow-sm">
+        {/* --- STATS GRID (Animated with a slight delay) --- */}
+        <div className={`w-full rounded-[1.2rem] md:rounded-[1.5rem] border border-[#36B936]/30 overflow-hidden bg-white shadow-sm transform ${smoothEase} delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
           
           <div className="grid grid-cols-2 md:grid-cols-2">
             

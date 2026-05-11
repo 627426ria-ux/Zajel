@@ -136,10 +136,10 @@ const HeroSection: React.FC = () => {
           minHeight: '100svh',
         }}
       >
-        {/* Mobile gradient — light top only, fully clear below so truck shows */}
+        {/* Mobile gradient — darkened bottom area for white text readability */}
         <div
           className="mobile-only absolute inset-0 z-0 pointer-events-none"
-          style={{ background: 'linear-gradient(to bottom, rgba(255,255,255,.88) 0%, rgba(255,255,255,.55) 25%, transparent 46%)' }}
+          style={{ background: 'linear-gradient(to bottom, rgba(255,255,255,.7) 0%, transparent 40%, rgba(0,0,0,.2) 60%, rgba(0,0,0,.6) 100%)' }}
         />
 
         {/* Desktop gradient — strong left fade */}
@@ -149,83 +149,86 @@ const HeroSection: React.FC = () => {
         />
 
         {/* ── MOBILE ── */}
-        <div className="mobile-only flex-col relative z-10 min-h-[100svh]" style={{ display: 'none' }}>
+        <div className="mobile-only flex-col relative z-10 min-h-[100svh]">
 
-          {/* top: track + headline + sub */}
-          <div className="px-5 pt-28 pb-0">
+          {/* top: track bar aligned with content padding, pushed below nav space */}
+          <div className="px-5 pt-24">
             <form
               onSubmit={e => e.preventDefault()}
-              className="hf1 bg-white/90 backdrop-blur-sm rounded-full p-1 flex items-center w-full shadow-sm border border-white/60 mb-6"
+              className="hf1 bg-white/90 backdrop-blur-sm rounded-full p-1 flex items-center w-full shadow-sm border border-white/60 mb-7"
             >
               <input
                 type="text"
                 placeholder="Enter AWB Number or Mobile"
-                className="flex-1 px-3.5 outline-none text-[12px] text-gray-700 bg-transparent placeholder:text-gray-400"
+                className="flex-1 px-3.5 outline-none text-[13px] text-gray-700 bg-transparent placeholder:text-gray-400"
               />
-              <button type="submit" className="bg-[#15A744] text-white px-4 py-2 rounded-full text-[12px] font-semibold flex items-center gap-1 shrink-0">
-                Track <Search size={11} strokeWidth={2.5} />
+              <button type="submit" className="bg-[#15A744] text-white px-4 py-2.5 rounded-full text-[13px] font-semibold flex items-center gap-1.5 shrink-0">
+                Track <Search size={12} strokeWidth={2.5} />
               </button>
             </form>
-
-            <h1 className="hf2 text-[2.6rem] font-light text-[#0A4D26] leading-[1.08] tracking-tight mb-2.5">
-              Intelligent<br />movement
-            </h1>
-            <p className="hf3 text-[13px] text-[#0A4D26]/75 font-normal leading-snug">
-              Reliable Courier & Logistics Solutions.<br />Built for Speed
-            </p>
           </div>
 
-          {/* spacer — truck image shows here */}
+          {/* spacer — windshield area remains clear */}
           <div className="flex-1" />
 
-          {/* bottom: quick actions + stats — fully transparent, no card */}
-          <div className="px-5 pb-9 flex flex-col gap-5">
+          {/* bottom area: Headline + Description + Quick Actions + Stats */}
+          <div className="px-5 pb-9 flex flex-col gap-6">
+            
+            {/* White text for mobile headline and description */}
+            <div>
+              <h1 className="hf2 font-light text-white leading-[1.08] tracking-tight mb-3" style={{ fontSize: 'clamp(2.6rem, 11vw, 3.5rem)' }}>
+                Intelligent<br />movement
+              </h1>
+              <p className="hf3 text-white/90 font-normal leading-snug" style={{ fontSize: 'clamp(14px, 3.8vw, 17px)' }}>
+                Reliable Courier & Logistics Solutions.<br />Built for Speed
+              </p>
+            </div>
 
-            {/* quick action icon chips — minimal, transparent bg */}
+            {/* quick action icon chips */}
             <div className="hf4 flex items-end justify-between">
               {QUICK_ACTIONS.map((qa, i) => {
                 const { Icon: QIcon } = qa;
                 return (
-                  <a
+                  <div
                     key={i}
-                    href={qa.path}
-                    className="flex flex-col items-center gap-1.5"
+                    className="flex flex-col items-center gap-2"
                     style={{ flex: 1 }}
-                    aria-label={qa.fullLabel}
                   >
-                    <div
-                      className="flex items-center justify-center shadow-lg"
-                      style={{ width: 42, height: 42, borderRadius: 11, backgroundColor: qa.iconBg }}
+                    <a
+                      href={qa.path}
+                      className="flex items-center justify-center shadow-lg active:scale-95 transition-transform"
+                      style={{ width: 48, height: 48, borderRadius: 13, backgroundColor: qa.iconBg }}
+                      aria-label={qa.fullLabel}
                     >
-                      <QIcon size={19} />
-                    </div>
+                      <QIcon size={22} />
+                    </a>
                     <span
-                      className="text-white/80 font-medium text-center leading-tight"
-                      style={{ fontSize: 8.5, letterSpacing: '.04em', whiteSpace: 'pre-line', textTransform: 'uppercase' }}
+                      className="text-white font-medium text-center leading-tight"
+                      style={{ fontSize: 10, letterSpacing: '.04em', whiteSpace: 'pre-line', textTransform: 'uppercase' }}
                     >
                       {qa.label}
                     </span>
-                  </a>
+                  </div>
                 );
               })}
             </div>
 
             {/* thin divider */}
-            <div style={{ height: 1, background: 'rgba(255,255,255,.15)' }} />
+            <div style={{ height: 1, background: 'rgba(255,255,255,.25)' }} />
 
-            {/* stats — fully transparent, 2×2 grid, tight */}
-            <div className="hf5 grid grid-cols-2 gap-x-4 gap-y-4">
+            {/* stats */}
+            <div className="hf5 grid grid-cols-2 gap-x-4 gap-y-5">
               {STATISTICS.map((stat, i) => (
                 <div key={i} className="flex flex-col">
                   <span
                     className="text-white font-light leading-none"
-                    style={{ fontSize: '1.85rem', letterSpacing: '-.02em', textShadow: '0 1px 8px rgba(0,0,0,.25)' }}
+                    style={{ fontSize: 'clamp(1.9rem, 8vw, 2.4rem)', letterSpacing: '-.02em' }}
                   >
                     {stat.value}
                   </span>
                   <span
-                    className="text-white/55 font-bold mt-1 leading-tight whitespace-pre-line"
-                    style={{ fontSize: 8.5, textTransform: 'uppercase', letterSpacing: '.13em' }}
+                    className="text-white/60 font-bold mt-1.5 leading-tight whitespace-pre-line"
+                    style={{ fontSize: 'clamp(9px, 2.4vw, 11px)', textTransform: 'uppercase', letterSpacing: '.13em' }}
                   >
                     {stat.label}
                   </span>
@@ -236,7 +239,7 @@ const HeroSection: React.FC = () => {
           </div>
         </div>
 
-        {/* ── DESKTOP (unchanged) ── */}
+        {/* ── DESKTOP (Unchanged) ── */}
         <main className="desktop-only relative z-10 h-screen flex flex-col justify-between px-6 md:px-10 lg:px-14 pt-36 pb-12">
           <div>
             <form

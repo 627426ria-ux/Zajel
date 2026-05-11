@@ -5,6 +5,7 @@ import TrustedMarquee from "../components/TrustedMarquee";
 import AppDownloadSection from "../components/AppDownloadSection";
 import TrustedSection from "../components/TrustedSection";
 import StorySection from "../components/StorySection";
+import ZajelFooter from "../components/Footer";
 
 export default function HomePage() {
   return (
@@ -16,6 +17,7 @@ export default function HomePage() {
       <AppDownloadSection />
       <TrustedSection />
       <StorySection />
+      <ZajelFooter/>
     </main>
   );
 }

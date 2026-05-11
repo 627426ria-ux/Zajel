@@ -1,6 +1,8 @@
+import Footer from "../components/Footer";
 import FreightHero from "../components/Freight Forwarding Services";
 import GlobalFreightSection from "../components/GlobalFreightSection";
 import InternationalDetails from "../components/InternationalDetails";
+import RatesSection from "../components/RatesSection";
 export default function FreightCourierPage() {
   return (
     <main className="bg-white">
@@ -12,6 +14,9 @@ export default function FreightCourierPage() {
 
       {/* 3. Reusing the Advantage Section */}
       <InternationalDetails/>
+
+      <RatesSection/>
+      <Footer/>
     </main>
   );
 }

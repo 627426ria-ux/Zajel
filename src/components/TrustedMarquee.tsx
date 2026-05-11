@@ -34,7 +34,7 @@ const TrustedMarquee: React.FC = () => {
       </style>
 
       <section
-        className="w-full py-8 lg:py-12 bg-[#F6F8F6] overflow-hidden flex flex-col items-center border-t border-[#36B936]/10"
+        className="w-full py-8 lg:py-12 bg-[#FFFFFF] overflow-hidden flex flex-col items-center border-t border-[#36B936]/10"
         style={{ fontFamily: '"Manrope", sans-serif' }}
       >
         {/* Section Heading */}

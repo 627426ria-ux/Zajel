@@ -5,6 +5,8 @@ import WhoWeAre from '../components/WhoWeAre';
 import Leadership from '../components/Leadership';
 import Testimonials from '../components/Testimonials';
 import SmartLogistics from '../components/SmartLogistics';
+import RatesSection from '../components/RatesSection';
+import Footer from '../components/Footer';
 
 const AboutPage: React.FC = () => {
   return (
@@ -19,6 +21,9 @@ const AboutPage: React.FC = () => {
       <Leadership/>
       
       <Testimonials/>
+      <RatesSection/>
+
+      <Footer/>
       {/* You can add more sections here later, like <AboutMission />, <AboutTeam />, etc. */}
     </main>
   );

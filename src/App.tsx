@@ -15,6 +15,9 @@ import ContactPage from './pages/Contact';
 import FaqPage from './pages/FaqPage';
 import AboutPage from './pages/About';
 import CareersPage from './pages/Careers';
+import TrackShipment from './components/TrackShipment';
+import TrackingResults from './pages/TrackingResults';
+import QuotationPage from './pages/Quotation';
 
 function App() {
   return (
@@ -51,6 +54,13 @@ function App() {
           <Route path="/about" element={<AboutPage/>} />
 
           <Route path="/careers" element={<CareersPage />} />
+
+          <Route path="/quotation" element={<QuotationPage />} />
+          <Route path="/track" element={<TrackShipment />} />
+          <Route path="/trackresults" element={<TrackingResults />} />
+
+
+
         </Routes>
       </main>
     </Router>
