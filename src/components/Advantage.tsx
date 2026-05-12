@@ -142,8 +142,8 @@ const AdvantageSection: React.FC = () => {
         }
 
         .globe-img {
-          width: clamp(100px, 18vw, 340px);
-          max-width: 90%;
+          width: clamp(160px, 36vw, 500px); /* INCREASED */
+          max-width: 110%; /* INCREASED */
           object-fit: contain;
           position: relative;
           z-index: 10;
@@ -152,7 +152,7 @@ const AdvantageSection: React.FC = () => {
 
         @media (min-width: 768px) {
           .globe-img {
-            width: clamp(160px, 85%, 340px);
+            width: clamp(220px, 100%, 450px); /* INCREASED */
           }
         }
 
