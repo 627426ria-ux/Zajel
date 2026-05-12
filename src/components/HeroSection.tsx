@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Search, ChevronRight, ChevronLeft } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const HERO_SLIDES = [
   {
@@ -68,7 +69,7 @@ const QUICK_ACTIONS = [
 
 const DOT_COUNT = QUICK_ACTIONS.length;
 
-// ─── Stats Bar: always one horizontal row, no wrapping ───────────────────────
+// ─── Stats Bar ────────────────────────────────────────────────────────────────
 const StatsBar: React.FC = () => (
   <div
     style={{
@@ -143,6 +144,7 @@ const StatsBar: React.FC = () => (
 
 // ─── Component ────────────────────────────────────────────────────────────────
 const HeroSection: React.FC = () => {
+  const navigate = useNavigate(); // ADDED: React Router DOM navigation
   const [activeIdx, setActiveIdx]     = useState(0);
   const [heroIdx, setHeroIdx]         = useState(0);
   const [animDir, setAnimDir]         = useState<'left' | 'right'>('right');
@@ -167,6 +169,17 @@ const HeroSection: React.FC = () => {
     const t = setInterval(() => setHeroIdx(p => (p + 1) % HERO_SLIDES.length), 5000);
     return () => clearInterval(t);
   }, []);
+
+  // ADDED: Submission handler to intercept the Track Search button securely without 404s
+  const handleTrackSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const input = e.currentTarget.querySelector('input');
+    if (input && input.value.trim()) {
+      navigate(`/track?awb=${encodeURIComponent(input.value.trim())}`);
+    } else {
+      navigate('/track');
+    }
+  };
 
   const action = QUICK_ACTIONS[activeIdx];
   const { Icon } = action;
@@ -272,8 +285,9 @@ const HeroSection: React.FC = () => {
 
           {/* Track bar */}
           <div className="px-5 pt-24">
+            {/* UPDATED: Added handleTrackSubmit */}
             <form
-              onSubmit={e => e.preventDefault()}
+              onSubmit={handleTrackSubmit}
               className="hf1 bg-white/90 backdrop-blur-sm rounded-full p-1 flex items-center w-full shadow-sm border border-white/60 mb-7"
             >
               <input
@@ -287,13 +301,11 @@ const HeroSection: React.FC = () => {
             </form>
           </div>
 
-          {/* Flexible spacer — image area stays clear */}
           <div className="flex-1" />
 
           {/* Bottom content */}
           <div className="px-5 pb-8 flex flex-col gap-5">
 
-            {/* Headline + description */}
             <div key={`mob-${heroIdx}`} className="min-h-[110px]">
               <h1
                 className="hf2 font-light text-white leading-[1.08] tracking-tight mb-3 whitespace-pre-line"
@@ -315,14 +327,15 @@ const HeroSection: React.FC = () => {
                 const { Icon: QIcon } = qa;
                 return (
                   <div key={i} className="flex flex-col items-center gap-2" style={{ flex: 1 }}>
-                    <a
-                      href={qa.path}
+                    {/* UPDATED: Replaced <a> with <Link> to avoid 404s */}
+                    <Link
+                      to={qa.path}
                       className="flex items-center justify-center shadow-lg active:scale-95 transition-transform"
                       style={{ width: 48, height: 48, borderRadius: 13, backgroundColor: qa.iconBg }}
                       aria-label={qa.fullLabel}
                     >
                       <QIcon size={22} />
-                    </a>
+                    </Link>
                     <span
                       className="text-white font-medium text-center leading-tight"
                       style={{ fontSize: 10, letterSpacing: '.04em', textTransform: 'uppercase' }}
@@ -334,10 +347,8 @@ const HeroSection: React.FC = () => {
               })}
             </div>
 
-            {/* Divider */}
             <div style={{ height: 1, background: 'rgba(255,255,255,0.22)' }} />
 
-            {/* Stats: single row, pinned at bottom */}
             <div className="hf5">
               <StatsBar />
             </div>
@@ -352,8 +363,9 @@ const HeroSection: React.FC = () => {
 
           {/* Top: track bar + animated headline */}
           <div>
+            {/* UPDATED: Added handleTrackSubmit */}
             <form
-              onSubmit={e => e.preventDefault()}
+              onSubmit={handleTrackSubmit}
               className="hf1 bg-white rounded-full p-1.5 flex items-center w-full max-w-[400px] shadow-sm border border-gray-100 mb-10 focus-within:shadow-md transition-shadow"
             >
               <label htmlFor="dt-track" className="sr-only">Enter AWB Number or Mobile</label>
@@ -384,19 +396,20 @@ const HeroSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Bottom row: quick-action carousel (left) | stats bar (right) */}
+          {/* Bottom row */}
           <div className="flex flex-row justify-between items-end w-full gap-10">
 
             {/* Quick-action carousel */}
             <div className="hf4 flex flex-col gap-3.5 shrink-0">
-              <a href={action.path} className={`qa-card ${isAnimating ? (animDir === 'right' ? 'qa-sr' : 'qa-sl') : ''}`}>
+              {/* UPDATED: Replaced <a> with <Link> to avoid 404s */}
+              <Link to={action.path} className={`qa-card ${isAnimating ? (animDir === 'right' ? 'qa-sr' : 'qa-sl') : ''}`}>
                 <div className="qa-icon" style={{ backgroundColor: action.iconBg }}><Icon size={26} /></div>
                 <div className="flex-1 min-w-0">
                   <p className="text-[#004E09] text-[13px] font-semibold leading-tight mb-1">{action.fullLabel}</p>
                   <p className="text-[#004E09]/50 text-[11px] leading-snug line-clamp-2">{action.desc}</p>
                 </div>
                 <div className="qa-arrow"><ChevronRight size={12} strokeWidth={2} /></div>
-              </a>
+              </Link>
               <div className="flex items-center gap-2 pl-0.5">
                 <button onClick={prev} aria-label="Previous" className="qa-nav"><ChevronLeft size={12} strokeWidth={2} /></button>
                 <div className="flex items-center gap-1.5" role="tablist">
@@ -416,7 +429,7 @@ const HeroSection: React.FC = () => {
               </div>
             </div>
 
-            {/* Stats: single row, right side, bottom-aligned */}
+            {/* Stats */}
             <div className="hf5 flex-1 min-w-0 flex flex-col items-end gap-5">
               <p
                 className="text-right text-white/80 drop-shadow-sm leading-relaxed"
