@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Landmark, FileCheck, ShieldCheck, ArrowRight, History, type LucideIcon } from 'lucide-react';
+import { Landmark, FileCheck,  History, type LucideIcon } from 'lucide-react';
 import RatesSection from '../components/RatesSection';
 import Footer from '../components/Footer';
 

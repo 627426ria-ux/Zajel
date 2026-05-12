@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 // Corrected: LucideIcon is now imported using 'type' to satisfy strict TS rules
-import { Mail, Building2, EyeOff, ArrowRight, type LucideIcon } from 'lucide-react';
+import { Mail, Building2, EyeOff, type LucideIcon } from 'lucide-react';
 import RatesSection from '../components/RatesSection';
 import Footer from '../components/Footer';
 
