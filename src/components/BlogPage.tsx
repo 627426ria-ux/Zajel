@@ -83,9 +83,7 @@ const BlogPage: React.FC = () => {
               from the World of Logistics
             </h1>
             
-            <button className="bg-[#36B936] hover:bg-[#2da32d] text-white px-7 py-3 rounded-full text-[13px] font-medium transition-all shadow-sm active:scale-95 flex items-center gap-2">
-              <span className="text-lg font-light leading-none mb-[2px]">+</span> Schedule a Pickup
-            </button>
+            
           </div>
 
           {/* Right: Description */}

@@ -20,50 +20,46 @@ import TrackingResults from './pages/TrackingResults';
 import QuotationPage from './pages/Quotation';
 import EcommercerPage from './pages/Ecommerce';
 
+// === UPDATED SERVICES IMPORTS ===
+import AllServicesPage from './pages/AllServices';
+import ServiceDetailPage from './pages/ServiceDetailPage'; 
+import SecureMailPage from './pages/Mail';
+import SecureDocsPage from './pages/SecureDocs';
+import SecureIDPage from './pages/SecureID';
+import GovInstitutionalPage from './pages/Govt';
+
 function App() {
   return (
     <Router>
-      {/* 1. GLOBAL NAVBAR */}
-      {/* Placed here, it renders once and stays visible across all route changes */}
       <Navbar />
       
-      {/* 2. PAGE CONTENT */}
-      {/* Wrapped in a main tag for semantic HTML structure */}
       <main>
         <Routes>
-          {/* Home Page Route */}
           <Route path="/" element={<HomePage />} />
-          
-          {/* Domestic Courier Page Route */}
           <Route path="/domestic-courier" element={<DomesticCourierPage />} />
-
-          {/* International Courier Page Route */}
           <Route path="/international-courier" element={<InternationalCourierPage />} />
-
           <Route path="/freight-courier" element={<FreightCourierPage/>} />
-
           <Route path="/support" element={<SupportPage />} />
-
           <Route path="/blog" element={<BlogPage/>} />
-
           <Route path="/blog/:id" element={<BlogDetailPage/>} />
-
           <Route path="/contact" element={<ContactPage/>} />
-
           <Route path="/faq" element={<FaqPage />} />
-
           <Route path="/about" element={<AboutPage/>} />
-
           <Route path="/careers" element={<CareersPage />} />
-
           <Route path="/quotation" element={<QuotationPage />} />
           <Route path="/track" element={<TrackShipment />} />
           <Route path="/trackresults" element={<TrackingResults />} />
-
           <Route path="/ecommerce" element={<EcommercerPage />} />
 
-
-
+          {/* === FIXED DYNAMIC ROUTES === */}
+          <Route path="/all-services" element={<AllServicesPage />} />
+          
+          {/* This route catches IDs like /services/standard-courier */}
+          <Route path="/services/:id" element={<ServiceDetailPage />} />
+          <Route path="/secure-mail" element={<SecureMailPage />} />
+          <Route path="/secure-docs" element={<SecureDocsPage/>} />
+          <Route path="/secure-id" element={<SecureIDPage/>} />
+          <Route path="/secure-gov" element={<GovInstitutionalPage/>} />
         </Routes>
       </main>
     </Router>

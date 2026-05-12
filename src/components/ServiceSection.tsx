@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
-// --- CONFIGURATION DATA ---
 const SERVICES_DATA = [
   {
     id: 'domestic',
@@ -31,8 +30,8 @@ const SERVICES_DATA = [
     id: 'all',
     title: 'All Services',
     description: 'Explore our complete suite of logistics, warehousing, and e-commerce fulfillment solutions tailored for your business needs.',
-    image: '/all-services.jpg',
-    path: '#',
+    image: '/ChatGPT Image Apr 5, 2026, 08_42_55 PM.png',
+    path: 'all-services',
     shortTitle: 'All',
   }
 ];
@@ -45,12 +44,9 @@ const ServicesSection: React.FC = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
+        if (entry.isIntersecting) { setIsVisible(true); observer.disconnect(); }
       },
-      { threshold: 0.2 }
+      { threshold: 0.15 }
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
@@ -61,170 +57,373 @@ const ServicesSection: React.FC = () => {
   return (
     <>
       <style>{`
+        .services-section {
+          font-family: 'Manrope', sans-serif;
+          padding: clamp(48px, 8vw, 112px) clamp(16px, 4vw, 48px);
+          background: white;
+          overflow: hidden;
+        }
+
+        /* ── Heading ── */
+        .services-eyebrow {
+          font-size: clamp(10px, 1vw, 13px);
+          font-weight: 700;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: #0A4D26;
+          display: block;
+          margin-bottom: clamp(8px, 1vw, 14px);
+        }
+
+        .services-heading {
+          font-size: clamp(1.5rem, 3.2vw, 2.75rem);
+          font-weight: 500;
+          color: #0A4D26;
+          line-height: 1.15;
+          letter-spacing: -0.02em;
+          margin-bottom: clamp(32px, 5vw, 72px);
+        }
+
+        /* ── Shared card base ── */
+        .service-card {
+          background: #36B936;
+          border-radius: clamp(1.25rem, 2.5vw, 2.5rem);
+          overflow: hidden;
+          box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+          position: relative;
+        }
+
+        /* ── Tab strip (mobile + tablet) ── */
+        .tab-strip {
+          display: flex;
+          gap: clamp(6px, 1vw, 10px);
+          overflow-x: auto;
+          padding-bottom: 4px;
+          margin-bottom: clamp(16px, 2.5vw, 28px);
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .tab-strip::-webkit-scrollbar { display: none; }
+
+        .tab-btn {
+          flex-shrink: 0;
+          padding: clamp(7px, 0.8vw, 11px) clamp(14px, 1.8vw, 22px);
+          border-radius: 9999px;
+          font-size: clamp(12px, 1.1vw, 14px);
+          font-weight: 500;
+          cursor: pointer;
+          border: none;
+          transition: all 0.25s ease;
+          outline: none;
+        }
+        .tab-btn-active {
+          background: #0A4D26;
+          color: white;
+          box-shadow: 0 4px 14px rgba(10,77,38,0.25);
+        }
+        .tab-btn-inactive {
+          background: #f3f4f6;
+          color: #0A4D26;
+          border: 1px solid #e5e7eb;
+        }
+        .tab-btn-inactive:hover { background: #e9eae8; }
+
+        /* ── Mobile / tablet card ── */
+        .mobile-card-img {
+          width: 100%;
+          height: clamp(180px, 36vw, 360px);
+          object-fit: cover;
+          object-position: center;
+          display: block;
+        }
+
+        /* ── REDUCED: only covers bottom 28%, starts fading at 55% height ── */
+        .mobile-card-gradient {
+          position: absolute;
+          bottom: 0; left: 0; right: 0;
+          height: 28%;
+          background: linear-gradient(to bottom, transparent 0%, #36B936 100%);
+          pointer-events: none;
+        }
+
+        .mobile-card-body {
+          padding: clamp(16px, 3vw, 32px) clamp(20px, 3.5vw, 36px) clamp(24px, 4vw, 44px);
+        }
+
+        .mobile-card-title {
+          font-size: clamp(1.4rem, 4.5vw, 2.2rem);
+          font-weight: 400;
+          color: white;
+          line-height: 1.15;
+          letter-spacing: -0.02em;
+          margin-bottom: clamp(10px, 1.5vw, 18px);
+        }
+
+        .mobile-card-desc {
+          font-size: clamp(12px, 1.4vw, 15px);
+          font-weight: 500;
+          color: #0A4D26;
+          line-height: 1.6;
+          margin-bottom: clamp(16px, 2.5vw, 28px);
+        }
+
+        /* ── Desktop layout ── */
+        .desktop-layout {
+          display: none;
+        }
+
+        @media (min-width: 1024px) {
+          .mobile-layout { display: none !important; }
+          .desktop-layout {
+            display: grid;
+            grid-template-columns: clamp(220px, 28vw, 380px) 1fr;
+            gap: clamp(24px, 3vw, 56px);
+            align-items: stretch;
+          }
+        }
+
+        /* ── Desktop tab list ── */
+        .desktop-tabs {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          gap: clamp(10px, 1.2vw, 16px);
+        }
+
+        .desktop-tab-btn {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: clamp(14px, 1.4vw, 20px) clamp(18px, 2vw, 28px);
+          border-radius: 9999px;
+          font-size: clamp(13px, 1.15vw, 16px);
+          font-weight: 500;
+          cursor: pointer;
+          border: none;
+          transition: all 0.3s ease;
+          outline: none;
+          text-align: left;
+        }
+        .desktop-tab-active {
+          background: #0A4D26;
+          color: #36B936;
+          box-shadow: 0 8px 24px rgba(10,77,38,0.2);
+          transform: scale(1.02);
+        }
+        .desktop-tab-inactive {
+          background: white;
+          color: #0A4D26;
+          border: 1px solid #e5e7eb;
+        }
+        .desktop-tab-inactive:hover {
+          background: #f9fafb;
+          border-color: #d1d5db;
+        }
+
+        .desktop-tab-dot {
+          width: clamp(8px, 0.7vw, 11px);
+          height: clamp(8px, 0.7vw, 11px);
+          border-radius: 50%;
+          flex-shrink: 0;
+          transition: all 0.3s ease;
+        }
+        .desktop-tab-dot-active {
+          background: #36B936;
+          box-shadow: 0 0 8px rgba(54,185,54,0.5);
+        }
+        .desktop-tab-dot-inactive { background: #d1d5db; }
+
+        /* ── Desktop service card ── */
+        .desktop-card {
+          min-height: clamp(360px, 42vw, 560px);
+          display: flex;
+          align-items: center;
+        }
+
+        .desktop-card-img-wrap {
+          position: absolute;
+          top: 0; right: 0;
+          width: 62%;
+          height: 100%;
+          z-index: 0;
+        }
+
+        .desktop-card-img-wrap img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: right center;
+          display: block;
+        }
+
+        /* ── REDUCED: solid green only for first 10%, fully transparent by 42% ── */
+        .desktop-card-img-gradient {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(to right,
+            rgba(54,185,54,1)    0%,
+            rgba(54,185,54,0.92) 5%,
+            rgba(115, 181, 115, 0.4)  20%,
+            rgba(54,185,54,0)    42%
+          );
+          pointer-events: none;
+        }
+
+        .desktop-card-content {
+          position: relative;
+          z-index: 10;
+          width: clamp(260px, 50%, 520px);
+          padding: clamp(28px, 4vw, 64px) clamp(28px, 4vw, 60px);
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+
+        .desktop-card-title {
+          font-size: clamp(1.6rem, 3vw, 3.25rem);
+          font-weight: 400;
+          color: white;
+          line-height: 1.1;
+          letter-spacing: -0.025em;
+          margin-bottom: clamp(12px, 1.5vw, 24px);
+          text-shadow: 0 1px 2px rgba(0,0,0,0.08);
+        }
+
+        .desktop-card-desc {
+          font-size: clamp(13px, 1.2vw, 16px);
+          font-weight: 500;
+          color: #0A4D26;
+          line-height: 1.65;
+          margin-bottom: clamp(20px, 2.5vw, 40px);
+          max-width: 88%;
+        }
+
+        .learn-more-btn {
+          background: #0A4D26;
+          color: #36B936;
+          padding: clamp(10px, 1vw, 14px) clamp(18px, 2vw, 28px);
+          border-radius: 9999px;
+          font-size: clamp(12px, 1.05vw, 14px);
+          font-weight: 700;
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          transition: background 0.25s ease;
+          width: fit-content;
+          outline: none;
+        }
+        .learn-more-btn:hover { background: black; }
+        .learn-more-btn:focus { outline: 2px solid #0A4D26; outline-offset: 2px; }
+
         @keyframes contentFadeIn {
-          from { opacity: 0; transform: translateY(15px); }
+          from { opacity: 0; transform: translateY(12px); }
           to   { opacity: 1; transform: translateY(0); }
         }
-        .animate-content { animation: contentFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-
-        .tab-strip::-webkit-scrollbar { display: none; }
-        .tab-strip { -ms-overflow-style: none; scrollbar-width: none; }
+        .animate-content {
+          animation: contentFadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
       `}</style>
 
-      <section
-        ref={sectionRef}
-        className="w-full py-16 md:py-24 px-5 sm:px-6 lg:px-12 bg-white overflow-hidden"
-        style={{ fontFamily: '"Manrope", sans-serif' }}
-      >
-        <div className="max-w-[1400px] mx-auto">
+      <section ref={sectionRef} className="services-section">
+        <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
 
-          {/* ── Section Heading ── */}
-          <div className={`text-center transform transition-all duration-1000 ease-out ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-          }`}>
-            <p className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.18em] uppercase text-[#0A4D26] mb-4">
-              Our Services
-            </p>
-            <h2 className="text-[1.75rem] sm:text-[2.1rem] lg:text-[2.75rem] font-medium text-[#0A4D26] leading-[1.15] tracking-tight mb-10 md:mb-16">
-              Delivering a smarter <br /> shipping experience.
+          {/* ── Heading ── */}
+          <div
+            className={`text-center transition-all duration-1000 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+          >
+            <span className="services-eyebrow">Our Services</span>
+            <h2 className="services-heading">
+              Delivering a smarter <br />shipping experience.
             </h2>
           </div>
 
-          {/* ══════════════════════════════════════
-              MOBILE LAYOUT
-          ══════════════════════════════════════ */}
-          <div className="block lg:hidden">
-            <div className={`transform transition-all duration-1000 delay-200 ease-out ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}>
-              <div className="tab-strip flex gap-2.5 overflow-x-auto pb-1 mb-8">
-                {SERVICES_DATA.map((service, index) => {
-                  const isActive = activeTab === index;
-                  return (
-                    <button
-                      key={service.id}
-                      onClick={() => setActiveTab(index)}
-                      className={`flex-shrink-0 px-5 py-2.5 rounded-full text-[13px] font-medium transition-all duration-300 focus:outline-none ${
-                        isActive
-                          ? 'bg-[#0A4D26] text-white shadow-md'
-                          : 'bg-gray-50 text-[#0A4D26] border border-gray-100'
-                      }`}
-                    >
-                      {service.shortTitle}
-                    </button>
-                  );
-                })}
-              </div>
+          {/* ════════════════════════════════
+              MOBILE + TABLET LAYOUT
+          ════════════════════════════════ */}
+          <div
+            className={`mobile-layout transition-all duration-1000 delay-200 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+          >
+            {/* Tab strip */}
+            <div className="tab-strip">
+              {SERVICES_DATA.map((s, i) => (
+                <button
+                  key={s.id}
+                  onClick={() => setActiveTab(i)}
+                  className={`tab-btn ${activeTab === i ? 'tab-btn-active' : 'tab-btn-inactive'}`}
+                >
+                  {s.shortTitle}
+                </button>
+              ))}
             </div>
 
-            <div
-              key={`mobile-${activeTab}`}
-              className={`animate-content rounded-[2rem] overflow-hidden bg-[#36B936] border border-gray-100 shadow-xl transform transition-all duration-1000 delay-400 ease-out ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-              }`}
-            >
-              <div className="relative w-full h-[260px] sm:h-[320px]">
-                <img
-                  src={active.image}
-                  alt={active.title}
-                  className="w-full h-full object-cover object-center"
-                />
-                <div
-                  className="absolute inset-0 pointer-events-none"
-                  style={{
-                    background: 'linear-gradient(to bottom, transparent 50%, rgba(54,185,54,1) 100%)'
-                  }}
-                />
+            {/* Card */}
+            <div key={`mob-${activeTab}`} className="service-card animate-content">
+              <div style={{ position: 'relative' }}>
+                <img src={active.image} alt={active.title} className="mobile-card-img" />
+                <div className="mobile-card-gradient" />
               </div>
-
-              <div className="px-7 pt-4 pb-8 flex flex-col">
-                <h3 className="text-white text-[1.9rem] sm:text-[2.25rem] font-normal leading-[1.15] tracking-tight mb-4">
-                  {active.title}
-                </h3>
-                <p className="text-[#0A4D26] text-[14px] font-medium leading-relaxed mb-7">
-                  {active.description}
-                </p>
-                <Link
-                  to={active.path}
-                  className="self-start bg-[#0A4D26] hover:bg-black transition-colors duration-300 text-[#36B936] px-6 py-3 rounded-full text-[13px] font-bold flex items-center gap-2"
-                >
+              <div className="mobile-card-body">
+                <h3 className="mobile-card-title">{active.title}</h3>
+                <p className="mobile-card-desc">{active.description}</p>
+                <Link to={active.path} className="learn-more-btn">
                   + Learn More
                 </Link>
               </div>
             </div>
           </div>
 
-          {/* ══════════════════════════════════════
+          {/* ════════════════════════════════
               DESKTOP LAYOUT
-          ══════════════════════════════════════ */}
-          <div className="hidden lg:grid grid-cols-12 gap-16">
-            <div className={`col-span-4 flex flex-col justify-between h-full py-1 transform transition-all duration-1000 delay-300 ease-out ${
-              isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'
-            }`}>
-              {SERVICES_DATA.map((service, index) => {
-                const isActive = activeTab === index;
-                return (
-                  <button
-                    key={service.id}
-                    onClick={() => setActiveTab(index)}
-                    className={`w-full group flex items-center justify-between px-8 py-5 rounded-full transition-all duration-300 focus:outline-none ${
-                      isActive
-                        ? 'bg-[#0A4D26] text-[#36B936] shadow-xl scale-[1.02]'
-                        : 'bg-white text-gray-700 border border-gray-100 hover:border-gray-200 hover:bg-gray-50'
-                    }`}
-                  >
-                    <span className={`text-[16px] font-medium transition-colors ${isActive ? 'text-[#36B936]' : 'text-[#0A4D26]'}`}>
-                      {service.title}
-                    </span>
-                    <span className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                      isActive ? 'bg-[#36B936] scale-110 shadow-[0_0_8px_rgba(54,185,54,0.5)]' : 'bg-gray-200 group-hover:bg-gray-300'
-                    }`} />
-                  </button>
-                );
-              })}
+          ════════════════════════════════ */}
+          <div className="desktop-layout">
+
+            {/* Left: tab list */}
+            <div
+              className={`desktop-tabs transition-all duration-1000 delay-300 ease-out ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}
+            >
+              {SERVICES_DATA.map((s, i) => (
+                <button
+                  key={s.id}
+                  onClick={() => setActiveTab(i)}
+                  className={`desktop-tab-btn ${activeTab === i ? 'desktop-tab-active' : 'desktop-tab-inactive'}`}
+                >
+                  <span>{s.title}</span>
+                  <span className={`desktop-tab-dot ${activeTab === i ? 'desktop-tab-dot-active' : 'desktop-tab-dot-inactive'}`} />
+                </button>
+              ))}
             </div>
 
-            <div className={`col-span-8 h-full transform transition-all duration-1000 delay-500 ease-out ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
-            }`}>
-              <div
-                key={`desktop-${activeTab}`}
-                className="relative w-full min-h-[480px] h-full rounded-[2.5rem] overflow-hidden bg-[#36B936] border border-gray-100 shadow-2xl animate-content flex items-center"
-              >
-                <div className="absolute top-0 right-0 w-[65%] h-full z-0">
-                  <img
-                    src={active.image}
-                    alt={active.title}
-                    className="w-full h-full object-cover object-right"
-                  />
-                  <div
-                    className="absolute inset-0 pointer-events-none"
-                    style={{
-                      background: 'linear-gradient(to right, rgba(54,185,54,1) 0%, rgba(54,185,54,0.95) 15%, rgba(54,185,54,0) 45%)'
-                    }}
-                  />
+            {/* Right: card */}
+            <div
+              className={`transition-all duration-1000 delay-500 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
+            >
+              <div key={`desk-${activeTab}`} className="service-card desktop-card animate-content">
+
+                {/* Image — right side, fades into green */}
+                <div className="desktop-card-img-wrap">
+                  <img src={active.image} alt={active.title} />
+                  <div className="desktop-card-img-gradient" />
                 </div>
-                <div className="relative z-10 w-full md:w-[55%] p-10 lg:p-14 flex flex-col justify-center">
-                  <h3 className="text-white text-[2.75rem] lg:text-[3.25rem] font-normal leading-[1.1] tracking-tight mb-6 drop-shadow-sm">
+
+                {/* Text — left side */}
+                <div className="desktop-card-content">
+                  <h3 className="desktop-card-title">
                     {active.title.split(' ').map((word, i) => (
                       <React.Fragment key={i}>
-                        {word}
-                        {i === 0 ? <br /> : ' '}
+                        {word}{i === 0 ? <br /> : ' '}
                       </React.Fragment>
                     ))}
                   </h3>
-                  <p className="text-[#0A4D26] text-[15px] font-medium leading-relaxed mb-10 max-w-[90%]">
-                    {active.description}
-                  </p>
-                  <Link
-                    to={active.path}
-                    className="bg-[#0A4D26] hover:bg-black transition-colors duration-300 text-[#36B936] w-fit px-6 py-3 rounded-full text-[13px] font-bold flex items-center gap-2 focus:outline-none"
-                  >
+                  <p className="desktop-card-desc">{active.description}</p>
+                  <Link to={active.path} className="learn-more-btn">
                     + Learn More
                   </Link>
                 </div>
+
               </div>
             </div>
+
           </div>
         </div>
       </section>
