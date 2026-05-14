@@ -193,7 +193,7 @@ const IconPlaceholder = () => (
 // ─────────────────────────────────────────────
 // CHEVRON
 // ─────────────────────────────────────────────
-const Chevron = ({ open }) => (
+const Chevron = ({ open }: { open: boolean }) => (
   <svg
     width="10"
     height="6"
@@ -223,7 +223,7 @@ const Chevron = ({ open }) => (
 // ─────────────────────────────────────────────
 // MEGA MENU PANEL  (full-width, below navbar)
 // ─────────────────────────────────────────────
-const MegaMenuPanel = ({ type, categories, isOpen, onClose }) => {
+const MegaMenuPanel = ({ type, categories, isOpen, onClose }: { type: string; categories: any[]; isOpen: boolean; onClose: () => void }) => {
   const [activeCategory, setActiveCategory] = useState(0);
   const panelRef = useRef(null);
 
@@ -356,7 +356,7 @@ const MegaMenuPanel = ({ type, categories, isOpen, onClose }) => {
                   gap: 8,
                 }}
               >
-                {activeItems.map((item, idx) => (
+                {activeItems.map((item: any, idx: number) => (
                   <Link
                     key={idx}
                     to={item.path}
@@ -440,14 +440,14 @@ const MegaMenuPanel = ({ type, categories, isOpen, onClose }) => {
 // ─────────────────────────────────────────────
 // MOBILE MENU
 // ─────────────────────────────────────────────
-const MobileMenu = ({ isOpen, onClose }) => {
-  const [openSection, setOpenSection] = useState(null);
-  const [mobileSubCat, setMobileSubCat] = useState({});
+const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+  const [openSection, setOpenSection] = useState<string | null>(null);
+  const [mobileSubCat, setMobileSubCat] = useState<Record<string, number | null>>({});
 
-  const toggle = (key) => setOpenSection((p) => (p === key ? null : key));
+  const toggle = (key: string) => setOpenSection((p) => (p === key ? null : key));
 
-  const toggleSub = (key, idx) =>
-    setMobileSubCat((p) => ({ ...p, [key]: p[key] === idx ? null : idx }));
+const toggleSub = (key: string, idx: number) =>
+  setMobileSubCat((p) => ({ ...p, [key]: p[key] === idx ? null : idx }));
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
@@ -745,7 +745,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
 // ─────────────────────────────────────────────
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [activeMenu, setActiveMenu] = useState(null); // 'solutions' | 'support' | null
+  const [activeMenu, setActiveMenu] = useState<string | null>(null); // 'solutions' | 'support' | null
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
@@ -755,12 +755,12 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    const onKey = (e) => e.key === "Escape" && setActiveMenu(null);
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setActiveMenu(null);
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  const toggleMenu = (key) => setActiveMenu((p) => (p === key ? null : key));
+  const toggleMenu = (key: string) => setActiveMenu((p) => (p === key ? null : key));
 
   const navLinks = [
     { label: "Home", path: "/" },
