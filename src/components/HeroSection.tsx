@@ -33,6 +33,13 @@ const HERO_SLIDES = [
     bgDesktop: '/ChatGPT Image May 14, 2026, 02_22_11 AM.png',
     bgMobile:  '/ChatGPT Image May 14, 2026, 02_23_35 AM.png',
   },
+  {
+    title: 'ZAJEL \n NOW',
+    desc: 'Instant city wide pickups and deliveries made simple through the ZAJEL app.',
+    bgDesktop: '/ChatGPT Image May 14, 2026, 02_00_48 PM.png',
+    bgMobile:  '/ChatGPT Image May 14, 2026, 02_03_54 PM.png',
+  },
+  
 ];
 
 const STATISTICS = [

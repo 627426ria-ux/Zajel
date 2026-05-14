@@ -155,10 +155,10 @@ const StorySection: React.FC = () => {
               style={{ transitionDelay: '300ms' }}
             >
               <h2 className="story-heading">
-                At ZAJEL, we go beyond delivery to provide agile, global logistics and business transformation
+              ZAJEL NOW brings instant, on-demand delivery directly into the app  making city wide pickups and deliveries faster, simpler, and more convenient than ever.
               </h2>
-              <Link to="/about" className="story-cta">
-                Explore Our Story
+              <Link to="/" className="story-cta">
+                Book Now
               </Link>
             </div>
 
