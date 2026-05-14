@@ -155,7 +155,7 @@ const StorySection: React.FC = () => {
               style={{ transitionDelay: '300ms' }}
             >
               <h2 className="story-heading">
-              ZAJEL NOW brings instant, on-demand delivery directly into the app  making city wide pickups and deliveries faster, simpler, and more convenient than ever.
+              ZAJEL NOW brings instant, on-demand city-wide pickups and deliveries directly into the app.
               </h2>
               <Link to="/" className="story-cta">
                 Book Now
