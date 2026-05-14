@@ -59,7 +59,7 @@ const EcommerceHero: React.FC = () => {
               marginBottom: 'clamp(0.75rem, 1.5vw, 1.25rem)',
             }}
           >
-            E-commerce <br /> Solutions
+            <span style={{ whiteSpace: 'nowrap' }}>E-commerce</span> <br /> Solutions
           </h1>
 
           <p

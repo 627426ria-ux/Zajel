@@ -44,28 +44,23 @@ interface SecureBoxProps {
   Icon: LucideIcon; 
   title: string | React.ReactNode;
   content: string;
-  buttonText: string;
   delay?: number;
 }
 
-const SecureBox: React.FC<SecureBoxProps> = ({ Icon, title, content, buttonText, delay = 0 }) => {
+const SecureBox: React.FC<SecureBoxProps> = ({ Icon, title, content, delay = 0 }) => {
   return (
     <Reveal delay={delay}>
-      <div className="group bg-[#36B936] rounded-[1.5rem] md:rounded-[2rem] p-6 md:p-10 flex flex-col h-full min-h-[260px] md:min-h-[360px] shadow-sm hover:shadow-2xl transition-all duration-500 ease-out">
+      {/* Adjusted min-height to fix the box sizing since buttons are removed */}
+      <div className="group bg-[#36B936] rounded-[1.5rem] md:rounded-[2rem] p-6 md:p-10 flex flex-col h-full min-h-[220px] md:min-h-[280px] shadow-sm hover:shadow-2xl transition-all duration-500 ease-out text-left">
         <div className="w-10 h-10 md:w-14 md:h-14 bg-white rounded-full flex items-center justify-center shrink-0 mb-4 md:mb-6 shadow-sm text-[#36B936]">
           <Icon className="w-5 h-5 md:w-7 md:h-7" strokeWidth={1.5} />
         </div>
         <h3 className="text-white text-[1.15rem] md:text-[1.75rem] font-light leading-tight tracking-tight mb-3 md:mb-5">
           {title}
         </h3>
-        <p className="text-white/90 text-[12px] md:text-[14px] font-light leading-relaxed mb-6 md:mb-8 flex-1">
+        <p className="text-white/90 text-[12px] md:text-[14px] font-light leading-relaxed flex-1">
           {content}
         </p>
-        <div className="mt-auto self-start">
-          <button className="bg-[#0A4D26] hover:bg-black transition-all duration-300 text-[#36B936] rounded-full flex items-center gap-2 px-5 py-2 md:px-6 md:py-2.5 shadow-md active:scale-95">
-            <span className="text-[10px] md:text-[12px] font-bold tracking-wide uppercase">{buttonText}</span>
-          </button>
-        </div>
       </div>
     </Reveal>
   );
@@ -95,11 +90,13 @@ const SecureDocsHero: React.FC = () => {
           </Reveal>
           
           <div className="hidden lg:flex flex-row gap-3 w-full sm:w-auto">
-            <button className="bg-[#36B936] hover:bg-[#2da12d] transition-all duration-300 text-white rounded-full px-8 py-3.5 text-[13px] font-medium shadow-lg active:scale-95">
-              Request Document Pickup
+            <button className="bg-[#36B936] hover:bg-[#2da12d] transition-all duration-300 text-white rounded-full px-8 py-3.5 text-[13px] font-medium tracking-wide shadow-lg active:scale-95 flex items-center gap-2">
+               <span className="font-extralight text-base leading-none">+</span>
+              <span>Request Document Pickup</span>
             </button>
-            <button className="bg-white border border-gray-200 hover:border-[#36B936] transition-all duration-300 text-[#0A4D26] rounded-full px-8 py-3.5 text-[13px] font-medium active:scale-95">
-              Contact Legal Desk
+            <button className="bg-white border border-gray-200 hover:border-[#36B936] transition-all duration-300 text-[#0A4D26] rounded-full px-8 py-3.5 text-[13px] font-medium tracking-wide active:scale-95 flex items-center gap-2">
+               <span className="font-extralight text-base leading-none">+</span>
+              <span>Contact Legal Desk</span>
             </button>
           </div>
         </div>
@@ -115,13 +112,15 @@ const SecureDocsHero: React.FC = () => {
 
         <div className="flex lg:hidden flex-col gap-3 w-full order-3">
           <Reveal delay={600}>
-            <button className="bg-[#36B936] hover:bg-[#2da12d] transition-all duration-300 text-white rounded-full w-full py-4 text-[14px] font-medium shadow-lg active:scale-95">
-              Request Document Pickup
+            <button className="bg-[#36B936] hover:bg-[#2da12d] transition-all duration-300 text-white rounded-full w-full py-4 text-[14px] font-medium tracking-wide shadow-lg active:scale-95 flex items-center justify-center gap-2">
+              <span className="font-extralight text-lg leading-none">+</span>
+              <span>Request Document Pickup</span>
             </button>
           </Reveal>
           <Reveal delay={700}>
-            <button className="bg-white border border-gray-200 hover:border-[#36B936] transition-all duration-300 text-[#0A4D26] rounded-full w-full py-4 text-[14px] font-medium active:scale-95">
-              Contact Legal Desk
+            <button className="bg-white border border-gray-200 hover:border-[#36B936] transition-all duration-300 text-[#0A4D26] rounded-full w-full py-4 text-[14px] font-medium tracking-wide active:scale-95 flex items-center justify-center gap-2">
+               <span className="font-extralight text-lg leading-none">+</span>
+              <span>Contact Legal Desk</span>
             </button>
           </Reveal>
         </div>
@@ -141,16 +140,16 @@ const ComplianceDetails: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-24 items-start">
           <div className="lg:col-span-5 flex flex-col">
             <Reveal>
-              <h2 className="text-[#0A4D26] text-[2rem] md:text-[3.5rem] font-light leading-[1.1] mb-5">
+              <h2 className="text-[#0A4D26] text-[2rem] md:text-[3.5rem] font-light leading-[1.1] mb-5 text-left">
                 Government & <br className="hidden md:block" /> <span className="text-[#36B936]">Court Integration.</span>
               </h2>
-              <p className="text-gray-500 font-light text-[15px] md:text-[18px] leading-relaxed mb-8">
+              <p className="text-gray-500 font-light text-[15px] md:text-[18px] leading-relaxed mb-8 text-left">
                 As a trusted partner for official entities, ZAJEL provides the specific logistics needed for time-sensitive judicial and attestation workflows.
               </p>
             </Reveal>
           </div>
 
-          <div className="lg:col-span-7 flex flex-col gap-8 md:gap-12 mt-8 lg:mt-0">
+          <div className="lg:col-span-7 flex flex-col gap-8 md:gap-12 mt-8 lg:mt-0 text-left">
             {[
               { title: "Judicial Filings", desc: "Direct delivery to UAE Courts with verified proof of submission and timestamped receipts." },
               { title: "MOFA Attestations", desc: "End-to-end handling of document legalization and Ministry of Foreign Affairs attestation rounds." },
@@ -182,7 +181,7 @@ const LegalProtocol: React.FC = () => {
     <section className="w-full py-16 md:py-32 px-5 md:px-12 bg-white border-t border-gray-50" style={{ fontFamily: '"Manrope", sans-serif' }}>
       <div className="max-w-[1200px] mx-auto">
         <Reveal>
-          <div className="mb-10 md:mb-16">
+          <div className="mb-10 md:mb-16 text-left">
             <h2 className="text-[#0A4D26] text-[2rem] md:text-[3.2rem] font-light leading-[1.1] mb-4">
               Official Channels
             </h2>
@@ -197,19 +196,16 @@ const LegalProtocol: React.FC = () => {
             delay={100} Icon={Gavel}
             title={<>Court <br className="hidden sm:block" /> Submissions</>}
             content="Direct-to-clerk filing services for legal firms and individual litigants across the emirates."
-            buttonText="File Document"
           />
           <SecureBox 
             delay={200} Icon={Landmark}
             title={<>Ministry <br className="hidden sm:block" /> Rounds</>}
             content="Standardized round-trips for MOFA, Chamber of Commerce, and Embassy attestations."
-            buttonText="Start Attestation"
           />
           <SecureBox 
             delay={300} Icon={FileText}
             title={<>Customs <br className="hidden sm:block" /> Logistics</>}
             content="Accelerated physical delivery of original manifests and shipping documents to Port Authorities."
-            buttonText="Clearance Desk"
           />
         </div>
       </div>

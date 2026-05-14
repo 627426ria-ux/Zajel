@@ -81,13 +81,31 @@ const EcommerceDetails: React.FC = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <button className="w-full sm:w-auto justify-center bg-transparent lg:bg-[#064423] border border-[#064423] lg:border-none text-[#064423] lg:text-[#36B936] hover:bg-[#064423]/5 lg:hover:bg-[#053a1e] px-6 sm:px-8 py-3.5 lg:py-4 rounded-full text-[14px] sm:text-[15px] flex items-center gap-2 lg:shadow-lg lg:hover:scale-105 lg:active:scale-95 transition-all duration-300">
-                <span className="text-xl font-extralight leading-none">+</span>
+              {/* PRIMARY BUTTON (Matched) */}
+              <button
+                className="w-full sm:w-auto justify-center bg-[#05361A] hover:bg-[#03200F] transition-all duration-300 text-[#36B936] rounded-full flex items-center shadow-sm hover:shadow-md lg:hover:scale-105 lg:active:scale-95"
+                style={{
+                  gap: 'clamp(5px, 0.8vw, 8px)',
+                  paddingInline: 'clamp(1.1rem, 2vw, 1.75rem)',
+                  paddingBlock: 'clamp(0.6rem, 0.9vw, 0.875rem)',
+                  fontSize: 'clamp(0.75rem, 0.68rem + 0.36vw, 0.9375rem)',
+                }}
+              >
+                <span className="font-extralight text-base leading-none">+</span>
                 <span className="font-medium tracking-wide">Get a Quote</span>
               </button>
 
-              <button className="w-full sm:w-auto justify-center bg-transparent lg:bg-white border border-gray-300 lg:border-none text-[#064423] hover:bg-gray-100 lg:hover:bg-gray-50 px-6 sm:px-8 py-3.5 lg:py-4 rounded-full text-[14px] sm:text-[15px] flex items-center gap-2 lg:shadow-lg lg:hover:scale-105 lg:active:scale-95 transition-all duration-300">
-                <span className="text-xl font-extralight leading-none">+</span>
+              {/* SECONDARY BUTTON (Matched structural clamping) */}
+              <button
+                className="w-full sm:w-auto justify-center bg-transparent lg:bg-white border border-gray-300 lg:border-none text-[#05361A] hover:bg-gray-100 lg:hover:bg-gray-50 transition-all duration-300 rounded-full flex items-center shadow-sm lg:shadow-lg hover:shadow-md lg:hover:scale-105 lg:active:scale-95"
+                style={{
+                  gap: 'clamp(5px, 0.8vw, 8px)',
+                  paddingInline: 'clamp(1.1rem, 2vw, 1.75rem)',
+                  paddingBlock: 'clamp(0.6rem, 0.9vw, 0.875rem)',
+                  fontSize: 'clamp(0.75rem, 0.68rem + 0.36vw, 0.9375rem)',
+                }}
+              >
+                <span className="font-extralight text-base leading-none">+</span>
                 <span className="font-medium tracking-wide">Contact Sales</span>
               </button>
             </div>

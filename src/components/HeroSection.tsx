@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Search, ChevronRight, ChevronLeft } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -6,12 +6,12 @@ const HERO_SLIDES = [
   {
     title: 'Global\nCourier',
     desc: 'Seamless international shipping and logistics.\nConnecting you to the world.',
-    bgDesktop: '/ChatGPT Image May 12, 2026 at 02_03_10 AM.png',
-    bgMobile:  '/ChatGPT Image May 12, 2026 at 02_04_41 AM.png',
+    bgDesktop: '/ChatGPT Image May 14, 2026, 01_14_25 PM.png',
+    bgMobile:  '/ChatGPT Image May 14, 2026, 01_13_31 PM.png',
   },
   {
     title: 'Intelligent\nmovement',
-    desc: 'Reliable Courier & Logistics Solutions.\nBuilt for Speed',
+    desc: 'Moving what matters \n with precision, trust, and control.',
     bgDesktop: '/ChatGPT Image May 12, 2026, 02_58_21 AM.png',
     bgMobile:  '/ChatGPT Image May 12, 2026, 02_58_25 AM.png',
   },
@@ -22,10 +22,16 @@ const HERO_SLIDES = [
     bgMobile:  '/ChatGPT Image May 12, 2026, 02_26_18 AM.png',
   },
   {
-    title: 'Express\nDelivery',
-    desc: 'Same-day and next-day delivery options.\nSpeed and precision, guaranteed.',
-    bgDesktop: '/ChatGPT Image Apr 24, 2026 at 01_16_23 PM.png',
-    bgMobile:  '/ChatGPT Image May 12, 2026 at 02_10_47 AM.png',
+    title: 'Everyday \n Reliability',
+    desc: 'Fast, secure, and reliable delivery solutions built for everyday UAE life.',
+    bgDesktop: '/ChatGPT Image May 14, 2026, 01_24_32 AM.png',
+    bgMobile:  '/ChatGPT Image May 14, 2026, 01_30_01 AM.png',
+  },
+  {
+    title: 'Freight \n Solutions',
+    desc: 'Reliable freight movement designed for modern businesses across air, land, and global trade networks.',
+    bgDesktop: '/ChatGPT Image May 14, 2026, 02_22_11 AM.png',
+    bgMobile:  '/ChatGPT Image May 14, 2026, 02_23_35 AM.png',
   },
 ];
 
@@ -69,73 +75,24 @@ const QUICK_ACTIONS = [
 
 const DOT_COUNT = QUICK_ACTIONS.length;
 
+// Ken Burns zoom directions — cycles per slide so each gets a unique feel
+
+
 // ─── Stats Bar ────────────────────────────────────────────────────────────────
 const StatsBar: React.FC = () => (
-  <div
-    style={{
-      display: 'flex',
-      flexDirection: 'row',
-      flexWrap: 'nowrap',
-      alignItems: 'flex-end',
-      width: '100%',
-      gap: 0,
-    }}
-  >
+  <div style={{ display:'flex', flexDirection:'row', flexWrap:'nowrap', alignItems:'flex-end', width:'100%', gap:0 }}>
     {STATISTICS.map((stat, i) => (
       <React.Fragment key={i}>
-        <div
-          style={{
-            flex: '1 1 0',
-            minWidth: 0,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            textAlign: 'center',
-            padding: '0 4px',
-          }}
-        >
-          <span
-            style={{
-              display: 'block',
-              color: '#ffffff',
-              fontWeight: 300,
-              lineHeight: 1,
-              letterSpacing: '-0.02em',
-              fontSize: 'clamp(1rem, 3.5vw, 2.25rem)',
-              whiteSpace: 'nowrap',
-            }}
-          >
+        <div style={{ flex:'1 1 0', minWidth:0, display:'flex', flexDirection:'column', alignItems:'center', textAlign:'center', padding:'0 4px' }}>
+          <span style={{ display:'block', color:'#ffffff', fontWeight:300, lineHeight:1, letterSpacing:'-0.02em', fontSize:'clamp(1rem, 3.5vw, 2.25rem)', whiteSpace:'nowrap' }}>
             {stat.value}
           </span>
-          <span
-            style={{
-              display: 'block',
-              color: 'rgba(255,255,255,0.6)',
-              fontWeight: 700,
-              textTransform: 'uppercase',
-              letterSpacing: '0.06em',
-              lineHeight: 1.3,
-              marginTop: '5px',
-              fontSize: 'clamp(6px, 1.2vw, 10px)',
-              whiteSpace: 'nowrap',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-            }}
-          >
+          <span style={{ display:'block', color:'rgba(255,255,255,0.6)', fontWeight:700, textTransform:'uppercase', letterSpacing:'0.06em', lineHeight:1.3, marginTop:'5px', fontSize:'clamp(6px, 1.2vw, 10px)', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>
             {stat.label}
           </span>
         </div>
-
         {i < STATISTICS.length - 1 && (
-          <div
-            style={{
-              width: 1,
-              alignSelf: 'stretch',
-              background: 'rgba(255,255,255,0.18)',
-              flexShrink: 0,
-              margin: '2px 0',
-            }}
-          />
+          <div style={{ width:1, alignSelf:'stretch', background:'rgba(255,255,255,0.18)', flexShrink:0, margin:'2px 0' }} />
         )}
       </React.Fragment>
     ))}
@@ -144,11 +101,16 @@ const StatsBar: React.FC = () => (
 
 // ─── Component ────────────────────────────────────────────────────────────────
 const HeroSection: React.FC = () => {
-  const navigate = useNavigate(); // ADDED: React Router DOM navigation
+  const navigate = useNavigate();
   const [activeIdx, setActiveIdx]     = useState(0);
   const [heroIdx, setHeroIdx]         = useState(0);
+  const [prevHeroIdx, setPrevHeroIdx] = useState<number | null>(null);
   const [animDir, setAnimDir]         = useState<'left' | 'right'>('right');
   const [isAnimating, setIsAnimating] = useState(false);
+  const [slidePhase, setSlidePhase]   = useState<'idle' | 'exit' | 'enter'>('idle');
+  const [textKey, setTextKey]         = useState(0);
+  const heroIdxRef = useRef(heroIdx);
+useEffect(() => { heroIdxRef.current = heroIdx; }, [heroIdx]);
 
   const goTo = useCallback((idx: number, dir: 'left' | 'right') => {
     if (isAnimating) return;
@@ -165,12 +127,28 @@ const HeroSection: React.FC = () => {
     return () => clearInterval(t);
   }, [activeIdx, goTo]);
 
+  // Hero slide transition with cinematic phases
   useEffect(() => {
-    const t = setInterval(() => setHeroIdx(p => (p + 1) % HERO_SLIDES.length), 5000);
+    const t = setInterval(() => {
+      const current = heroIdxRef.current;
+      const next = (current + 1) % HERO_SLIDES.length;
+  
+      setPrevHeroIdx(current);
+      setSlidePhase('exit');
+  
+      setTimeout(() => {
+        setHeroIdx(next);
+        setSlidePhase('enter');
+        setTextKey(k => k + 1);
+        setTimeout(() => {
+          setPrevHeroIdx(null);
+          setSlidePhase('idle');
+        }, 1400);
+      }, 700);
+    }, 5000);
     return () => clearInterval(t);
   }, []);
 
-  // ADDED: Submission handler to intercept the Track Search button securely without 404s
   const handleTrackSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const input = e.currentTarget.querySelector('input');
@@ -189,6 +167,7 @@ const HeroSection: React.FC = () => {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap');
 
+        /* ── Entry animations ── */
         @keyframes fadeUp {
           from { opacity:0; transform:translateY(14px); }
           to   { opacity:1; transform:translateY(0); }
@@ -202,8 +181,102 @@ const HeroSection: React.FC = () => {
         .hf4 { animation: fadeUp .7s .32s ease forwards; opacity:0; }
         .hf5 { animation: fadeUp .7s .42s ease forwards; opacity:0; }
 
-        .qa-sr { animation: qaSlideRight .26s cubic-bezier(.22,1,.36,1) forwards; }
         .qa-sl { animation: qaSlideLeft  .26s cubic-bezier(.22,1,.36,1) forwards; }
+        .qa-sr { animation: qaSlideRight .26s cubic-bezier(.22,1,.36,1) forwards; }
+
+        /* ── Ken Burns zoom variants ── */
+       @keyframes kbZoomOut {
+  from { transform: scale(1.1); }
+  to   { transform: scale(1.0); }
+}
+
+.kb-0, .kb-1, .kb-2, .kb-3, .kb-4 {
+  animation: kbZoomOut 5.7s ease-out both;
+}
+
+        /* ── Slide transition overlays ── */
+        @keyframes slideReveal {
+          from { clip-path: inset(0 100% 0 0); opacity: 0; }
+          to   { clip-path: inset(0 0% 0 0);   opacity: 1; }
+        }
+        @keyframes slideExit {
+          from { opacity: 1; transform: scale(1); }
+          to   { opacity: 0; transform: scale(1.04); }
+        }
+        @keyframes crossFadeIn {
+          0%   { opacity: 0; }
+          100% { opacity: 1; }
+        }
+        @keyframes crossFadeOut {
+          0%   { opacity: 1; }
+          100% { opacity: 0; }
+        }
+
+        /* ── Cinematic text transitions ── */
+        @keyframes textReveal {
+          0%   { opacity: 0; transform: translateY(22px) skewY(1.5deg); filter: blur(4px); }
+          60%  { filter: blur(0px); }
+          100% { opacity: 1; transform: translateY(0px) skewY(0deg); filter: blur(0px); }
+        }
+        @keyframes subtitleReveal {
+          0%   { opacity: 0; transform: translateY(14px); filter: blur(2px); }
+          100% { opacity: 1; transform: translateY(0); filter: blur(0px); }
+        }
+
+        /* ── Shimmer wipe on transition ── */
+        @keyframes shimmerWipe {
+          0%   { transform: translateX(-100%); opacity: 0.6; }
+          100% { transform: translateX(200%);  opacity: 0; }
+        }
+
+        /* ── Progress bar for slide timing ── */
+        @keyframes progressBar {
+          from { width: 0%; }
+          to   { width: 100%; }
+        }
+
+        .slide-text-title {
+          animation: textReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          opacity: 0;
+        }
+        .slide-text-desc {
+          animation: subtitleReveal 0.85s 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          opacity: 0;
+        }
+
+        .hero-bg-active {
+          animation-timing-function: linear;
+          animation-fill-mode: both;
+        }
+        .hero-bg-entering {
+          animation: crossFadeIn 0.85s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        .hero-bg-exiting {
+          animation: crossFadeOut 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        
+
+        /* ── Shimmer overlay on transition ── */
+        .slide-shimmer {
+          position: absolute; inset: 0; z-index: 5; pointer-events: none;
+          background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.08) 50%, transparent 60%);
+          animation: shimmerWipe 1.1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        /* ── Progress indicator ── */
+        .slide-progress {
+          height: 2px;
+          background: rgba(255,255,255,0.35);
+          border-radius: 99px;
+          overflow: hidden;
+        }
+        .slide-progress-bar {
+          height: 100%;
+          background: rgba(255,255,255,0.9);
+          border-radius: 99px;
+          animation: progressBar 5s linear forwards;
+        }
 
         .qa-dot {
           height: 4px; border-radius: 99px; border: none; padding: 0; cursor: pointer;
@@ -255,37 +328,73 @@ const HeroSection: React.FC = () => {
         className="relative w-full overflow-hidden bg-[#e6f0e9]"
         style={{ fontFamily: '"Manrope", sans-serif', minHeight: '100svh' }}
       >
-        {/* ── Animated background slides ── */}
-        {HERO_SLIDES.map((slide, idx) => (
-          <div
-            key={idx}
-            className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${idx === heroIdx ? 'opacity-100 z-0' : 'opacity-0 -z-10'}`}
-          >
-            <div className="block lg:hidden absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url('${slide.bgMobile}')` }} />
-            <div className="hidden lg:block absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url('${slide.bgDesktop}')` }} />
-          </div>
-        ))}
+        {/* ── Animated background slides with Ken Burns ── */}
+        {HERO_SLIDES.map((slide, idx) => {
+          const kbClass   = `kb-${idx % 5}`;
+          const isActive  = idx === heroIdx;
+          
+          const isExiting = idx === prevHeroIdx && (slidePhase === 'exit' || slidePhase === 'enter');
+          
+          let fadeClass = '';
+          if (isActive  && slidePhase === 'enter') fadeClass = 'hero-bg-entering';
+          if (isExiting && slidePhase === 'exit')  fadeClass = 'hero-bg-exiting';
+          
+          const opacity =
+            isActive  && slidePhase === 'idle'  ? 1         :
+            isActive  && slidePhase === 'exit'  ? 1         :
+            isActive  && slidePhase === 'enter' ? undefined :
+            isExiting && slidePhase === 'exit'  ? undefined :
+            isExiting && slidePhase === 'enter' ? 0         :
+            0;
+          
+          return (
+            <div
+              key={idx}
+              className={`absolute inset-0 w-full h-full overflow-hidden ${fadeClass}`}
+              style={{
+                zIndex: isActive ? 2 : isExiting ? 1 : -1,
+                opacity,
+              }}
+            >
+              {/* Mobile bg */}
+              <div
+  key={`mob-bg-${idx}-${textKey}`}
+  className={`block lg:hidden absolute inset-0 bg-cover bg-center bg-no-repeat ${isActive ? kbClass : ''}`}
+  style={{ backgroundImage: `url('${slide.bgMobile}')`, transformOrigin: 'center center' }}
+/>
+<div
+  key={`dt-bg-${idx}-${textKey}`}
+  className={`hidden lg:block absolute inset-0 bg-cover bg-center bg-no-repeat ${isActive ? kbClass : ''}`}
+  style={{ backgroundImage: `url('${slide.bgDesktop}')`, transformOrigin: 'center center' }}
+/>
+            </div>
+          );
+        })}
+
+        {/* Shimmer wipe on transition */}
+        {slidePhase === 'enter' && (
+          <div key={`shimmer-${textKey}`} className="slide-shimmer" style={{ zIndex: 6 }} />
+        )}
 
         {/* Mobile gradient overlay */}
         <div
-          className="mobile-only absolute inset-0 z-[1] pointer-events-none"
-          style={{ background: 'linear-gradient(to bottom, rgba(255,255,255,.7) 0%, transparent 38%, rgba(0,0,0,.18) 58%, rgba(0,0,0,.68) 100%)' }}
+          className="mobile-only absolute inset-0 pointer-events-none"
+          style={{ zIndex: 7, background: 'linear-gradient(to bottom, rgba(255,255,255,.7) 0%, transparent 38%, rgba(0,0,0,.18) 58%, rgba(0,0,0,.68) 100%)' }}
         />
 
         {/* Desktop gradient overlay */}
         <div
-          className="desktop-only absolute inset-0 z-[1] pointer-events-none"
-          style={{ background: 'linear-gradient(110deg, rgba(255,255,255,.97) 0%, rgba(255,255,255,.88) 22%, rgba(255,255,255,0) 50%)' }}
+          className="desktop-only absolute inset-0 pointer-events-none"
+          style={{ zIndex: 7, background: 'linear-gradient(110deg, rgba(255,255,255,.97) 0%, rgba(255,255,255,.88) 22%, rgba(255,255,255,0) 50%)' }}
         />
 
         {/* ══════════════════════════════════════════════
             MOBILE  (< 1024px)
         ══════════════════════════════════════════════ */}
-        <div className="mobile-only flex-col relative z-10 min-h-[100svh]">
+        <div className="mobile-only flex-col relative min-h-[100svh]" style={{ zIndex: 10 }}>
 
           {/* Track bar */}
           <div className="px-5 pt-24">
-            {/* UPDATED: Added handleTrackSubmit */}
             <form
               onSubmit={handleTrackSubmit}
               className="hf1 bg-white/90 backdrop-blur-sm rounded-full p-1 flex items-center w-full shadow-sm border border-white/60 mb-7"
@@ -306,19 +415,28 @@ const HeroSection: React.FC = () => {
           {/* Bottom content */}
           <div className="px-5 pb-8 flex flex-col gap-5">
 
-            <div key={`mob-${heroIdx}`} className="min-h-[110px]">
+            <div key={`mob-${textKey}`} className="min-h-[110px]">
               <h1
-                className="hf2 font-light text-white leading-[1.08] tracking-tight mb-3 whitespace-pre-line"
+                className="slide-text-title font-light text-white leading-[1.08] tracking-tight mb-3 whitespace-pre-line"
                 style={{ fontSize: 'clamp(2.6rem, 11vw, 3.5rem)' }}
               >
                 {HERO_SLIDES[heroIdx].title}
               </h1>
               <p
-                className="hf3 text-white/90 font-normal leading-snug whitespace-pre-line"
+                className="slide-text-desc text-white/90 font-normal leading-snug whitespace-pre-line"
                 style={{ fontSize: 'clamp(14px, 3.8vw, 17px)' }}
               >
                 {HERO_SLIDES[heroIdx].desc}
               </p>
+            </div>
+
+            {/* Slide progress dots */}
+            <div className="flex gap-1.5">
+              {HERO_SLIDES.map((_, i) => (
+                <div key={i} className="slide-progress flex-1">
+                  {i === heroIdx && <div key={`p-${textKey}`} className="slide-progress-bar" />}
+                </div>
+              ))}
             </div>
 
             {/* Quick action icon chips */}
@@ -327,7 +445,6 @@ const HeroSection: React.FC = () => {
                 const { Icon: QIcon } = qa;
                 return (
                   <div key={i} className="flex flex-col items-center gap-2" style={{ flex: 1 }}>
-                    {/* UPDATED: Replaced <a> with <Link> to avoid 404s */}
                     <Link
                       to={qa.path}
                       className="flex items-center justify-center shadow-lg active:scale-95 transition-transform"
@@ -359,11 +476,10 @@ const HeroSection: React.FC = () => {
         {/* ══════════════════════════════════════════════
             DESKTOP  (≥ 1024px)
         ══════════════════════════════════════════════ */}
-        <main className="desktop-only relative z-10 h-screen flex flex-col justify-between px-6 md:px-10 lg:px-14 pt-36 pb-10">
+        <main className="desktop-only relative h-screen flex flex-col justify-between px-6 md:px-10 lg:px-14 pt-36 pb-10" style={{ zIndex: 10 }}>
 
           {/* Top: track bar + animated headline */}
           <div>
-            {/* UPDATED: Added handleTrackSubmit */}
             <form
               onSubmit={handleTrackSubmit}
               className="hf1 bg-white rounded-full p-1.5 flex items-center w-full max-w-[400px] shadow-sm border border-gray-100 mb-10 focus-within:shadow-md transition-shadow"
@@ -380,15 +496,15 @@ const HeroSection: React.FC = () => {
               </button>
             </form>
 
-            <div key={`dt-${heroIdx}`} className="min-h-[200px]">
+            <div key={`dt-${textKey}`} className="min-h-[200px]">
               <h1
-                className="hf2 font-light text-[#0A4D26] leading-[1.05] tracking-tight mb-5 whitespace-pre-line"
+                className="slide-text-title font-light text-[#0A4D26] leading-[1.05] tracking-tight mb-5 whitespace-pre-line"
                 style={{ fontSize: 'clamp(3.5rem, 6.5vw, 6.5rem)' }}
               >
                 {HERO_SLIDES[heroIdx].title}
               </h1>
               <p
-                className="hf3 text-[#0A4D26] font-normal max-w-sm leading-snug whitespace-pre-line"
+                className="slide-text-desc text-[#0A4D26] font-normal max-w-sm leading-snug whitespace-pre-line"
                 style={{ fontSize: 'clamp(15px, 1.3vw, 18px)' }}
               >
                 {HERO_SLIDES[heroIdx].desc}
@@ -401,7 +517,6 @@ const HeroSection: React.FC = () => {
 
             {/* Quick-action carousel */}
             <div className="hf4 flex flex-col gap-3.5 shrink-0">
-              {/* UPDATED: Replaced <a> with <Link> to avoid 404s */}
               <Link to={action.path} className={`qa-card ${isAnimating ? (animDir === 'right' ? 'qa-sr' : 'qa-sl') : ''}`}>
                 <div className="qa-icon" style={{ backgroundColor: action.iconBg }}><Icon size={26} /></div>
                 <div className="flex-1 min-w-0">
@@ -431,6 +546,14 @@ const HeroSection: React.FC = () => {
 
             {/* Stats */}
             <div className="hf5 flex-1 min-w-0 flex flex-col items-end gap-5">
+              {/* Slide progress bars */}
+              <div className="flex gap-1.5 w-full max-w-xs">
+                {HERO_SLIDES.map((_, i) => (
+                  <div key={i} className="slide-progress flex-1">
+                    {i === heroIdx && <div key={`dp-${textKey}`} className="slide-progress-bar" />}
+                  </div>
+                ))}
+              </div>
               <p
                 className="text-right text-white/80 drop-shadow-sm leading-relaxed"
                 style={{ fontSize: 'clamp(11px, 1vw, 13px)' }}

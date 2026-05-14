@@ -79,20 +79,22 @@ const AppDownloadSection: React.FC = () => {
 
         /* Text content */
         .text-content {
-          width: clamp(52%, 55%, 62%);
-          padding: clamp(18px, 4vw, 80px);
-          padding-right: clamp(12px, 2vw, 40px);
-          position: relative;
-          z-index: 10;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          height: 100%;
-        }
+  width: clamp(52%, 55%, 62%);
+  padding-left: clamp(18px, 4vw, 80px);
+  padding-right: clamp(12px, 2vw, 40px);
+  padding-top: 0;
+  padding-bottom: 0;
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
 
         .banner-heading {
           font-size: clamp(1.05rem, 3.8vw, 4rem);
-          font-weight: 400;
+          font-weight: 300;
           line-height: 1.05;
           letter-spacing: -0.02em;
           color: white;
@@ -102,8 +104,8 @@ const AppDownloadSection: React.FC = () => {
 
         .banner-subtext {
           font-size: clamp(9px, 1.3vw, 18px);
-          color: #0A4D26;
-          font-weight: 500;
+          color: rgba(255, 255, 255, 0.9);
+          font-weight: 300;
           line-height: 1.5;
           margin-bottom: clamp(10px, 2vw, 40px);
           max-width: 420px;
@@ -111,8 +113,8 @@ const AppDownloadSection: React.FC = () => {
 
         .download-label {
           font-size: clamp(10px, 1.4vw, 20px);
-          color: #0A4D26;
-          font-weight: 500;
+          color: rgba(255, 255, 255, 0.9);
+          font-weight: 300;
           margin-bottom: clamp(4px, 0.8vw, 12px);
           display: block;
         }

@@ -64,24 +64,56 @@ const ServicesSection: React.FC = () => {
           overflow: hidden;
         }
 
-        /* ── Heading ── */
+        /* ── Header Split Layout ── */
+        .services-header {
+          display: flex;
+          flex-direction: column;
+          gap: clamp(16px, 3vw, 24px);
+          margin-bottom: clamp(40px, 6vw, 80px);
+          text-align: left;
+        }
+        
+        @media (min-width: 1024px) {
+          .services-header {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-end;
+          }
+          .services-header-left {
+            max-width: 600px;
+          }
+          .services-header-right {
+            max-width: 440px;
+            padding-bottom: 0.5rem;
+          }
+        }
+
+        /* ── Header Typography (Matched to other pages) ── */
         .services-eyebrow {
-          font-size: clamp(10px, 1vw, 13px);
+          font-size: clamp(10px, 1.2vw, 12px);
           font-weight: 700;
-          letter-spacing: 0.18em;
+          letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #0A4D26;
+          color: #36B936;
           display: block;
-          margin-bottom: clamp(8px, 1vw, 14px);
+          margin-bottom: clamp(12px, 1.5vw, 16px);
         }
 
         .services-heading {
-          font-size: clamp(1.5rem, 3.2vw, 2.75rem);
-          font-weight: 500;
+          font-size: clamp(2.2rem, 4.2vw, 4.2rem);
+          font-weight: 300;
           color: #0A4D26;
-          line-height: 1.15;
-          letter-spacing: -0.02em;
-          margin-bottom: clamp(32px, 5vw, 72px);
+          line-height: 1.1;
+          letter-spacing: -0.025em;
+          margin: 0;
+        }
+
+        .services-header-desc {
+          font-size: clamp(14px, 1.2vw, 18px);
+          font-weight: 300;
+          color: #6b7280;
+          line-height: 1.6;
+          margin: 0;
         }
 
         /* ── Shared card base ── */
@@ -137,7 +169,6 @@ const ServicesSection: React.FC = () => {
           display: block;
         }
 
-        /* ── REDUCED: only covers bottom 28%, starts fading at 55% height ── */
         .mobile-card-gradient {
           position: absolute;
           bottom: 0; left: 0; right: 0;
@@ -152,7 +183,7 @@ const ServicesSection: React.FC = () => {
 
         .mobile-card-title {
           font-size: clamp(1.4rem, 4.5vw, 2.2rem);
-          font-weight: 400;
+          font-weight: 300;
           color: white;
           line-height: 1.15;
           letter-spacing: -0.02em;
@@ -161,8 +192,8 @@ const ServicesSection: React.FC = () => {
 
         .mobile-card-desc {
           font-size: clamp(12px, 1.4vw, 15px);
-          font-weight: 500;
-          color: #0A4D26;
+          font-weight: 300;
+          color: rgba(255, 255, 255, 0.9);
           line-height: 1.6;
           margin-bottom: clamp(16px, 2.5vw, 28px);
         }
@@ -257,7 +288,6 @@ const ServicesSection: React.FC = () => {
           display: block;
         }
 
-        /* ── REDUCED: solid green only for first 10%, fully transparent by 42% ── */
         .desktop-card-img-gradient {
           position: absolute;
           inset: 0;
@@ -282,7 +312,7 @@ const ServicesSection: React.FC = () => {
 
         .desktop-card-title {
           font-size: clamp(1.6rem, 3vw, 3.25rem);
-          font-weight: 400;
+          font-weight: 300;
           color: white;
           line-height: 1.1;
           letter-spacing: -0.025em;
@@ -292,29 +322,44 @@ const ServicesSection: React.FC = () => {
 
         .desktop-card-desc {
           font-size: clamp(13px, 1.2vw, 16px);
-          font-weight: 500;
-          color: #0A4D26;
+          font-weight: 300;
+          color: rgba(255, 255, 255, 0.9);
           line-height: 1.65;
           margin-bottom: clamp(20px, 2.5vw, 40px);
           max-width: 88%;
         }
 
+        /* UPDATED BUTTON STYLE */
         .learn-more-btn {
           background: #0A4D26;
           color: #36B936;
           padding: clamp(10px, 1vw, 14px) clamp(18px, 2vw, 28px);
           border-radius: 9999px;
-          font-size: clamp(12px, 1.05vw, 14px);
-          font-weight: 700;
           display: inline-flex;
           align-items: center;
-          gap: 6px;
+          gap: clamp(5px, 0.8vw, 8px);
           transition: background 0.25s ease;
           width: fit-content;
           outline: none;
+          box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
-        .learn-more-btn:hover { background: black; }
+        .learn-more-btn:hover { 
+          background: #063219; 
+          box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
         .learn-more-btn:focus { outline: 2px solid #0A4D26; outline-offset: 2px; }
+
+        .btn-plus-icon {
+          font-weight: 200;
+          font-size: clamp(16px, 1.5vw, 18px);
+          line-height: 1;
+        }
+
+        .btn-text {
+          font-size: clamp(12px, 1.05vw, 14px);
+          font-weight: 500;
+          letter-spacing: 0.025em;
+        }
 
         @keyframes contentFadeIn {
           from { opacity: 0; transform: translateY(12px); }
@@ -328,14 +373,19 @@ const ServicesSection: React.FC = () => {
       <section ref={sectionRef} className="services-section">
         <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
 
-          {/* ── Heading ── */}
-          <div
-            className={`text-center transition-all duration-1000 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
-          >
-            <span className="services-eyebrow">Our Services</span>
-            <h2 className="services-heading">
-              Delivering a smarter <br />shipping experience.
-            </h2>
+          {/* ── Updated Header (Split on Desktop) ── */}
+          <div className={`services-header transition-all duration-1000 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <div className="services-header-left">
+              <span className="services-eyebrow">Our Services</span>
+              <h2 className="services-heading">
+                Delivering a smarter <br className="hidden md:block" />shipping experience.
+              </h2>
+            </div>
+            <div className="services-header-right">
+              <p className="services-header-desc">
+                From local last-mile fulfillment to global freight, we provide the architectural logistics required to scale your business with speed, absolute security, and full compliance.
+              </p>
+            </div>
           </div>
 
           {/* ════════════════════════════════
@@ -367,7 +417,8 @@ const ServicesSection: React.FC = () => {
                 <h3 className="mobile-card-title">{active.title}</h3>
                 <p className="mobile-card-desc">{active.description}</p>
                 <Link to={active.path} className="learn-more-btn">
-                  + Learn More
+                  <span className="btn-plus-icon">+</span>
+                  <span className="btn-text">Learn More</span>
                 </Link>
               </div>
             </div>
@@ -417,7 +468,8 @@ const ServicesSection: React.FC = () => {
                   </h3>
                   <p className="desktop-card-desc">{active.description}</p>
                   <Link to={active.path} className="learn-more-btn">
-                    + Learn More
+                    <span className="btn-plus-icon">+</span>
+                    <span className="btn-text">Learn More</span>
                   </Link>
                 </div>
 

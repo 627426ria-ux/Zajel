@@ -31,16 +31,18 @@ const AdvantageSection: React.FC = () => {
 
         /* ── Heading ── */
         .adv-heading {
-          font-size: clamp(1.6rem, 3.2vw, 3.25rem);
-          font-weight: 500;
+          font-size: clamp(2.2rem, 4.2vw, 4.2rem);
+          font-weight: 300;
           color: #0A4D26;
-          line-height: 1.15;
+          line-height: 1.1;
+          letter-spacing: -0.025em;
           margin-bottom: clamp(6px, 0.8vw, 14px);
         }
         .adv-subtext {
-          font-size: clamp(12px, 1.1vw, 14px);
-          color: rgba(10,77,38,0.7);
-          line-height: 1.65;
+          font-size: clamp(14px, 1.2vw, 18px);
+          font-weight: 300;
+          color: #6b7280;
+          line-height: 1.6;
           max-width: 480px;
           margin: 0 auto;
         }
@@ -225,7 +227,7 @@ const AdvantageSection: React.FC = () => {
         /* ── Shared card typography ── */
         .card-title {
           font-size: clamp(1.1rem, 2.2vw, 2.25rem);
-          font-weight: 500;
+          font-weight: 300;
           color: white;
           line-height: 1.15;
           margin-bottom: clamp(6px, 0.8vw, 14px);
@@ -233,8 +235,8 @@ const AdvantageSection: React.FC = () => {
 
         .card-desc {
           font-size: clamp(11px, 1.05vw, 13px);
-          font-weight: 500;
-          color: #0A4D26;
+          font-weight: 300;
+          color: rgba(255, 255, 255, 0.9);
           line-height: 1.65;
         }
       `}</style>

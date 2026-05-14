@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Landmark, FileCheck,  History, type LucideIcon } from 'lucide-react';
+import { Landmark, FileCheck, History, type LucideIcon } from 'lucide-react';
 import RatesSection from '../components/RatesSection';
 import Footer from '../components/Footer';
 
@@ -44,28 +44,23 @@ interface GovBoxProps {
   Icon: LucideIcon; 
   title: string | React.ReactNode;
   content: string;
-  buttonText: string;
   delay?: number;
 }
 
-const GovBox: React.FC<GovBoxProps> = ({ Icon, title, content, buttonText, delay = 0 }) => {
+const GovBox: React.FC<GovBoxProps> = ({ Icon, title, content, delay = 0 }) => {
   return (
     <Reveal delay={delay}>
-      <div className="group bg-[#36B936] rounded-[1.5rem] md:rounded-[2rem] p-6 md:p-10 flex flex-col h-full min-h-[260px] md:min-h-[360px] shadow-sm hover:shadow-2xl transition-all duration-500 ease-out text-left">
+      {/* Adjusted min-height to fix the box sizing since buttons are removed */}
+      <div className="group bg-[#36B936] rounded-[1.5rem] md:rounded-[2rem] p-6 md:p-10 flex flex-col h-full min-h-[220px] md:min-h-[280px] shadow-sm hover:shadow-2xl transition-all duration-500 ease-out text-left">
         <div className="w-10 h-10 md:w-14 md:h-14 bg-white rounded-full flex items-center justify-center shrink-0 mb-4 md:mb-6 shadow-sm text-[#36B936]">
           <Icon className="w-5 h-5 md:w-7 md:h-7" strokeWidth={1.5} />
         </div>
         <h3 className="text-white text-[1.15rem] md:text-[1.75rem] font-light leading-tight tracking-tight mb-3 md:mb-5">
           {title}
         </h3>
-        <p className="text-white/90 text-[12px] md:text-[14px] font-light leading-relaxed mb-6 md:mb-8 flex-1">
+        <p className="text-white/90 text-[12px] md:text-[14px] font-light leading-relaxed flex-1">
           {content}
         </p>
-        <div className="mt-auto self-start">
-          <button className="bg-[#0A4D26] hover:bg-black transition-all duration-300 text-[#36B936] rounded-full flex items-center gap-2 px-5 py-2 md:px-6 md:py-2.5 shadow-md active:scale-95">
-            <span className="text-[10px] md:text-[12px] font-bold tracking-wide uppercase">{buttonText}</span>
-          </button>
-        </div>
       </div>
     </Reveal>
   );
@@ -95,11 +90,13 @@ const GovHero: React.FC = () => {
           </Reveal>
           
           <div className="hidden lg:flex flex-row gap-3 w-full sm:w-auto">
-            <button className="bg-[#36B936] hover:bg-[#2da12d] transition-all duration-300 text-white rounded-full px-8 py-3.5 text-[13px] font-medium shadow-lg active:scale-95">
-              Initiate Partnership
+            <button className="bg-[#36B936] hover:bg-[#2da12d] transition-all duration-300 text-white rounded-full px-8 py-3.5 text-[13px] font-medium tracking-wide shadow-lg active:scale-95 flex items-center gap-2">
+              <span className="font-extralight text-base leading-none">+</span>
+              <span>Initiate Partnership</span>
             </button>
-            <button className="bg-white border border-gray-200 hover:border-[#36B936] transition-all duration-300 text-[#0A4D26] rounded-full px-8 py-3.5 text-[13px] font-medium active:scale-95">
-              Compliance Manual
+            <button className="bg-white border border-gray-200 hover:border-[#36B936] transition-all duration-300 text-[#0A4D26] rounded-full px-8 py-3.5 text-[13px] font-medium tracking-wide active:scale-95 flex items-center gap-2">
+              <span className="font-extralight text-base leading-none">+</span>
+              <span>Compliance Manual</span>
             </button>
           </div>
         </div>
@@ -114,13 +111,15 @@ const GovHero: React.FC = () => {
 
         <div className="flex lg:hidden flex-col gap-3 w-full order-3">
           <Reveal delay={600}>
-            <button className="bg-[#36B936] hover:bg-[#2da12d] transition-all duration-300 text-white rounded-full w-full py-4 text-[14px] font-medium shadow-lg active:scale-95">
-              Initiate Partnership
+            <button className="bg-[#36B936] hover:bg-[#2da12d] transition-all duration-300 text-white rounded-full w-full py-4 text-[14px] font-medium tracking-wide shadow-lg active:scale-95 flex items-center justify-center gap-2">
+              <span className="font-extralight text-lg leading-none">+</span>
+              <span>Initiate Partnership</span>
             </button>
           </Reveal>
           <Reveal delay={700}>
-            <button className="bg-white border border-gray-200 hover:border-[#36B936] transition-all duration-300 text-[#0A4D26] rounded-full w-full py-4 text-[14px] font-medium active:scale-95">
-              Compliance Manual
+            <button className="bg-white border border-gray-200 hover:border-[#36B936] transition-all duration-300 text-[#0A4D26] rounded-full w-full py-4 text-[14px] font-medium tracking-wide active:scale-95 flex items-center justify-center gap-2">
+              <span className="font-extralight text-lg leading-none">+</span>
+              <span>Compliance Manual</span>
             </button>
           </Reveal>
         </div>
@@ -196,19 +195,16 @@ const InstitutionalProtocol: React.FC = () => {
             delay={100} Icon={Landmark}
             title={<>Dedicated <br className="hidden sm:block" /> Hubs</>}
             content="On-site sorting and dispatch facilities embedded within major institutional headquarters."
-            buttonText="Our Facilities"
           />
           <GovBox 
             delay={200} Icon={FileCheck}
             title={<>Verified <br className="hidden sm:block" /> Submissions</>}
             content="Standardized POD (Proof of Delivery) recognized by all major UAE Ministries."
-            buttonText="View Formats"
           />
           <GovBox 
             delay={300} Icon={History}
             title={<>Audit <br className="hidden sm:block" /> Trails</>}
             content="Comprehensive data logs providing a 100% auditable history of every document's movement."
-            buttonText="Audit Standards"
           />
         </div>
       </div>

@@ -65,12 +65,12 @@ const ChevronDown = () => (
 );
 
 // ── Shared tab styles ───────────────────────────────────────────────────────
-// wrapper: rounded-2xl  →  gives the outer track ~30% feel
-// button:  rounded-xl   →  slightly tighter inner pill, inset from wrapper
-const TAB_WRAPPER = 'flex bg-[#EFEFEF] rounded-2xl p-1 gap-1';
+// wrapper: rounded-full  →  gives the outer track fully rounded pill shape
+// button:  rounded-full  →  tight inner pill matching the wrapper shape
+const TAB_WRAPPER = 'flex bg-[#EFEFEF] rounded-full p-1 gap-1';
 const TAB_BTN_ACTIVE = 'bg-[#064423] text-[#36B936]';   // dark bg, light green text
 const TAB_BTN_INACTIVE = 'text-[#064423]/40 hover:text-[#064423]/70';
-const TAB_BTN_BASE = `flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-[13px] font-light transition-all duration-200`;
+const TAB_BTN_BASE = `flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-full text-[13px] font-light transition-all duration-200`;
 
 // ── Main Component ──────────────────────────────────────────────────────────
 
@@ -249,14 +249,14 @@ const CourierCalculator: React.FC = () => {
                     placeholder="e.g, 45"
                     className={inputCls + ' flex-1 min-w-0'}
                   />
-                  {/* Kg / G toggle — same rounding system */}
-                  <div className="flex bg-[#EFEFEF] rounded-2xl p-1 flex-shrink-0">
+                  {/* Kg / G toggle */}
+                  <div className="flex bg-[#EFEFEF] rounded-full p-1 flex-shrink-0">
                     {(['Kg', 'G'] as const).map((u) => (
                       <button
                         key={u}
                         onClick={() => setWeightUnit(u)}
-                        className={`px-3 py-1.5 rounded-xl text-[11px] font-light transition-all duration-200 ${
-                          weightUnit === u ? 'bg-[#064423] text-[#36B936] shadow-sm' : 'text-[#064423]/40'
+                        className={`px-3 py-1.5 rounded-full text-[11px] font-light transition-all duration-200 ${
+                          weightUnit === u ? 'bg-[#064423] text-[#36B936] shadow-sm' : 'text-[#064423]/40 hover:text-[#064423]/70'
                         }`}
                       >
                         {u}
@@ -279,34 +279,34 @@ const CourierCalculator: React.FC = () => {
 
             {/* Unsure about sizes */}
             {(
-  <div>
-    <p className="text-[#064423]/70 text-[12px] font-light mb-2">Unsure about the sizes?</p>
-    <div className="grid grid-cols-3 gap-2">
-    {(shipmentType === 'document' ? BOX_SIZES.slice(0, 1) : BOX_SIZES).map((box) => {
-        const isSelected = selectedBox === box.label;
-        return (
-          <button
-            key={box.label}
-            onClick={() => setSelectedBox(box.label)}
-            className={`flex flex-col items-center gap-1 px-2 py-3 rounded-2xl border text-center transition-all duration-200 ${
-              isSelected
-                ? 'border-[#36B936] bg-[#F0FAF0]'
-                : 'border-[#E8EBE8] bg-white hover:border-[#36B936]/40'
-            }`}
-          >
-            <BoxPresetIcon />
-            <p className={`text-[10px] leading-tight ${isSelected ? 'font-semibold text-[#064423]' : 'font-light text-[#064423]/50'}`}>
-              {box.dims}
-            </p>
-            <p className={`text-[11px] ${isSelected ? 'font-semibold text-[#064423]' : 'font-light text-[#064423]/60'}`}>
-              {box.label}
-            </p>
-          </button>
-        );
-      })}
-    </div>
-  </div>
-)}
+              <div>
+                <p className="text-[#064423]/70 text-[12px] font-light mb-2">Unsure about the sizes?</p>
+                <div className="grid grid-cols-3 gap-2">
+                {(shipmentType === 'document' ? BOX_SIZES.slice(0, 1) : BOX_SIZES).map((box) => {
+                    const isSelected = selectedBox === box.label;
+                    return (
+                      <button
+                        key={box.label}
+                        onClick={() => setSelectedBox(box.label)}
+                        className={`flex flex-col items-center gap-1 px-2 py-3 rounded-2xl border text-center transition-all duration-200 ${
+                          isSelected
+                            ? 'border-[#36B936] bg-[#F0FAF0]'
+                            : 'border-[#E8EBE8] bg-white hover:border-[#36B936]/40'
+                        }`}
+                      >
+                        <BoxPresetIcon />
+                        <p className={`text-[10px] leading-tight ${isSelected ? 'font-semibold text-[#064423]' : 'font-light text-[#064423]/50'}`}>
+                          {box.dims}
+                        </p>
+                        <p className={`text-[11px] ${isSelected ? 'font-semibold text-[#064423]' : 'font-light text-[#064423]/60'}`}>
+                          {box.label}
+                        </p>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
 
             {/* Dimensions */}
             <div className="grid grid-cols-3 gap-3">
@@ -328,7 +328,7 @@ const CourierCalculator: React.FC = () => {
             </div>
 
             {/* CTA */}
-            <button className="w-full bg-[#36B936] hover:bg-[#2da52d] active:scale-[0.99] text-white font-light text-[14px] py-4 rounded-2xl transition-all duration-200 mt-1">
+            <button className="w-full bg-[#36B936] hover:bg-[#2da52d] active:scale-[0.99] text-white font-light text-[14px] py-4 rounded-full transition-all duration-200 mt-1">
               Calculate Shipping Cost
             </button>
           </div>

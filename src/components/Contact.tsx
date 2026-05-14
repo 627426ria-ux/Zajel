@@ -88,19 +88,19 @@ const ContactPage: React.FC = () => {
 
                 <div className="flex flex-col gap-1.5">
                   <label className="text-[#064423] text-[13px] font-medium opacity-80">
-                    Message <span className="text-[#5DBA52]">*</span>
+                    Message <span className="text-[#36B936]">*</span>
                   </label>
                   <textarea 
                     rows={4} 
                     placeholder="Please provide details about your inquiry..." 
-                    className="w-full p-3.5 rounded-xl border border-gray-100 bg-[#FCFCFC] text-[13px] text-[#064423] outline-none focus:border-[#5DBA52]/40 focus:bg-white font-light resize-none placeholder:text-gray-300 transition-all" 
+                    className="w-full p-3.5 rounded-xl border border-gray-100 bg-[#FCFCFC] text-[13px] text-[#064423] outline-none focus:border-[#36B936]/40 focus:bg-white font-light resize-none placeholder:text-gray-300 transition-all" 
                   />
                 </div>
 
                 <div className="pt-2">
                   <button 
                     type="submit" 
-                    className="w-full bg-[#5DBA52] hover:bg-[#4ea843] text-white py-3.5 rounded-xl text-[14px] font-medium transition-all shadow-sm active:scale-95"
+                    className="w-full bg-[#36B936] hover:bg-[#2da12d] text-white py-3.5 rounded-full text-[14px] font-medium tracking-wide transition-all shadow-sm active:scale-95"
                   >
                     Submit Message
                   </button>
@@ -122,18 +122,18 @@ const ContactPage: React.FC = () => {
 const InputField = ({ label, placeholder, type = "text" }: { label: string, placeholder: string, type?: string }) => (
   <div className="flex flex-col gap-1.5 w-full">
     <label className="text-[#064423] text-[13px] font-medium opacity-80">
-      {label} <span className="text-[#5DBA52]">*</span>
+      {label} <span className="text-[#36B936]">*</span>
     </label>
     <input 
       type={type} 
       placeholder={placeholder} 
-      className="w-full p-3.5 rounded-xl border border-gray-100 bg-[#FCFCFC] text-[#064423] text-[13px] outline-none font-light placeholder:text-gray-300 focus:border-[#5DBA52]/40 focus:bg-white transition-all" 
+      className="w-full p-3.5 rounded-xl border border-gray-100 bg-[#FCFCFC] text-[#064423] text-[13px] outline-none font-light placeholder:text-gray-300 focus:border-[#36B936]/40 focus:bg-white transition-all" 
     />
   </div>
 );
 
 const IconWrapper = ({ children }: { children: React.ReactNode }) => (
-  <div className="min-w-[40px] w-[40px] h-[40px] rounded-[12px] bg-[#5DBA52] flex items-center justify-center text-white shrink-0">
+  <div className="min-w-[40px] w-[40px] h-[40px] rounded-[12px] bg-[#36B936] flex items-center justify-center text-white shrink-0">
     {children}
   </div>
 );

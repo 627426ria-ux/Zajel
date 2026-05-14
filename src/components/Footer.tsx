@@ -1,5 +1,4 @@
-import React from 'react';
-
+import { Link } from 'react-router-dom';
 // ==========================================
 // SVG COMPONENTS & GRAPHICS
 // ==========================================
@@ -33,7 +32,6 @@ const WatermarkPattern = () => (
 );
 
 // 3. Mathematical "Migrating V" Flock
-// Positioned to precisely NOT overlap with the geometric block
 const BirdFlock = () => (
   <div className="relative w-full h-full text-white">
     {/* Leader - Largest and most opaque */}
@@ -58,8 +56,6 @@ const BirdFlock = () => (
 // MAIN FOOTER COMPONENT
 // ==========================================
 
-
-
 const Footer: React.FC = () => {
   return (
     <>
@@ -76,18 +72,20 @@ const Footer: React.FC = () => {
       }
     `}</style>
     <footer 
-      className="w-full bg-gradient-to-r from-[#4EC33B] to-[#36B936] text-white font-sans"
-      style={{ fontFamily: '"Manrope", sans-serif' }}
+      className="w-full text-white font-sans"
+      style={{ 
+        fontFamily: '"Manrope", sans-serif',
+        background: 'linear-gradient(180deg, #36B936 0%,rgb(3, 87, 42) 90%,#064423 100%)'
+      }}
     >
 
       {/* =========================================
           TOP HALF: Branding & Vans Image
       ========================================= */}
-      <div className="relative w-full border-b border-white/20 overflow-hidden">
+      <div className="relative w-full overflow-hidden">
         
         <div 
           className="absolute inset-y-0 right-0 w-full lg:w-[60%] z-0 pointer-events-none select-none van-image-mask"
-          
         >
           <img 
             src="/vans-fleet.png" 
@@ -131,7 +129,7 @@ const Footer: React.FC = () => {
                 </a>
               </div>
 
-              {/* App Download — inline on mobile, hidden on desktop (desktop uses the separate div below) */}
+              {/* App Download — inline on mobile, hidden on desktop */}
               <div className="flex lg:hidden items-center gap-3 mb-5">
                 <a href="#" className="flex items-center gap-1.5 bg-black/30 hover:bg-black/40 transition-colors rounded-lg px-3 py-1.5">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.64.24.98.21l12.93-12.93-3.54-3.54L3.18 23.76zM.99 2.27C.68 2.7.5 3.27.5 3.96v16.08c0 .69.18 1.26.49 1.69l.09.09 9.01-9.01v-.21L.99 2.27zm19.87 8.32-2.54-1.47-2.84 2.84 2.84 2.84 2.56-1.48c.73-.42.73-1.31-.02-1.73zM4.16.24L17.09 13.17l-3.54 3.54L.98.43A1.4 1.4 0 0 1 4.16.24z"/></svg>
@@ -148,7 +146,7 @@ const Footer: React.FC = () => {
               </p>
             </div>
 
-            {/* App Download — desktop only, original position */}
+            {/* App Download — desktop only */}
             <div className="hidden lg:flex flex-col mt-20 lg:mt-20">
               {/* your original app store buttons go here */}
             </div>
@@ -161,8 +159,6 @@ const Footer: React.FC = () => {
           BOTTOM HALF: Links & Separated Graphics
       ========================================= */}
       <div className="relative w-full overflow-hidden">
-        
-      
 
         {/* Links Container */}
         <div className="max-w-[1440px] w-full mx-auto relative z-20 px-6 sm:px-10 lg:px-12 xl:px-16 pt-8 pb-12 lg:pt-12 lg:pb-16">
@@ -172,60 +168,60 @@ const Footer: React.FC = () => {
             
             <div className="flex flex-col gap-2.5">
               <h4 className="text-sm font-medium mb-1 tracking-tight">Quick Links</h4>
-              <a href="#" className="text-xs font-light text-white/80 hover:text-white transition-colors">Home</a>
-              <a href="#" className="text-xs font-light text-white/80 hover:text-white transition-colors">Ship</a>
-              <a href="#" className="text-xs font-light text-white/80 hover:text-white transition-colors">Track</a>
-              <a href="#" className="text-xs font-light text-white/80 hover:text-white transition-colors">Rates</a>
-              <a href="#" className="text-xs font-light text-white/80 hover:text-white transition-colors">Business</a>
-              <a href="#" className="text-xs font-light text-white/80 hover:text-white transition-colors">Solutions</a>
-              <a href="#" className="text-xs font-light text-white/80 hover:text-white transition-colors">Support</a>
-              <a href="#" className="text-xs font-light text-white/80 hover:text-white transition-colors">About</a>
-              <a href="#" className="text-xs font-light text-white/80 hover:text-white transition-colors">Career</a>
-              <a href="#" className="text-xs font-light text-white/80 hover:text-white transition-colors">Blog</a>
+              <Link to="/" className="text-xs font-light text-white/80 hover:text-white transition-colors">Home</Link>
+              <Link to="/ship" className="text-xs font-light text-white/80 hover:text-white transition-colors">Ship</Link>
+              <Link to="/track" className="text-xs font-light text-white/80 hover:text-white transition-colors">Track</Link>
+              <Link to="/rates" className="text-xs font-light text-white/80 hover:text-white transition-colors">Rates</Link>
+              <Link to="/business" className="text-xs font-light text-white/80 hover:text-white transition-colors">Business</Link>
+              <Link to="/solutions" className="text-xs font-light text-white/80 hover:text-white transition-colors">Solutions</Link>
+              <Link to="/support" className="text-xs font-light text-white/80 hover:text-white transition-colors">Support</Link>
+              <Link to="/about" className="text-xs font-light text-white/80 hover:text-white transition-colors">About</Link>
+              <Link to="/careers" className="text-xs font-light text-white/80 hover:text-white transition-colors">Career</Link>
+              <Link to="/blog" className="text-xs font-light text-white/80 hover:text-white transition-colors">Blog</Link>
             </div>
 
             <div className="flex flex-col gap-2.5">
               <h4 className="text-sm font-medium mb-1 tracking-tight">Services</h4>
-              <a href="#" className="text-xs font-light text-white/80 hover:text-white transition-colors">Same Day Delivery</a>
-              <a href="#" className="text-xs font-light text-white/80 hover:text-white transition-colors">Next Day Delivery</a>
-              <a href="#" className="text-xs font-light text-white/80 hover:text-white transition-colors">International Shipping</a>
-              <a href="#" className="text-xs font-light text-white/80 hover:text-white transition-colors">Bulk Shipping</a>
-              <a href="#" className="text-xs font-light text-white/80 hover:text-white transition-colors">E-commerce Solutions</a>
-              <a href="#" className="text-xs font-light text-white/80 hover:text-white transition-colors">White Glove Service</a>
+              <Link to="/services/same-day" className="text-xs font-light text-white/80 hover:text-white transition-colors">Same Day Delivery</Link>
+              <Link to="/services/next-day" className="text-xs font-light text-white/80 hover:text-white transition-colors">Next Day Delivery</Link>
+              <Link to="/international-courier" className="text-xs font-light text-white/80 hover:text-white transition-colors">International Shipping</Link>
+              <Link to="/freight-courier" className="text-xs font-light text-white/80 hover:text-white transition-colors">Bulk Shipping</Link>
+              <Link to="/ecommerce" className="text-xs font-light text-white/80 hover:text-white transition-colors">E-commerce Solutions</Link>
+              <Link to="/services/white-glove" className="text-xs font-light text-white/80 hover:text-white transition-colors">White Glove Service</Link>
             </div>
 
             <div className="flex flex-col gap-2.5">
               <h4 className="text-sm font-medium mb-1 tracking-tight">Our Locations</h4>
-              <a href="#" className="text-xs font-light text-white/80 hover:text-white transition-colors">Dubai</a>
-              <a href="#" className="text-xs font-light text-white/80 hover:text-white transition-colors">Abu Dhabi</a>
-              <a href="#" className="text-xs font-light text-white/80 hover:text-white transition-colors">Sharjah</a>
-              <a href="#" className="text-xs font-light text-white/80 hover:text-white transition-colors">Ajman</a>
+              <Link to="/locations/dubai" className="text-xs font-light text-white/80 hover:text-white transition-colors">Dubai</Link>
+              <Link to="/locations/abu-dhabi" className="text-xs font-light text-white/80 hover:text-white transition-colors">Abu Dhabi</Link>
+              <Link to="/locations/sharjah" className="text-xs font-light text-white/80 hover:text-white transition-colors">Sharjah</Link>
+              <Link to="/locations/ajman" className="text-xs font-light text-white/80 hover:text-white transition-colors">Ajman</Link>
             </div>
 
             <div className="flex flex-col gap-2.5">
               <h4 className="text-sm font-medium mb-1 tracking-tight">Help & Legal</h4>
-              <a href="#" className="text-xs font-light text-white/80 hover:text-white transition-colors">Help Center</a>
-              <a href="#" className="text-xs font-light text-white/80 hover:text-white transition-colors">Claims</a>
-              <a href="#" className="text-xs font-light text-white/80 hover:text-white transition-colors">Alerts</a>
-              <a href="#" className="text-xs font-light text-white/80 hover:text-white transition-colors">PDPL</a>
-              <a href="#" className="text-xs font-light text-white/80 hover:text-white transition-colors">Terms</a>
-              <a href="#" className="text-xs font-light text-white/80 hover:text-white transition-colors">Policy</a>
-              <a href="#" className="text-xs font-light text-white/80 hover:text-white transition-colors">Ally</a>
+              <Link to="/support" className="text-xs font-light text-white/80 hover:text-white transition-colors">Help Center</Link>
+              <Link to="/claims" className="text-xs font-light text-white/80 hover:text-white transition-colors">Claims</Link>
+              <Link to="/alerts" className="text-xs font-light text-white/80 hover:text-white transition-colors">Alerts</Link>
+              <Link to="/pdpl" className="text-xs font-light text-white/80 hover:text-white transition-colors">PDPL</Link>
+              <Link to="/terms" className="text-xs font-light text-white/80 hover:text-white transition-colors">Terms</Link>
+              <Link to="/policy" className="text-xs font-light text-white/80 hover:text-white transition-colors">Policy</Link>
+              <Link to="/ally" className="text-xs font-light text-white/80 hover:text-white transition-colors">Ally</Link>
             </div>
 
           </div>
         </div>
 
         <div className="hidden lg:block lg:absolute lg:bottom-0 lg:right-0 lg:w-[540px] pointer-events-none z-0">
-  <WatermarkPattern />
-  <div className="absolute bottom-4 right-4 lg:bottom-8 lg:right-8 w-[200px] lg:w-[260px] h-[140px] lg:h-[180px]">
-    <BirdFlock />
-  </div>
-</div>
+          <WatermarkPattern />
+          <div className="absolute bottom-4 right-4 lg:bottom-8 lg:right-8 w-[200px] lg:w-[260px] h-[140px] lg:h-[180px]">
+            <BirdFlock />
+          </div>
+        </div>
         
-</div>
+      </div>
 
-</footer>
+    </footer>
     </>
   );
 };
