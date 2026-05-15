@@ -28,6 +28,8 @@ import SecureDocsPage from './pages/SecureDocs';
 import SecureIDPage from './pages/SecureID';
 import GovInstitutionalPage from './pages/Govt';
 import DownloadAppPage from './pages/Download';
+import ShipmentTimeline from './pages/ShipmentTimeline';
+import ProofOfDelivery from './pages/ProofOfDelivery';
 
 function App() {
   return (
@@ -62,6 +64,8 @@ function App() {
           <Route path="/secure-id" element={<SecureIDPage/>} />
           <Route path="/secure-gov" element={<GovInstitutionalPage/>} />
           <Route path="/download" element={<DownloadAppPage/>} />
+          <Route path="/shipment-timeline" element={<ShipmentTimeline />} />
+          <Route path="/proof-of-delivery" element={<ProofOfDelivery />} />
         </Routes>
       </main>
     </Router>

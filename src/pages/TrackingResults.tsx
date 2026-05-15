@@ -1,13 +1,16 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import RatesSection from '../components/RatesSection';
 import Footer from '../components/Footer';
 
 const TrackingResults: React.FC = () => {
+  const navigate = useNavigate();
   return (
-    <section 
-      className="w-full pt-32 pb-20 md:pt-40 md:pb-24 px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center bg-white"
-      style={{ fontFamily: '"Manrope", sans-serif' }}
-    >
+    <>
+      <section 
+        className="w-full pt-32 pb-20 md:pt-40 md:pb-24 px-4 sm:px-6 lg:px-8 flex flex-col items-center bg-white"
+        style={{ fontFamily: '"Manrope", sans-serif' }}
+      >
       {/* --- HEADER --- */}
       <div className="text-center mb-10 md:mb-14 max-w-[500px] px-2">
         <h2 className="text-[#064423] text-3xl sm:text-4xl md:text-[2.75rem] font-light tracking-tight mb-3 sm:mb-4">
@@ -217,20 +220,27 @@ const TrackingResults: React.FC = () => {
 
           {/* Action Buttons */}
           <div className="flex gap-4">
-            <button className="flex-1 bg-white border border-[#E5EBE7] text-[#064423] font-light text-[13px] md:text-sm py-3.5 rounded-full hover:bg-gray-50 transition-colors duration-300 shadow-[0_2px_10px_rgba(6,68,35,0.02)] outline-none">
+            <button onClick={() => navigate(-1)} className="flex-1 bg-white border border-[#E5EBE7] text-[#064423] font-light text-[13px] md:text-sm py-3.5 rounded-full hover:bg-gray-50 transition-colors duration-300 shadow-[0_2px_10px_rgba(6,68,35,0.02)] outline-none">
               Back
             </button>
-            <button className="flex-1 bg-[#36B936] text-white font-normal text-[13px] md:text-sm py-3.5 rounded-full hover:bg-[#2EA32E] active:scale-[0.99] transition-all duration-300 shadow-[0_4px_14px_rgba(54,185,54,0.15)] outline-none">
-              Next
-            </button>
+            <button 
+  onClick={() => navigate('/shipment-timeline')}
+  className="flex-1 bg-[#36B936] text-white font-normal text-[13px] md:text-sm py-3.5 rounded-full hover:bg-[#2EA32E] active:scale-[0.99] transition-all duration-300 shadow-[0_4px_14px_rgba(54,185,54,0.15)] outline-none"
+>
+  Next
+</button>
           </div>
 
         </div>
       </div>
-      <RatesSection/>
-      <Footer/>
+     
     </section>
+    <RatesSection/>
+    <Footer/>
+    </>
+    
   );
 };
+
 
 export default TrackingResults;

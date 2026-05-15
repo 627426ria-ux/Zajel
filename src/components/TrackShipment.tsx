@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 type TabType = 'awb' | 'mobile';
 
 const TrackShipment: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>('awb');
   const [inputValue, setInputValue] = useState('');
+  const navigate = useNavigate();
+
+  const handleTrack = () => {
+    if (!inputValue.trim()) return;
+    navigate('/trackresults');
+  };
 
   return (
     <section 
@@ -77,7 +84,8 @@ const TrackShipment: React.FC = () => {
         </div>
 
         {/* Submit Button */}
-        <button 
+        <button
+        onClick={handleTrack}  
           className="w-full bg-[#36B936] hover:bg-[#2EA32E] active:scale-[0.99] text-white rounded-full py-3.5 sm:py-4 flex items-center justify-center gap-2 sm:gap-2.5 text-[13px] sm:text-[14px] font-normal transition-all duration-300 mb-4 sm:mb-5 outline-none"
         >
           {/* Search Icon */}
