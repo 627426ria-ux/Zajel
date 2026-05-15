@@ -27,6 +27,7 @@ import SecureMailPage from './pages/Mail';
 import SecureDocsPage from './pages/SecureDocs';
 import SecureIDPage from './pages/SecureID';
 import GovInstitutionalPage from './pages/Govt';
+import DownloadAppPage from './pages/Download';
 
 function App() {
   return (
@@ -60,6 +61,7 @@ function App() {
           <Route path="/secure-docs" element={<SecureDocsPage/>} />
           <Route path="/secure-id" element={<SecureIDPage/>} />
           <Route path="/secure-gov" element={<GovInstitutionalPage/>} />
+          <Route path="/download" element={<DownloadAppPage/>} />
         </Routes>
       </main>
     </Router>

@@ -21,14 +21,12 @@ const solutionsCategories = [
         name: "On Demand Express",
         desc: "Instant solutions for urgent deliveries.",
         path: "/domestic-courier",
-        // PASTE YOUR SVG HERE ↓  (replace the null)
         icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
       },
       {
         name: "International Shipping",
         desc: "Global reach with local expertise.",
         path: "/international-courier",
-        // PASTE YOUR SVG HERE ↓
         icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
       },
     ],
@@ -42,14 +40,12 @@ const solutionsCategories = [
         name: "Ecommerce",
         desc: "First, mid, and last-mile perfection.",
         path: "/ecommerce",
-        // PASTE YOUR SVG HERE ↓
         icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
       },
       {
         name: "Global Freight",
         desc: "Air, sea, and road cargo routing.",
         path: "/freight-courier",
-        // PASTE YOUR SVG HERE ↓
         icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
       },
     ],
@@ -63,28 +59,24 @@ const solutionsCategories = [
         name: "Gov & Institutional",
         desc: "Compliant document handling.",
         path: "/secure-gov",
-        // PASTE YOUR SVG HERE ↓
         icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
       },
       {
         name: "Secure ID",
         desc: "Emirates ID & passport delivery.",
         path: "/secure-id",
-        // PASTE YOUR SVG HERE ↓
         icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><line x1="7" y1="15" x2="12" y2="15"/><line x1="7" y1="11" x2="9" y2="11"/><circle cx="17" cy="10" r="2"/><path d="M14 16c0-1.6 2-3 3-3s3 1.4 3 3"/></svg>
       },
       {
         name: "Secure Docs",
         desc: "Courts, MOFA, and Customs.",
         path: "/secure-docs",
-        // PASTE YOUR SVG HERE ↓
         icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path d="M14 2v6h6"/><path d="M12 18s-3-2-3-5a3 3 0 0 1 6 0c0 3-3 5-3 5z"/></svg>
       },
       {
         name: "Secure Mail",
         desc: "Confidential corporate mail.",
         path: "/secure-mail",
-        // PASTE YOUR SVG HERE ↓
         icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
       },
     ],
@@ -152,11 +144,10 @@ const supportCategories = [
 ];
 
 // ─────────────────────────────────────────────
-// LOGO  — replace SVGs inside as needed
+// LOGO 
 // ─────────────────────────────────────────────
 const Logo = () => (
   <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-    {/* PASTE YOUR LOGO SVG(S) HERE ↓ — placeholder shown below */}
     <div className="flex items-center gap-2 flex-shrink-0">
     <svg width="36" height="16" viewBox="0 0 49 16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M0.0234375 14.513L1.16446 12.5275L7.28173 2.10255H1.45097C1.45097 2.10255 2.24516 0.257812 3.62745 0.257812H11.3884L10.3781 1.97186L4.21053 12.6733H8.23677C9.45821 12.6733 9.97595 14.513 9.97595 14.513H0.0234375Z" fill="#004E09"/>
@@ -216,11 +207,6 @@ const Chevron = ({ open }: { open: boolean }) => (
 );
 
 // ─────────────────────────────────────────────
-// CONVERSION CARD  (right panel of mega menu)
-// ─────────────────────────────────────────────
-
-
-// ─────────────────────────────────────────────
 // MEGA MENU PANEL  (full-width, below navbar)
 // ─────────────────────────────────────────────
 const MegaMenuPanel = ({ type, categories, isOpen, onClose }: { type: string; categories: any[]; isOpen: boolean; onClose: () => void }) => {
@@ -241,7 +227,7 @@ const MegaMenuPanel = ({ type, categories, isOpen, onClose }: { type: string; ca
         style={{
           position: "fixed",
           inset: 0,
-          top: 72,
+          top: 64,
           background: "rgba(0,0,0,0.15)",
           backdropFilter: "blur(4px)",
           WebkitBackdropFilter: "blur(4px)",
@@ -257,7 +243,7 @@ const MegaMenuPanel = ({ type, categories, isOpen, onClose }: { type: string; ca
         ref={panelRef}
         style={{
           position: "fixed",
-          top: 72,
+          top: 64, 
           left: 0,
           right: 0,
           zIndex: 49,
@@ -284,7 +270,7 @@ const MegaMenuPanel = ({ type, categories, isOpen, onClose }: { type: string; ca
               style={{
                 width: 290,
                 flexShrink: 0,
-                background: "#f8fbf8", // Ultra-light, premium green wash
+                background: "#f8fbf8",
                 borderRight: "1px solid rgba(0,78,9,0.04)",
                 padding: "36px 16px",
               }}
@@ -347,7 +333,6 @@ const MegaMenuPanel = ({ type, categories, isOpen, onClose }: { type: string; ca
                 {categories[activeCategory]?.label}
               </p>
 
-              {/* Wrapping grid in a key to force stagger animation re-trigger on category change */}
               <div
                 key={activeCategory}
                 style={{
@@ -366,7 +351,6 @@ const MegaMenuPanel = ({ type, categories, isOpen, onClose }: { type: string; ca
                     className="mega-item"
                     style={{ animationDelay: `${idx * 0.04}s` }}
                   >
-                    {/* Icon container */}
                     <div className="mega-icon">
                       {item.icon ?? <IconPlaceholder />}
                     </div>
@@ -398,7 +382,6 @@ const MegaMenuPanel = ({ type, categories, isOpen, onClose }: { type: string; ca
                       </p>
                     </div>
 
-                    {/* Subtle Right Arrow */}
                     <svg
                       width="16"
                       height="16"
@@ -428,7 +411,6 @@ const MegaMenuPanel = ({ type, categories, isOpen, onClose }: { type: string; ca
                 background: "#ffffff"
               }}
             >
-             
             </div>
           </div>
         </div>
@@ -445,15 +427,11 @@ const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
   const [mobileSubCat, setMobileSubCat] = useState<Record<string, number | null>>({});
 
   const toggle = (key: string) => setOpenSection((p) => (p === key ? null : key));
-
-const toggleSub = (key: string, idx: number) =>
-  setMobileSubCat((p) => ({ ...p, [key]: p[key] === idx ? null : idx }));
+  const toggleSub = (key: string, idx: number) => setMobileSubCat((p) => ({ ...p, [key]: p[key] === idx ? null : idx }));
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
+    return () => { document.body.style.overflow = ""; };
   }, [isOpen]);
 
   const menuItems = [
@@ -543,9 +521,7 @@ const toggleSub = (key: string, idx: number) =>
             <Link
               key={item.path}
               to={item.path}
-              onClick={() => {
-                onClose();
-              }}
+              onClick={() => onClose()}
               style={{
                 display: "block",
                 padding: "16px 24px",
@@ -615,9 +591,7 @@ const toggleSub = (key: string, idx: number) =>
                           <Link
                             key={iIdx}
                             to={item.path}
-                            onClick={() => {
-                              onClose();
-                            }}
+                            onClick={() => onClose()}
                             style={{
                               display: "flex",
                               alignItems: "center",
@@ -678,9 +652,7 @@ const toggleSub = (key: string, idx: number) =>
           {/* Quotation */}
           <Link
             to="/quotation"
-            onClick={() => {
-              onClose();
-            }}
+            onClick={() => onClose()}
             style={{
               display: "block",
               padding: "16px 24px",
@@ -694,7 +666,7 @@ const toggleSub = (key: string, idx: number) =>
             Quotation
           </Link>
 
-          {/* Language Mobile Menu (No circles/borders) */}
+          {/* Language Mobile Menu */}
           <div style={{ padding: "24px" }}>
             <button
               style={{
@@ -728,11 +700,11 @@ const toggleSub = (key: string, idx: number) =>
             flexShrink: 0,
           }}
         >
-          <Link to="/download" className="btn-download" style={{ width: "100%", padding: "14px", fontFamily: '"Manrope", sans-serif', fontSize: 14, textDecoration: "none", display: "flex", justifyContent: "center", alignItems: "center", boxSizing: "border-box" }}>
-            Download App
-          </Link>
-          <Link to="/login" className="btn-login" style={{ width: "100%", padding: "14px", fontFamily: '"Manrope", sans-serif', fontSize: 14, textDecoration: "none", display: "flex", justifyContent: "center", alignItems: "center", boxSizing: "border-box" }}>
+          <Link to="/login" className="btn-login" style={{ width: "100%", textAlign: "center" }}>
             Login
+          </Link>
+          <Link to="/download" className="btn-download" style={{ width: "100%", textAlign: "center", justifyContent: "center", display: "flex" }}>
+            Download App
           </Link>
         </div>
       </div>
@@ -745,7 +717,7 @@ const toggleSub = (key: string, idx: number) =>
 // ─────────────────────────────────────────────
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [activeMenu, setActiveMenu] = useState<string | null>(null); // 'solutions' | 'support' | null
+  const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
@@ -771,24 +743,91 @@ export default function Navbar() {
     <>
       <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
-      {/* High-End CSS Animations & Classes */}
       <style>{`
-        /* Glass Navbar */
-        .nav-glass {
-          background: rgba(255, 255, 255, 0.95);
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
-          box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
-          border-bottom: 1px solid rgba(0, 0, 0, 0.02);
+        /* 1. Flush Snapped State (When Scrolled or Menu Open) */
+        .nav-snapped {
+          background: rgba(255, 255, 255, 0.98);
+          backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
+          border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+          box-shadow: 0 4px 40px rgba(0, 0, 0, 0.04);
+          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Nav Link Hover Line */
+        /* 2. Premium Attached Glass (Top State) */
+        .nav-top-glass {
+          background: rgba(255, 255, 255, 0.55); 
+          backdrop-filter: blur(24px) saturate(150%);
+          -webkit-backdrop-filter: blur(24px) saturate(150%);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.6); 
+          box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02); 
+          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Inner container */
+        /* Smooth transition for the inner container (Dynamic Height) */
+        .nav-inner {
+          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+          width: 100%;
+          min-height: 76px; /* A slightly taller, premium baseline */
+          height: auto; /* Allows it to grow if content wraps */
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 12px clamp(20px, 4vw, 48px); /* Vertical padding hugs the content */
+          margin: 0 auto;
+          max-width: 1600px; 
+        }
+
+        /* Calm, Fading Navigation Links */
         .nav-link {
           position: relative;
           color: #0A4D26;
-          transition: color 0.2s ease;
+          opacity: 0.7;
+          transition: all 0.3s ease;
+          font-weight: 500;
         }
-        .nav-link:hover { color: #2BA735; }
+        .nav-link:hover, .nav-link:focus { 
+          opacity: 1; 
+          color: #0A4D26; 
+        }
+
+        /* Minimal CTAs */
+        .btn-login {
+          background: transparent;
+          border: none;
+          color: #004E09;
+          font-weight: 700;
+          cursor: pointer;
+          transition: opacity 0.3s ease;
+          padding: 8px 12px;
+          font-size: 13px;
+          font-family: "Manrope", sans-serif;
+          opacity: 0.8;
+          text-decoration: none;
+        }
+        .btn-login:hover {
+          opacity: 1;
+        }
+
+        .btn-download {
+          background: transparent;
+          border: 1px solid rgba(0, 78, 9, 0.3); /* Delicate Wireframe */
+          border-radius: 50px;
+          color: #004E09;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          padding: 8px 24px;
+          font-size: 13px;
+          font-family: "Manrope", sans-serif;
+          white-space: nowrap;
+          text-decoration: none;
+        }
+        .btn-download:hover {
+          border-color: #004E09;
+          background: rgba(0, 78, 9, 0.04);
+        }
 
         /* Staggered Grid Animation for Center Menu Items */
         @keyframes fadeSlideUp {
@@ -796,7 +835,6 @@ export default function Navbar() {
           100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* MEGA ITEM HIGH-END HOVER */
         .mega-item {
           display: flex;
           align-items: flex-start;
@@ -810,17 +848,13 @@ export default function Navbar() {
           opacity: 0; 
           animation: fadeSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
-        
-        .mega-item:hover {
-          background: #fafafa;
-        }
+        .mega-item:hover { background: #fafafa; }
 
-        /* Mega Icon Minimal Transformation */
         .mega-icon {
           width: 44px;
           height: 44px;
           border-radius: 12px;
-          background: #f4fbf4; /* Soft green */
+          background: #f4fbf4; 
           display: flex;
           align-items: center;
           justify-content: center;
@@ -831,14 +865,10 @@ export default function Navbar() {
         .mega-item:hover .mega-icon {
           background: #2BA735;
           color: #fff;
-          transform: scale(1.04); /* Very minimal scale, NO rotation */
+          transform: scale(1.04); 
         }
 
-        /* Mega Text & Arrow */
-        .mega-text {
-          position: relative;
-          flex: 1;
-        }
+        .mega-text { position: relative; flex: 1; }
         .mega-arrow {
           margin-top: 4px;
           opacity: 0;
@@ -851,7 +881,6 @@ export default function Navbar() {
           transform: translateX(2px);
         }
 
-        /* SIDEBAR BUTTONS - PREMIUM UPGRADE */
         .sidebar-btn {
           position: relative;
           display: flex;
@@ -881,9 +910,7 @@ export default function Navbar() {
           transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
           opacity: 0;
         }
-        .sidebar-btn:hover {
-          background: rgba(255, 255, 255, 0.5);
-        }
+        .sidebar-btn:hover { background: rgba(255, 255, 255, 0.5); }
         .sidebar-btn.active {
           background: #fff;
           border-color: rgba(0, 78, 9, 0.05);
@@ -907,10 +934,7 @@ export default function Navbar() {
           justify-content: space-between;
           width: 100%;
         }
-        .sidebar-btn.active .sidebar-btn-title {
-          font-weight: 700;
-          color: #0A4D26;
-        }
+        .sidebar-btn.active .sidebar-btn-title { font-weight: 700; color: #0A4D26; }
         .sidebar-btn-desc {
           font-size: 12.5px;
           color: rgba(10, 77, 38, 0.4);
@@ -918,9 +942,7 @@ export default function Navbar() {
           font-family: "Manrope", sans-serif;
           transition: color 0.3s ease;
         }
-        .sidebar-btn.active .sidebar-btn-desc {
-          color: #2BA735;
-        }
+        .sidebar-btn.active .sidebar-btn-desc { color: #2BA735; }
         .sidebar-active-arrow {
           opacity: 0;
           transform: translateX(-8px);
@@ -932,72 +954,6 @@ export default function Navbar() {
           transform: translateX(0);
         }
 
-        /* Conversion Card inside Mega Menu */
-        .conversion-card {
-          width: 260px;
-          flex-shrink: 0;
-          background: linear-gradient(145deg, #0A4D26 0%, #052613 100%);
-          border-radius: 20px;
-          padding: 32px 24px;
-          display: flex;
-          flex-direction: column;
-          position: relative;
-          overflow: hidden;
-          box-shadow: 0 16px 32px rgba(0,78,9,0.1);
-        }
-
-        @keyframes pulseGlow {
-          0% { transform: scale(1); opacity: 0.15; }
-          50% { transform: scale(1.1); opacity: 0.25; }
-          100% { transform: scale(1); opacity: 0.15; }
-        }
-        .card-glow-1 {
-          position: absolute;
-          top: -20px;
-          right: -20px;
-          width: 140px;
-          height: 140px;
-          background: #2BA735;
-          border-radius: 50%;
-          filter: blur(40px);
-          animation: pulseGlow 6s infinite alternate ease-in-out;
-        }
-        .card-glow-2 {
-          position: absolute;
-          bottom: -40px;
-          left: -40px;
-          width: 160px;
-          height: 160px;
-          background: #004E09;
-          border-radius: 50%;
-          filter: blur(50px);
-          animation: pulseGlow 8s infinite alternate-reverse ease-in-out;
-        }
-
-        .conversion-btn {
-          margin-top: auto;
-          background: #fff;
-          border: none;
-          border-radius: 50px;
-          padding: 12px 18px;
-          font-size: 13.5px;
-          font-weight: 600;
-          color: #0A4D26;
-          cursor: pointer;
-          transition: all 0.2s ease;
-          position: relative;
-          z-index: 10;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        .conversion-btn:hover {
-          background: #e6f4e6;
-          color: #0A4D26;
-          transform: translateY(-1px);
-        }
-
-        /* Language Toggle Clean Text Only */
         .lang-toggle {
           color: #0A4D26;
           transition: color 0.2s ease;
@@ -1011,121 +967,45 @@ export default function Navbar() {
           font-size: 14px;
           font-weight: 500;
           padding: 0;
-          white-space: nowrap; /* Prevent Wrap */
-          flex-shrink: 0; /* Prevent Squishing */
+          white-space: nowrap; 
+          flex-shrink: 0; 
         }
-        .lang-toggle:hover {
-          color: #2BA735;
-        }
+        .lang-toggle:hover { color: #2BA735; }
 
-        /* New CTAs */
-        .btn-download {
-          background: #2BA735;
-          border: 1px solid transparent;
-          border-radius: 50px;
-          color: #fff;
-          font-weight: 400; /* Minimal weight */
-          cursor: pointer;
-          transition: all 0.2s ease;
-          padding: 8px 20px;
-          font-size: 13px;
-          font-family: "Manrope", sans-serif;
-          white-space: nowrap; /* Prevent Wrap */
-          flex-shrink: 0; /* Prevent Squishing */
-        }
-        .btn-download:hover {
-          background: #228f2a;
-          transform: translateY(-1px);
-          box-shadow: 0 4px 12px rgba(43,167,53,0.15);
-        }
-
-        .btn-login {
-          background: #004E09;
-          border: 1px solid transparent;
-          border-radius: 50px;
-          color: #36B936; /* Light green text */
-          font-weight: 400; /* Minimal weight */
-          cursor: pointer;
-          transition: all 0.2s ease;
-          padding: 8px 24px;
-          font-size: 13px;
-          font-family: "Manrope", sans-serif;
-          white-space: nowrap; /* Prevent Wrap */
-          flex-shrink: 0; /* Prevent Squishing */
-        }
-        .btn-login:hover {
-          background: #003606;
-          color: #4ade80; /* Slightly brighter green on hover */
-          transform: translateY(-1px);
-          box-shadow: 0 4px 12px rgba(0,78,9,0.15);
+        @media (max-width: 1024px) {
+          .desktop-nav { display: none !important; }
+          .mobile-only { display: block !important; }
         }
       `}</style>
 
       {/* ── NAVBAR BAR ── */}
       <nav
-        className={scrolled || activeMenu ? "nav-glass" : ""}
+        className={scrolled || activeMenu ? "nav-snapped" : "nav-top-glass"}
         style={{
           position: "fixed",
           top: 0,
           left: 0,
           right: 0,
           zIndex: 50,
-          transition: "all 0.3s cubic-bezier(0.16,1,0.3,1)",
-          background: !scrolled && !activeMenu ? "transparent" : "",
         }}
       >
-        {/* BALANCED FLEX ARCHITECTURE (No Squishing, Perfectly Centered) */}
-        <div
-          style={{
-            width: "100%",
-            maxWidth: 1400,
-            margin: "0 auto",
-            padding: "0 clamp(20px, 4vw, 48px)",
-            height: 72,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: "20px",
-          }}
-        >
-          {/* LOGO - Will never shrink */}
+        <div className="nav-inner">
+          {/* LOGO */}
           <div style={{ flexShrink: 0, display: "flex" }}>
-            <Link
-              to="/"
-              style={{ textDecoration: "none" }}
-              onClick={() => {
-                setActiveMenu(null);
-              }}
-            >
+            <Link to="/" style={{ textDecoration: "none" }} onClick={() => setActiveMenu(null)}>
               <Logo />
             </Link>
           </div>
 
-          {/* DESKTOP CENTER LINKS - Takes available space & centers items */}
-          <div
-            className="desktop-nav"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "clamp(20px, 2.5vw, 36px)",
-              flex: 1,
-            }}
-          >
+          {/* DESKTOP CENTER LINKS */}
+          <div className="desktop-nav" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "clamp(20px, 2.5vw, 36px)", flex: 1 }}>
             {navLinks.map(({ label, path }) => (
               <Link
                 key={path}
                 to={path}
-                onClick={() => {
-                  setActiveMenu(null);
-                }}
+                onClick={() => setActiveMenu(null)}
                 className="nav-link"
-                style={{
-                  fontFamily: '"Manrope", sans-serif',
-                  fontSize: 14,
-                  fontWeight: 500,
-                  textDecoration: "none",
-                }}
+                style={{ fontFamily: '"Manrope", sans-serif', fontSize: 14, textDecoration: "none" }}
               >
                 {label}
               </Link>
@@ -1143,7 +1023,6 @@ export default function Navbar() {
                 style={{
                   fontFamily: '"Manrope", sans-serif',
                   fontSize: 14,
-                  fontWeight: 500,
                   background: "none",
                   border: "none",
                   padding: 0,
@@ -1152,6 +1031,7 @@ export default function Navbar() {
                   gap: 6,
                   cursor: "pointer",
                   color: activeMenu === key ? "#2BA735" : "",
+                  opacity: activeMenu === key ? 1 : undefined,
                 }}
               >
                 {label}
@@ -1161,43 +1041,27 @@ export default function Navbar() {
 
             <Link
               to="/quotation"
-              onClick={() => {
-                setActiveMenu(null);
-              }}
+              onClick={() => setActiveMenu(null)}
               className="nav-link"
-              style={{
-                fontFamily: '"Manrope", sans-serif',
-                fontSize: 14,
-                fontWeight: 500,
-                textDecoration: "none",
-              }}
+              style={{ fontFamily: '"Manrope", sans-serif', fontSize: 14, textDecoration: "none" }}
             >
               Quotation
             </Link>
           </div>
 
-          {/* DESKTOP RIGHT CTAs - Will never shrink */}
-          <div
-            className="desktop-nav"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-end",
-              gap: "clamp(12px, 1.5vw, 20px)",
-              flexShrink: 0,
-            }}
-          >
+          {/* DESKTOP RIGHT CTAs */}
+          <div className="desktop-nav" style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "clamp(12px, 1.5vw, 20px)", flexShrink: 0 }}>
             <button className="lang-toggle">
               <span style={{ fontSize: 18, lineHeight: 1 }}>🇦🇪</span>
               <span>AR</span>
             </button>
 
-            <Link to="/download" className="btn-download" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              Download App
+            <Link to="/login" className="btn-login" onClick={() => setActiveMenu(null)}>
+              Login
             </Link>
 
-            <Link to="/login" className="btn-login" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              Login
+            <Link to="/download" className="btn-download" onClick={() => setActiveMenu(null)}>
+              Download App
             </Link>
           </div>
 
@@ -1205,21 +1069,10 @@ export default function Navbar() {
           <div className="mobile-only" style={{ display: "none" }}>
             <button
               onClick={() => setMobileOpen(true)}
-              style={{
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                color: "#0A4D26",
-                padding: 8,
-              }}
+              style={{ background: "none", border: "none", cursor: "pointer", color: "#0A4D26", padding: 8 }}
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M3 12h18M3 6h18M3 18h18"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
+                <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
               </svg>
             </button>
           </div>
@@ -1242,14 +1095,6 @@ export default function Navbar() {
 
       {/* ── MOBILE MENU ── */}
       <MobileMenu isOpen={mobileOpen} onClose={() => setMobileOpen(false)} />
-
-      {/* ── RESPONSIVE OVERRIDES ── */}
-      <style>{`
-        @media (max-width: 1024px) {
-          .desktop-nav { display: none !important; }
-          .mobile-only { display: block !important; }
-        }
-      `}</style>
     </>
   );
 }

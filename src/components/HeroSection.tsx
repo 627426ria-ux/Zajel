@@ -35,9 +35,9 @@ const HERO_SLIDES = [
   },
   {
     title: 'ZAJEL \n NOW',
-    desc: 'Instant city wide pickups and deliveries made simple through the ZAJEL app.',
-    bgDesktop: '/ChatGPT Image May 14, 2026, 02_00_48 PM.png',
-    bgMobile:  '/ChatGPT Image May 14, 2026, 02_03_54 PM.png',
+    desc: 'Book instant pickups and deliveries across the city in minutes.',
+    bgDesktop: '/ChatGPT Image May 15, 2026, 05_28_51 AM.png',
+    bgMobile:  '/ChatGPT Image May 15, 2026, 05_30_17 AM.png',
   },
   
 ];
@@ -82,9 +82,6 @@ const QUICK_ACTIONS = [
 
 const DOT_COUNT = QUICK_ACTIONS.length;
 
-// Ken Burns zoom directions — cycles per slide so each gets a unique feel
-
-
 // ─── Stats Bar ────────────────────────────────────────────────────────────────
 const StatsBar: React.FC = () => (
   <div style={{ display:'flex', flexDirection:'row', flexWrap:'nowrap', alignItems:'flex-end', width:'100%', gap:0 }}>
@@ -117,7 +114,8 @@ const HeroSection: React.FC = () => {
   const [slidePhase, setSlidePhase]   = useState<'idle' | 'exit' | 'enter'>('idle');
   const [textKey, setTextKey]         = useState(0);
   const heroIdxRef = useRef(heroIdx);
-useEffect(() => { heroIdxRef.current = heroIdx; }, [heroIdx]);
+  
+  useEffect(() => { heroIdxRef.current = heroIdx; }, [heroIdx]);
 
   const goTo = useCallback((idx: number, dir: 'left' | 'right') => {
     if (isAnimating) return;
@@ -193,13 +191,13 @@ useEffect(() => { heroIdxRef.current = heroIdx; }, [heroIdx]);
 
         /* ── Ken Burns zoom variants ── */
        @keyframes kbZoomOut {
-  from { transform: scale(1.1); }
-  to   { transform: scale(1.0); }
-}
+          from { transform: scale(1.1); }
+          to   { transform: scale(1.0); }
+        }
 
-.kb-0, .kb-1, .kb-2, .kb-3, .kb-4 {
-  animation: kbZoomOut 5.7s ease-out both;
-}
+        .kb-0, .kb-1, .kb-2, .kb-3, .kb-4 {
+          animation: kbZoomOut 5.7s ease-out both;
+        }
 
         /* ── Slide transition overlays ── */
         @keyframes slideReveal {
@@ -261,8 +259,6 @@ useEffect(() => { heroIdxRef.current = heroIdx; }, [heroIdx]);
         .hero-bg-exiting {
           animation: crossFadeOut 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
-
-        
 
         /* ── Shimmer overlay on transition ── */
         .slide-shimmer {
@@ -365,15 +361,16 @@ useEffect(() => { heroIdxRef.current = heroIdx; }, [heroIdx]);
             >
               {/* Mobile bg */}
               <div
-  key={`mob-bg-${idx}-${textKey}`}
-  className={`block lg:hidden absolute inset-0 bg-cover bg-center bg-no-repeat ${isActive ? kbClass : ''}`}
-  style={{ backgroundImage: `url('${slide.bgMobile}')`, transformOrigin: 'center center' }}
-/>
-<div
-  key={`dt-bg-${idx}-${textKey}`}
-  className={`hidden lg:block absolute inset-0 bg-cover bg-center bg-no-repeat ${isActive ? kbClass : ''}`}
-  style={{ backgroundImage: `url('${slide.bgDesktop}')`, transformOrigin: 'center center' }}
-/>
+                key={`mob-bg-${idx}-${textKey}`}
+                className={`block lg:hidden absolute inset-0 bg-cover bg-center bg-no-repeat ${isActive ? kbClass : ''}`}
+                style={{ backgroundImage: `url('${slide.bgMobile}')`, transformOrigin: 'center center' }}
+              />
+              {/* Desktop bg */}
+              <div
+                key={`dt-bg-${idx}-${textKey}`}
+                className={`hidden lg:block absolute inset-0 bg-cover bg-center bg-no-repeat ${isActive ? kbClass : ''}`}
+                style={{ backgroundImage: `url('${slide.bgDesktop}')`, transformOrigin: 'center center' }}
+              />
             </div>
           );
         })}
@@ -483,23 +480,23 @@ useEffect(() => { heroIdxRef.current = heroIdx; }, [heroIdx]);
         {/* ══════════════════════════════════════════════
             DESKTOP  (≥ 1024px)
         ══════════════════════════════════════════════ */}
-        <main className="desktop-only relative h-screen flex flex-col justify-between px-6 md:px-10 lg:px-14 pt-36 pb-10" style={{ zIndex: 10 }}>
+        <main className="desktop-only relative h-screen flex flex-col justify-between px-6 md:px-10 lg:px-14 pt-44 pb-10" style={{ zIndex: 10 }}>
 
           {/* Top: track bar + animated headline */}
           <div>
             <form
               onSubmit={handleTrackSubmit}
-              className="hf1 bg-white rounded-full p-1.5 flex items-center w-full max-w-[400px] shadow-sm border border-gray-100 mb-10 focus-within:shadow-md transition-shadow"
+              className="hf1 bg-white/90 backdrop-blur-md rounded-full p-2 pl-5 flex items-center w-full max-w-[440px] shadow-[0_8px_32px_rgba(0,0,0,0.06)] border border-white/60 mb-14 focus-within:shadow-[0_12px_48px_rgba(0,0,0,0.1)] focus-within:bg-white transition-all duration-500"
             >
               <label htmlFor="dt-track" className="sr-only">Enter AWB Number or Mobile</label>
               <input
                 id="dt-track"
                 type="text"
                 placeholder="Enter AWB Number or Mobile"
-                className="flex-1 px-4 outline-none text-[13px] text-gray-700 bg-transparent placeholder:text-gray-400"
+                className="flex-1 px-3 outline-none text-[14px] text-[#0A4D26] font-medium bg-transparent placeholder:text-gray-400"
               />
-              <button type="submit" className="bg-[#15A744] hover:bg-[#0e8f38] transition-colors text-white px-5 py-2.5 rounded-full text-[13px] font-semibold flex items-center gap-1.5">
-                Track <Search size={13} strokeWidth={2.5} />
+              <button type="submit" className="bg-[#15A744] hover:bg-[#118f39] transition-all duration-300 text-white px-7 py-3 rounded-full text-[13.5px] font-bold flex items-center gap-2 shadow-[0_4px_14px_rgba(21,167,68,0.25)] hover:shadow-[0_6px_20px_rgba(21,167,68,0.4)]">
+                Track <Search size={14} strokeWidth={2.5} />
               </button>
             </form>
 
