@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { AppHero } from '../components/DownloadHero';
 import { AppShowcase } from '../components/InsideApp';
 import { AppSteps } from '../components/HowItWorks';
