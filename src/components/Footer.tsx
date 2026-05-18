@@ -61,9 +61,9 @@ const Footer: React.FC = () => {
     <>
     <style>{`
       .van-image-mask {
-        mask-image: linear-gradient(to top, transparent 0%, black 40%);
-        -webkit-mask-image: linear-gradient(to top, transparent 0%, black 40%);
-      }
+  mask-image: linear-gradient(to top, transparent 0%, black 70%);
+  -webkit-mask-image: linear-gradient(to top, transparent 0%, black 70%);
+}
       @media (min-width: 1024px) {
         .van-image-mask {
           mask-image: linear-gradient(to right, transparent 0%, black 40%);
@@ -88,15 +88,16 @@ const Footer: React.FC = () => {
           className="absolute inset-y-0 right-0 w-full lg:w-[60%] z-0 pointer-events-none select-none van-image-mask"
         >
           <img 
-            src="/vans-fleet.png" 
-            alt="Zajel Delivery Vans" 
-            className="w-full h-full object-cover object-center lg:object-left"
-          />
-          <div className="absolute inset-0 bg-[#36B936]/10 mix-blend-overlay w-full h-full" />
+  src="/vans-fleet.png" 
+  alt="Zajel Delivery Vans" 
+  className="w-full h-full object-cover object-center lg:object-left"
+/>
+<div className="absolute inset-0 bg-[#036b22]/70 mix-blend-multiply lg:hidden" />
+<div className="absolute inset-0 bg-[#36B936]/10 mix-blend-overlay w-full h-full" />
         </div>
 
         <div className="max-w-[1440px] w-full mx-auto relative z-10 px-6 sm:px-10 lg:px-12 xl:px-16 pt-10 pb-10 lg:pt-16 lg:pb-12 flex flex-col lg:flex-row">
-          <div className="w-full lg:w-[50%] xl:w-[45%] flex flex-col sm:flex-row justify-start gap-12 lg:gap-10">
+        <div className="w-full lg:w-[50%] xl:w-[45%] flex flex-col sm:flex-row justify-start gap-12 lg:gap-10" style={{ filter: 'drop-shadow(0 1px 6px rgba(0,0,0,0.4))' }}>
             
             {/* Brand Info */}
             <div className="flex flex-col mb-0">
@@ -132,11 +133,21 @@ const Footer: React.FC = () => {
               {/* App Download — inline on mobile, hidden on desktop */}
               <div className="flex lg:hidden items-center gap-3 mb-5">
                 <a href="#" className="flex items-center gap-1.5 bg-black/30 hover:bg-black/40 transition-colors rounded-lg px-3 py-1.5">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.64.24.98.21l12.93-12.93-3.54-3.54L3.18 23.76zM.99 2.27C.68 2.7.5 3.27.5 3.96v16.08c0 .69.18 1.26.49 1.69l.09.09 9.01-9.01v-.21L.99 2.27zm19.87 8.32-2.54-1.47-2.84 2.84 2.84 2.84 2.56-1.48c.73-.42.73-1.31-.02-1.73zM4.16.24L17.09 13.17l-3.54 3.54L.98.43A1.4 1.4 0 0 1 4.16.24z"/></svg>
+                <svg width="21" height="24" viewBox="0 0 21 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M9.80482 11.4617L0.0895996 22.0059C0.0905121 22.0078 0.090512 22.0106 0.0914244 22.0125C0.389807 23.1574 1.41179 24 2.62539 24C3.11083 24 3.56616 23.8656 3.95671 23.6305L3.98773 23.6118L14.9229 17.1593L9.80482 11.4617Z" fill="#EA4335"/>
+<path d="M19.6331 9.66619L19.624 9.65966L14.9028 6.86123L9.58391 11.7013L14.9219 17.1582L19.6176 14.3878C20.4406 13.9324 21 13.045 21 12.0223C21 11.0052 20.4489 10.1225 19.6331 9.66619Z" fill="#FBBC04"/>
+<path d="M0.0894234 1.99331C0.0310244 2.21353 0 2.44494 0 2.68382V21.3163C0 21.5552 0.0310245 21.7866 0.0903359 22.0059L10.1386 11.7313L0.0894234 1.99331Z" fill="#4285F4"/>
+<path d="M9.87657 11.9999L14.9044 6.85935L3.98192 0.383507C3.58499 0.139962 3.12145 -4.76837e-06 2.62597 -4.76837e-06C1.41237 -4.76837e-06 0.388558 0.844468 0.0901759 1.99034C0.0901759 1.99127 0.0892639 1.9922 0.0892639 1.99314L9.87657 11.9999Z" fill="#34A853"/>
+</svg>
+
                   <span className="text-[10px] font-medium leading-tight">Google Play</span>
                 </a>
                 <a href="#" className="flex items-center gap-1.5 bg-black/30 hover:bg-black/40 transition-colors rounded-lg px-3 py-1.5">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                <svg width="20" height="24" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M16.7045 12.7631C16.7166 11.8432 16.9669 10.9413 17.4321 10.1412C17.8972 9.34108 18.5621 8.66885 19.3648 8.18702C18.8548 7.47597 18.1821 6.89081 17.4 6.478C16.6178 6.0652 15.7479 5.83613 14.8592 5.80898C12.9635 5.61471 11.1258 6.91644 10.1598 6.91644C9.17506 6.91644 7.68776 5.82827 6.08616 5.86044C5.05021 5.89311 4.04059 6.18722 3.15568 6.7141C2.27077 7.24099 1.54075 7.98268 1.03674 8.86691C-1.14648 12.5573 0.482005 17.9809 2.57338 20.964C3.61975 22.4247 4.84264 24.0564 6.44279 23.9985C8.00863 23.9351 8.59344 23.0237 10.4835 23.0237C12.3561 23.0237 12.9048 23.9985 14.5374 23.9617C16.2176 23.9351 17.2762 22.4945 18.2859 21.02C19.0377 19.9792 19.6162 18.8288 20 17.6116C19.0238 17.2085 18.1908 16.5338 17.6048 15.6716C17.0187 14.8094 16.7056 13.7979 16.7045 12.7631Z" fill="white"/>
+<path d="M13.6208 3.84713C14.5369 2.77343 14.9883 1.39335 14.879 0C13.4793 0.143519 12.1865 0.796596 11.258 1.82911C10.804 2.33351 10.4563 2.92033 10.2348 3.55601C10.0132 4.19168 9.92219 4.86375 9.96686 5.5338C10.6669 5.54084 11.3595 5.3927 11.9924 5.10054C12.6253 4.80838 13.1821 4.37982 13.6208 3.84713Z" fill="white"/>
+</svg>
+
                   <span className="text-[10px] font-medium leading-tight">App Store</span>
                 </a>
               </div>
