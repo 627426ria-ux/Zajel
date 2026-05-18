@@ -51,7 +51,7 @@ const RatesSection: React.FC = () => {
                 borderRadius: '999px 0 0 999px',
               }}
             >
-              Make an CALL
+              Make a Call
             </span>
             <span
               className="bg-white flex items-center justify-center w-[44px] h-[44px] md:w-[50px] md:h-[50px] flex-shrink-0"
