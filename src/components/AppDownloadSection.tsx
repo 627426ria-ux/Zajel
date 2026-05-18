@@ -41,7 +41,7 @@ const AppDownloadSection: React.FC = () => {
          * The inner bg-mask layer handles its own overflow-hidden separately.
          */
         .banner-container {
-          height: clamp(160px, 28vw, 340px);
+          height: clamp(160px, 28vw, 400px);
           overflow: visible;
           position: relative;
         }
