@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 
 // Import Global Components
 import Navbar from './components/Navbar';
@@ -31,9 +32,16 @@ import DownloadAppPage from './pages/Download';
 import ShipmentTimeline from './pages/ShipmentTimeline';
 import ProofOfDelivery from './pages/ProofOfDelivery';
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+}
+
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Navbar />
       
       <main>
@@ -56,8 +64,6 @@ function App() {
 
           {/* === FIXED DYNAMIC ROUTES === */}
           <Route path="/all-services" element={<AllServicesPage />} />
-          
-          {/* This route catches IDs like /services/standard-courier */}
           <Route path="/services/:id" element={<ServiceDetailPage />} />
           <Route path="/secure-mail" element={<SecureMailPage />} />
           <Route path="/secure-docs" element={<SecureDocsPage/>} />

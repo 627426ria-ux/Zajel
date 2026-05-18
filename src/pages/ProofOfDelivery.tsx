@@ -116,7 +116,7 @@ const ProofOfDelivery: React.FC = () => {
                     {row.icon}
                   </div>
                   <div>
-                    <div className="text-[10px] font-normal text-[#064423]/50 tracking-wider mb-0.5">
+                    <div className="text-[10px] font-normal text-[#064423]/90 tracking-wider mb-0.5">
                       {row.label}
                     </div>
                     <div className="text-[15px] font-normal text-[#064423] leading-snug">

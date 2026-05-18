@@ -59,7 +59,7 @@ const TrackingResults: React.FC = () => {
                     </svg>
                   </div>
                   <div>
-                    <div className="text-[10px] font-normal text-[#064423]/50 tracking-wider mb-1">SENDER</div>
+                    <div className="text-[10px] font-normal text-[#064423]/90 tracking-wider mb-1">SENDER</div>
                     <div className="text-[15px] font-normal text-[#064423] leading-tight">ABC Trading L.L.C</div>
                     <div className="text-[12px] font-light text-[#064423]/70 mt-0.5">Dubai Marina, Dubai, UAE</div>
                     <div className="text-[12px] font-light text-[#064423]/70 mt-0.5">+971 50 123 4567</div>
@@ -74,7 +74,7 @@ const TrackingResults: React.FC = () => {
                     </svg>
                   </div>
                   <div>
-                    <div className="text-[10px] font-normal text-[#064423]/50 tracking-wider mb-1">ORIGIN</div>
+                    <div className="text-[10px] font-normal text-[#064423]/90 tracking-wider mb-1">ORIGIN</div>
                     <div className="text-[13px] font-normal text-[#064423]">Dubai Marina, Dubai, UAE</div>
                   </div>
                 </div>
@@ -92,7 +92,7 @@ const TrackingResults: React.FC = () => {
                     </svg>
                   </div>
                   <div>
-                    <div className="text-[10px] font-normal text-[#064423]/50 tracking-wider mb-1">SENDER</div>
+                    <div className="text-[10px] font-normal text-[#064423]/90 tracking-wider mb-1">SENDER</div>
                     <div className="text-[15px] font-normal text-[#064423] leading-tight">Amaneyyy</div>
                     <div className="text-[12px] font-light text-[#064423]/70 mt-0.5">Dubai Marina, Dubai, UAE</div>
                     <div className="text-[12px] font-light text-[#064423]/70 mt-0.5">+971 50 123 4567</div>
@@ -107,7 +107,7 @@ const TrackingResults: React.FC = () => {
                     </svg>
                   </div>
                   <div>
-                    <div className="text-[10px] font-normal text-[#064423]/50 tracking-wider mb-1">DESTINATION</div>
+                    <div className="text-[10px] font-normal text-[#064423]/90 tracking-wider mb-1">DESTINATION</div>
                     <div className="text-[13px] font-normal text-[#064423]">Dubai Marina, Dubai, UAE</div>
                   </div>
                 </div>
@@ -126,7 +126,7 @@ const TrackingResults: React.FC = () => {
                   </svg>
                 </div>
                 <div>
-                  <div className="text-[9px] font-normal text-[#064423]/50 tracking-wider mb-0.5">SERVICE TYPE</div>
+                  <div className="text-[9px] font-normal text-[#064423]/90 tracking-wider mb-0.5">SERVICE TYPE</div>
                   <div className="text-[13px] font-normal text-[#064423]">ZAJEL Express</div>
                 </div>
               </div>
@@ -139,7 +139,7 @@ const TrackingResults: React.FC = () => {
                   </svg>
                 </div>
                 <div>
-                  <div className="text-[9px] font-normal text-[#064423]/50 tracking-wider mb-0.5">WEIGHT</div>
+                  <div className="text-[9px] font-normal text-[#064423]/90 tracking-wider mb-0.5">WEIGHT</div>
                   <div className="text-[13px] font-normal text-[#064423]">2.5 kg</div>
                 </div>
               </div>
@@ -152,7 +152,7 @@ const TrackingResults: React.FC = () => {
                   </svg>
                 </div>
                 <div>
-                  <div className="text-[9px] font-normal text-[#064423]/50 tracking-wider mb-0.5">PIECES</div>
+                  <div className="text-[9px] font-normal text-[#064423]/90 tracking-wider mb-0.5">PIECES</div>
                   <div className="text-[13px] font-normal text-[#064423]">1</div>
                 </div>
               </div>

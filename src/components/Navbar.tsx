@@ -209,7 +209,7 @@ const Chevron = ({ open }: { open: boolean }) => (
 // ─────────────────────────────────────────────
 // MEGA MENU PANEL  (full-width, below navbar)
 // ─────────────────────────────────────────────
-const MegaMenuPanel = ({ type, categories, isOpen, onClose }: { type: string; categories: any[]; isOpen: boolean; onClose: () => void }) => {
+const MegaMenuPanel = ({ type, categories, isOpen, onClose, onMouseEnter }: { type: string; categories: any[]; isOpen: boolean; onClose: () => void; onMouseEnter?: () => void }) => {
   const [activeCategory, setActiveCategory] = useState(0);
   const panelRef = useRef(null);
 
@@ -240,10 +240,12 @@ const MegaMenuPanel = ({ type, categories, isOpen, onClose }: { type: string; ca
 
       {/* Panel */}
       <div
-        ref={panelRef}
-        style={{
-          position: "fixed",
-          top: 64, 
+  ref={panelRef}
+  onMouseEnter={onMouseEnter}
+  onMouseLeave={() => onClose()}
+  style={{
+    position: "fixed",
+    top: 64, 
           left: 0,
           right: 0,
           zIndex: 49,
@@ -720,6 +722,17 @@ export default function Navbar() {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const openMenu = (key: string) => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setActiveMenu(key);
+  };
+
+  const closeMenu = () => {
+    closeTimer.current = setTimeout(() => setActiveMenu(null), 100);
+  };
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -981,6 +994,7 @@ export default function Navbar() {
       {/* ── NAVBAR BAR ── */}
       <nav
         className={scrolled || activeMenu ? "nav-snapped" : "nav-top-glass"}
+        
         style={{
           position: "fixed",
           top: 0,
@@ -1004,6 +1018,7 @@ export default function Navbar() {
                 key={path}
                 to={path}
                 onClick={() => setActiveMenu(null)}
+                onMouseEnter={closeMenu} 
                 className="nav-link"
                 style={{ fontFamily: '"Manrope", sans-serif', fontSize: 14, textDecoration: "none" }}
               >
@@ -1019,6 +1034,7 @@ export default function Navbar() {
               <button
                 key={key}
                 onClick={() => toggleMenu(key)}
+                onMouseEnter={() => openMenu(key)} 
                 className="nav-link"
                 style={{
                   fontFamily: '"Manrope", sans-serif',
@@ -1042,6 +1058,7 @@ export default function Navbar() {
             <Link
               to="/quotation"
               onClick={() => setActiveMenu(null)}
+              onMouseEnter={closeMenu}
               className="nav-link"
               style={{ fontFamily: '"Manrope", sans-serif', fontSize: 14, textDecoration: "none" }}
             >
@@ -1081,17 +1098,19 @@ export default function Navbar() {
 
       {/* ── MEGA MENU PANELS ── */}
       <MegaMenuPanel
-        type="solutions"
-        categories={solutionsCategories}
-        isOpen={activeMenu === "solutions"}
-        onClose={() => setActiveMenu(null)}
-      />
-      <MegaMenuPanel
-        type="support"
-        categories={supportCategories}
-        isOpen={activeMenu === "support"}
-        onClose={() => setActiveMenu(null)}
-      />
+  type="solutions"
+  categories={solutionsCategories}
+  isOpen={activeMenu === "solutions"}
+  onClose={closeMenu}                         // ← was () => setActiveMenu(null)
+  onMouseEnter={() => openMenu("solutions")}  // ← was () => setActiveMenu("solutions")
+/>
+<MegaMenuPanel
+  type="support"
+  categories={supportCategories}
+  isOpen={activeMenu === "support"}
+  onClose={closeMenu}                         // ← was () => setActiveMenu(null)
+  onMouseEnter={() => openMenu("support")}    // ← was () => setActiveMenu("support")
+/>
 
       {/* ── MOBILE MENU ── */}
       <MobileMenu isOpen={mobileOpen} onClose={() => setMobileOpen(false)} />
