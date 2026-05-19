@@ -265,7 +265,7 @@ const AppDownloadSection: React.FC = () => {
               style={{ transitionDelay: '500ms' }}
             >
               <img
-                src="/phone-app.png"
+                src="/ChatGPT Image May 19, 2026, 03_20_54 PM (1).png"
                 alt="Zajel Mobile App Preview"
               />
             </div>
