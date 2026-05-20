@@ -1,8 +1,10 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 // Import Global Components
 import Navbar from './components/Navbar';
+
+import LogoLoader from './components/LogoLoader';
 
 // Import your Pages
 import HomePage from './pages/HomePage';
@@ -39,7 +41,29 @@ function ScrollToTop() {
 }
 
 function App() {
+  const [loading, setLoading] = useState(
+    !sessionStorage.getItem("introPlayed")
+  );
+  useEffect(() => {
+
+    if (!loading) return;
+  
+    const timer = setTimeout(() => {
+  
+      sessionStorage.setItem("introPlayed", "true");
+  
+      setLoading(false);
+  
+    }, 3000);
+  
+    return () => clearTimeout(timer);
+  
+  }, [loading]);
+  
+  
   return (
+    <>
+      {loading && <LogoLoader />}
     <Router>
       <ScrollToTop />
       <Navbar />
@@ -75,6 +99,7 @@ function App() {
         </Routes>
       </main>
     </Router>
+    </>
   );
 }
 

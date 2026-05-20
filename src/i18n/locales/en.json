@@ -1,0 +1,30 @@
+{
+    "hero": {
+      "trackPlaceholder": "Enter AWB Number or Mobile",
+      "trackLabel": "Enter AWB Number or Mobile",
+      "trackButton": "Track",
+      "footerDesc": "Domestic and international shipping, smart tracking, instant quotations, and dependable delivery — powered by technology.",
+      "prev": "Previous",
+      "next": "Next",
+      "slides": [
+        { "title": "Global\nCourier", "desc": "Seamless international shipping and logistics.\nConnecting you to the world." },
+        { "title": "Intelligent\nmovement", "desc": "Moving what matters \n with precision, trust, and control." },
+        { "title": "E-commerce\nSolutions", "desc": "End-to-end fulfillment and rapid delivery.\nBuilt to scale your online business." },
+        { "title": "Everyday \n Reliability", "desc": "Fast, secure, and reliable delivery solutions built for everyday UAE life." },
+        { "title": "Freight \n Solutions", "desc": "Reliable freight movement designed for modern businesses across air, land, and global trade networks." },
+        { "title": "ZAJEL \n NOW", "desc": "Book instant pickups and deliveries across the city in minutes." }
+      ],
+      "stats": [
+        { "value": "15+",   "label": "Years of Success" },
+        { "value": "45M+",  "label": "Shipments Delivered" },
+        { "value": "200+",  "label": "Countries Covered" },
+        { "value": "500K+", "label": "Worldwide Destinations" }
+      ],
+      "actions": [
+        { "label": "Track",         "fullLabel": "Track Shipment",     "desc": "Real-time tracking for all your packages" },
+        { "label": "Quotation",     "fullLabel": "Shipping Quotation", "desc": "Get instant price estimates for domestic and international" },
+        { "label": "Domestic",      "fullLabel": "Domestic Services",  "desc": "Fast and reliable delivery within the country" },
+        { "label": "International", "fullLabel": "International",      "desc": "Shipping to over 200 countries worldwide" }
+      ]
+    }
+  }
