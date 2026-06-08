@@ -42,6 +42,74 @@ function useBreakpoint() {
 const isMobile = (bp: string) => bp === 'xs' || bp === 'sm' || bp === 'md';
 
 // ─────────────────────────────────────────────
+// FEATURE LABELS — premium 3-item design
+// ─────────────────────────────────────────────
+
+const CheckIcon = () => (
+  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="6.5" cy="6.5" r="6.5" fill="rgba(255,255,255,0.25)" />
+    <path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="white" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+const features = [
+  { label: 'Real-Time Tracking' },
+  { label: 'Instant Notifications' },
+  { label: '24/7 Live Support' },
+];
+
+const FeaturePills = ({ mobile }: { mobile: boolean }) => (
+  <motion.div
+    variants={fadeUp} custom={2.5} initial="hidden" animate="visible"
+    style={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: mobile ? 6 : 10,
+    }}
+  >
+    {features.map((f, i) => (
+      <motion.div
+        key={i}
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.55, ease: springEase, delay: 0.42 + i * 0.09 }}
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: 7,
+          background: 'rgba(255,255,255,0.10)',
+          border: '0.5px solid rgba(255,255,255,0.22)',
+          borderRadius: 999,
+          paddingInline: mobile ? '0.7rem' : '0.95rem',
+          paddingBlock: mobile ? '0.3rem' : '0.4rem',
+          fontFamily: '"Manrope", sans-serif',
+          fontSize: mobile ? 10 : 12,
+          fontWeight: 500,
+          color: 'rgba(255,255,255,0.95)',
+          letterSpacing: '0.02em',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        <CheckIcon />
+        {f.label}
+      </motion.div>
+    ))}
+
+    {/* Separator dots between labels */}
+    <style>{`
+      .feature-sep {
+        width: 3px; height: 3px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.3);
+        display: inline-block;
+        margin: 0 -4px;
+      }
+    `}</style>
+  </motion.div>
+);
+
+// ─────────────────────────────────────────────
 // APP STORE BUTTON
 // ─────────────────────────────────────────────
 const AppStoreBtn = ({
@@ -141,17 +209,16 @@ export const AppHero = () => {
   const headingWeight = mobile ? 300 : 400;
 
   const topPaddingTop =
-  bp === 'xs' ? '6rem' :
-  bp === 'sm' ? '5rem' :
-  bp === 'md' ? '2.5rem' :
-  '3rem';
+    bp === 'xs' ? '6rem' :
+    bp === 'sm' ? '5rem' :
+    bp === 'md' ? '2.5rem' :
+    '3rem';
 
   const phoneZoneMarginTop =
     bp === 'xs' ? '0.5rem' :
     bp === 'sm' ? '0.75rem' :
     '1rem';
 
-  // ── Circle size scales with the phone width ──
   const circleSize =
     bp === 'xs' ? '90vw' :
     bp === 'sm' ? '82vw' :
@@ -181,42 +248,48 @@ export const AppHero = () => {
           `,
         }}
       >
-        {/* ── DESKTOP: top text section ── */}
+        {/* ── Top text section: heading + pills + CTAs ── */}
         <div style={{
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  textAlign: 'center',
-  paddingInline: '1.5rem',
-  paddingTop: topPaddingTop,
-  paddingBottom: '1rem',
-  gap: 16,
-  position: 'relative',
-  zIndex: 10,
-}}>
-  <motion.h1
-    variants={fadeUp} custom={1} initial="hidden" animate="visible"
-    style={{
-      fontFamily: '"Manrope", sans-serif',
-      fontWeight: headingWeight,
-      fontSize: headingSize,
-      letterSpacing: '-0.02em',
-      lineHeight: 1.08,
-      color: 'white',
-      margin: 0,
-      textShadow: mobile ? '0 2px 16px rgba(6,68,35,0.25)' : 'none',
-    }}
-  >
-    The Smartest App<br />For All Your Shipments
-  </motion.h1>
-  <motion.div
-    variants={fadeUp} custom={2} initial="hidden" animate="visible"
-    style={{ display: 'flex', alignItems: 'center', gap: mobile ? 8 : 12 }}
-  >
-    <AppStoreBtn store="apple" mobile={mobile} />
-    <AppStoreBtn store="google" mobile={mobile} />
-  </motion.div>
-</div>
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          textAlign: 'center',
+          paddingInline: '1.5rem',
+          paddingTop: topPaddingTop,
+          paddingBottom: '1rem',
+          gap: mobile ? 12 : 16,
+          position: 'relative',
+          zIndex: 10,
+        }}>
+          {/* Heading */}
+          <motion.h1
+            variants={fadeUp} custom={1} initial="hidden" animate="visible"
+            style={{
+              fontFamily: '"Manrope", sans-serif',
+              fontWeight: headingWeight,
+              fontSize: headingSize,
+              letterSpacing: '-0.02em',
+              lineHeight: 1.08,
+              color: 'white',
+              margin: 0,
+              textShadow: mobile ? '0 2px 16px rgba(6,68,35,0.25)' : 'none',
+            }}
+          >
+            The Smartest App<br />For All Your Shipments
+          </motion.h1>
+
+          {/* ── Feature Pills — only on desktop/tablet where there's room ── */}
+          {!mobile && <FeaturePills mobile={mobile} />}
+
+          {/* Store buttons */}
+          <motion.div
+            variants={fadeUp} custom={3} initial="hidden" animate="visible"
+            style={{ display: 'flex', alignItems: 'center', gap: mobile ? 8 : 12 }}
+          >
+            <AppStoreBtn store="apple" mobile={mobile} />
+            <AppStoreBtn store="google" mobile={mobile} />
+          </motion.div>
+        </div>
 
         {/* ── PHONE + FLOATING CARDS ZONE ── */}
         <motion.div
@@ -244,7 +317,7 @@ export const AppHero = () => {
             alignItems: 'flex-end',
             justifyContent: 'center',
             overflow: 'visible',
-            position: 'relative', // needed so circle positions relative to this
+            position: 'relative',
           }}>
 
             {/* ── CIRCLE BEHIND PHONE ── */}
@@ -271,7 +344,7 @@ export const AppHero = () => {
               alt="App mockup"
               style={{
                 position: 'relative',
-                zIndex: 1, // sits above the circle
+                zIndex: 1,
                 width: phoneW,
                 height: 'auto',
                 maxHeight: phoneMaxH,
@@ -284,9 +357,6 @@ export const AppHero = () => {
               }}
             />
           </div>
-
-          {/* ── MOBILE ONLY: heading + CTAs overlaid above the phone ── */}
-          
         </motion.div>
 
         {/* Bottom fade */}

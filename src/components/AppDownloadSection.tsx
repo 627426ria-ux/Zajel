@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const AppDownloadSection: React.FC = () => {
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === 'ar';
+
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -19,46 +23,25 @@ const AppDownloadSection: React.FC = () => {
   }, []);
 
   const smoothEase = "transition-all duration-1000 ease-[cubic-bezier(0.2,0.8,0.2,1)]";
+  
+  // Slide from the opposite side in RTL
+  const slideDirection = isRtl ? 'translate-x-8' : '-translate-x-8';
 
   return (
     <>
       <style>{`
         .app-download-section {
           font-family: 'Manrope', sans-serif;
-          /*
-           * FIX 1 — prevent overlap with section above.
-           * margin-top pushes this section cleanly below whatever precedes it.
-           * Adjust the clamp values to match your page's actual spacing needs.
-           */
           margin-top: clamp(40px, 6vw, 80px);
           padding-top: clamp(120px, 22vw, 320px);
         }
 
-        /*
-         * FIX 2 — the banner card.
-         * overflow: visible is CRITICAL so the phone (which is taller than the card)
-         * can escape above the top edge without being clipped.
-         * The inner bg-mask layer handles its own overflow-hidden separately.
-         */
         .banner-container {
           height: clamp(160px, 28vw, 400px);
           overflow: visible;
           position: relative;
         }
 
-        /*
-         * FIX 3 — phone positioning.
-         *
-         * MENTAL MODEL:
-         *   - bottom: 0  →  the BOTTOM of the phone image = the BOTTOM of the card.
-         *   - The phone image is naturally taller than the card height.
-         *   - So the phone's top edge rises ABOVE the card's top edge automatically.
-         *   - NO translateY needed. Any positive translateY pushes it further DOWN (wrong).
-         *   - A small NEGATIVE translateY would lift it slightly but isn't needed here.
-         *
-         * The phone sits with its base on the card floor and its body rising up through
-         * and above the green card — exactly the "floating out of card" premium look.
-         */
         .phone-image-wrap {
           position: absolute;
           bottom: 0;
@@ -66,7 +49,12 @@ const AppDownloadSection: React.FC = () => {
           width: clamp(160px, 28vw, 440px);
           z-index: 20;
           pointer-events: none;
-          /* No transform — bottom:0 is enough. Phone base = card base. */
+        }
+
+        /* RTL support for phone image */
+        [dir="rtl"] .phone-image-wrap {
+          right: auto;
+          left: 4%;
         }
 
         .phone-image-wrap img {
@@ -77,20 +65,25 @@ const AppDownloadSection: React.FC = () => {
           filter: drop-shadow(0 25px 35px rgba(0,0,0,0.4));
         }
 
-        /* Text content */
         .text-content {
-  width: clamp(52%, 55%, 62%);
-  padding-left: clamp(18px, 4vw, 80px);
-  padding-right: clamp(12px, 2vw, 40px);
-  padding-top: 0;
-  padding-bottom: 0;
-  position: relative;
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100%;
-}
+          width: clamp(52%, 55%, 62%);
+          padding-left: clamp(18px, 4vw, 80px);
+          padding-right: clamp(12px, 2vw, 40px);
+          padding-top: 0;
+          padding-bottom: 0;
+          position: relative;
+          z-index: 10;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          height: 100%;
+        }
+
+        /* RTL support for text content padding */
+        [dir="rtl"] .text-content {
+          padding-left: clamp(12px, 2vw, 40px);
+          padding-right: clamp(18px, 4vw, 80px);
+        }
 
         .banner-heading {
           font-size: clamp(1.05rem, 3.8vw, 4rem);
@@ -100,6 +93,7 @@ const AppDownloadSection: React.FC = () => {
           color: white;
           margin-bottom: clamp(6px, 1.2vw, 24px);
           text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+          white-space: pre-line; /* Essential for rendering JSON \n as line breaks */
         }
 
         .banner-subtext {
@@ -145,27 +139,25 @@ const AppDownloadSection: React.FC = () => {
           display: block;
         }
 
-        /* Outer section — horizontal padding only, margin-top handles vertical spacing */
         .section-outer {
           padding-left: clamp(16px, 4vw, 48px);
           padding-right: clamp(16px, 4vw, 48px);
-          /* Bottom padding gives breathing room below the card */
           padding-bottom: clamp(40px, 6vw, 80px);
         }
       `}</style>
 
       <section
         ref={sectionRef}
+        dir={isRtl ? 'rtl' : 'ltr'}
         className={`app-download-section section-outer w-full flex items-center justify-center bg-white`}
       >
         <div className="w-full max-w-[1200px] relative">
 
-          {/* ── Green Banner Card ── */}
           <div
             className={`banner-container w-full bg-[#36B936] rounded-[1.5rem] md:rounded-[2.5rem] shadow-2xl flex flex-row items-stretch transform ${smoothEase} ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
           >
 
-            {/* Layer 1 — background graphics, clipped inside rounded corners */}
+            {/* Layer 1 — background graphics */}
             <div className="absolute inset-0 rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden pointer-events-none z-0">
               <div
                 className="absolute inset-0 w-full h-full opacity-20 mix-blend-overlay"
@@ -222,17 +214,17 @@ const AppDownloadSection: React.FC = () => {
 
             {/* Layer 2 — Text content */}
             <div
-              className={`text-content transform ${smoothEase} ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}
+              className={`text-content transform ${smoothEase} ${isVisible ? 'opacity-100 translate-x-0' : `opacity-0 ${slideDirection}`}`}
               style={{ transitionDelay: '300ms' }}
             >
               <h2 className="banner-heading">
-                Download the <br />ZAJEL App
+                {t('appDownload.heading')}
               </h2>
               <p className="banner-subtext">
-                Track shipments, get instant updates, and manage your deliveries anytime, anywhere.
+                {t('appDownload.subtext')}
               </p>
               <div>
-                <span className="download-label">Download Our App</span>
+                <span className="download-label">{t('appDownload.downloadLabel')}</span>
                 <div className="store-buttons">
                   <a href="#" className="store-button-link">
                     <img src="/image copy 15.png" alt="Get it on Google Play" />
@@ -244,22 +236,7 @@ const AppDownloadSection: React.FC = () => {
               </div>
             </div>
 
-            {/*
-             * Layer 3 — Phone image (INSIDE the banner div).
-             *
-             * HOW IT WORKS:
-             *   position: absolute + bottom: 0
-             *   → the bottom edge of the phone img = the bottom edge of the green card.
-             *
-             *   The phone image's natural height is greater than the card's height,
-             *   so the phone automatically extends UPWARD above the card's top edge.
-             *
-             *   overflow: visible on .banner-container lets it show above the card freely.
-             *   The inner graphics layer (overflow:hidden) doesn't clip this element
-             *   because this div is a sibling, not a child, of that layer.
-             *
-             *   Result: phone base sits at card bottom, phone top floats above card top.
-             */}
+            {/* Layer 3 — Phone image */}
             <div
               className={`phone-image-wrap transform ${smoothEase} ${isVisible ? 'opacity-100' : 'opacity-0'}`}
               style={{ transitionDelay: '500ms' }}
@@ -270,8 +247,7 @@ const AppDownloadSection: React.FC = () => {
               />
             </div>
 
-          </div>{/* end .banner-container */}
-
+          </div>
         </div>
       </section>
     </>

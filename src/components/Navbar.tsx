@@ -1,3 +1,4 @@
+import LanguageSwitcher from "./LanguageSwitcher";
 import  { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
@@ -670,23 +671,7 @@ const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
 
           {/* Language Mobile Menu */}
           <div style={{ padding: "24px" }}>
-            <button
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-                background: "transparent",
-                border: "none",
-                padding: 0,
-                fontSize: 15,
-                fontWeight: 500,
-                color: "#0A4D26",
-                cursor: "pointer",
-                fontFamily: '"Manrope", sans-serif',
-              }}
-            >
-              <span style={{ fontSize: 20, lineHeight: 1 }}>🇦🇪</span> AR
-            </button>
+          <LanguageSwitcher />
           </div>
         </div>
 
@@ -1068,10 +1053,7 @@ export default function Navbar() {
 
           {/* DESKTOP RIGHT CTAs */}
           <div className="desktop-nav" style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "clamp(12px, 1.5vw, 20px)", flexShrink: 0 }}>
-            <button className="lang-toggle">
-              <span style={{ fontSize: 18, lineHeight: 1 }}>🇦🇪</span>
-              <span>AR</span>
-            </button>
+          <LanguageSwitcher />
 
             <Link to="/login" className="btn-login" onClick={() => setActiveMenu(null)}>
               Login

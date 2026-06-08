@@ -1,30 +1,249 @@
 {
-    "hero": {
-      "trackPlaceholder": "Enter AWB Number or Mobile",
-      "trackLabel": "Enter AWB Number or Mobile",
-      "trackButton": "Track",
-      "footerDesc": "Domestic and international shipping, smart tracking, instant quotations, and dependable delivery — powered by technology.",
+  "hero": {
+    "track": {
+      "placeholder": "Enter AWB Number or Mobile",
+      "button": "Track"
+    },
+    "nav": {
       "prev": "Previous",
-      "next": "Next",
-      "slides": [
-        { "title": "Global\nCourier", "desc": "Seamless international shipping and logistics.\nConnecting you to the world." },
-        { "title": "Intelligent\nmovement", "desc": "Moving what matters \n with precision, trust, and control." },
-        { "title": "E-commerce\nSolutions", "desc": "End-to-end fulfillment and rapid delivery.\nBuilt to scale your online business." },
-        { "title": "Everyday \n Reliability", "desc": "Fast, secure, and reliable delivery solutions built for everyday UAE life." },
-        { "title": "Freight \n Solutions", "desc": "Reliable freight movement designed for modern businesses across air, land, and global trade networks." },
-        { "title": "ZAJEL \n NOW", "desc": "Book instant pickups and deliveries across the city in minutes." }
-      ],
-      "stats": [
-        { "value": "15+",   "label": "Years of Success" },
-        { "value": "45M+",  "label": "Shipments Delivered" },
-        { "value": "200+",  "label": "Countries Covered" },
-        { "value": "500K+", "label": "Worldwide Destinations" }
-      ],
-      "actions": [
-        { "label": "Track",         "fullLabel": "Track Shipment",     "desc": "Real-time tracking for all your packages" },
-        { "label": "Quotation",     "fullLabel": "Shipping Quotation", "desc": "Get instant price estimates for domestic and international" },
-        { "label": "Domestic",      "fullLabel": "Domestic Services",  "desc": "Fast and reliable delivery within the country" },
-        { "label": "International", "fullLabel": "International",      "desc": "Shipping to over 200 countries worldwide" }
-      ]
+      "next": "Next"
+    },
+    "tagline": "Domestic and international shipping, smart tracking, instant\nquotations, and dependable delivery — powered by technology.",
+    "slides": {
+      "0": { "title": "Global\nCourier",        "desc": "Seamless international shipping and logistics.\nConnecting you to the world." },
+      "1": { "title": "Intelligent\nmovement",  "desc": "Moving what matters\nwith precision, trust, and control." },
+      "2": { "title": "E-commerce\nSolutions",  "desc": "End-to-end fulfillment and rapid delivery.\nBuilt to scale your online business." },
+      "3": { "title": "Everyday\nReliability",  "desc": "Fast, secure, and reliable delivery solutions built for everyday UAE life." },
+      "4": { "title": "Freight\nSolutions",     "desc": "Reliable freight movement designed for modern businesses across air, land, and global trade networks." },
+      "5": { "title": "ZAJEL\nNOW",             "desc": "Book instant pickups and deliveries across the city in minutes." }
+    },
+    "stats": {
+      "years":        "Years of Success",
+      "shipments":    "Shipments Delivered",
+      "countries":    "Countries Covered",
+      "destinations": "Worldwide Destinations"
+    },
+    "actions": {
+      "track":         { "label": "Track",         "fullLabel": "Track Shipment",     "desc": "Real-time tracking for all your packages" },
+      "quotation":     { "label": "Quotation",     "fullLabel": "Shipping Quotation", "desc": "Get instant price estimates for domestic and international" },
+      "domestic":      { "label": "Domestic",      "fullLabel": "Domestic Services",  "desc": "Fast and reliable delivery within the country" },
+      "international": { "label": "International", "fullLabel": "International",      "desc": "Shipping to over 200 countries worldwide" }
     }
+  },
+  "services": {
+    "eyebrow": "Our Services",
+    "heading": "Delivering a smarter <br />shipping experience.",
+    "desc": "From local last-mile fulfillment to global freight, we provide the architectural logistics required to scale your business with speed, absolute security, and full compliance.",
+    "learnMore": "Learn More",
+    "items": {
+      "domestic":      { "title": "Domestic Courier Services",      "short": "Domestic",       "desc": "Thanks to our extensive fleet network, you can rely on ZAJEL to offer a seamless service from booking and pickup to final delivery." },
+      "international": { "title": "International Courier Services", "short": "International",  "desc": "Global reach with local expertise. We deliver your packages across borders with full tracking, customs clearance, and speed." },
+      "freight":       { "title": "Foreign Freight Services",       "short": "Foreign Freight","desc": "Heavy lifting made easy. Our freight solutions provide cost-effective, large-scale shipping for businesses worldwide." },
+      "all":           { "title": "All Services",                   "short": "All",            "desc": "Explore our complete suite of logistics, warehousing, and e-commerce fulfillment solutions tailored for your business needs." }
+    }
+  },
+  "advantage": {
+    "heading": "The ZAJEL Advantage.",
+    "subtext": "We combine technology, expertise, and dedication to deliver exceptional courier services you can trust.",
+    "cards": {
+      "coverage": {
+        "title": "Wide\nCoverage",
+        "desc": "Extensive network covering all major domestic cities and seamlessly connecting 200+ countries globally."
+      },
+      "tracking": {
+        "title": "Real-Time\nTracking",
+        "desc": "Track your shipments 24/7 with live milestone updates and automated delivery notifications."
+      },
+      "pricing": {
+        "title": "Transparent Pricing",
+        "desc": "No hidden fees. Get instant, intelligent quotes and know exactly what you will pay upfront."
+      },
+      "handling": {
+        "title": "Professional\nHandling",
+        "desc": "Trained staff ensuring your packages are handled with care from pickup to delivery."
+      }
+    }
+  },
+  "appDownload": {
+    "heading": "Download the\nZAJEL App",
+    "subtext": "Track shipments, get instant updates, and manage your deliveries anytime, anywhere.",
+    "downloadLabel": "Download Our App"
+  },
+  "trusted": {
+    "heading1": "Trusted by",
+    "headingHighlight": "500K +",
+    "heading2": "Businesses",
+    "subtext": "From solo traders to enterprise — Zajel powers shipments across 200+ countries every day.",
+    "stats": {
+      "shipments": { "suffix": "M+", "label": "Shipments Delivered" },
+      "countries": { "suffix": "+", "label": "Countries Covered" },
+      "years": { "suffix": "", "label": "Years of Success" },
+      "destinations": { "suffix": "K+", "label": "Worldwide Destinations" }
+    }
+  },
+  "story": {
+    "heading": "ZAJEL NOW brings instant, on-demand city-wide pickups and deliveries directly into the app.",
+    "cta": "Book Now"
+  },
+  "footer": {
+    "description": "Premium courier and logistics services across the UAE and beyond. Delivering excellence with every shipment.",
+    "copyright": "© 2025 ZAJEL. All rights reserved.",
+    "app": {
+      "googlePlay": "Google Play",
+      "appStore": "App Store"
+    },
+    "quickLinks": {
+      "title": "Quick Links",
+      "home": "Home",
+      "ship": "Ship",
+      "track": "Track",
+      "rates": "Rates",
+      "business": "Business",
+      "solutions": "Solutions",
+      "support": "Support",
+      "about": "About",
+      "careers": "Career",
+      "blog": "Blog"
+    },
+    "services": {
+      "title": "Services",
+      "sameDay": "Same Day Delivery",
+      "nextDay": "Next Day Delivery",
+      "international": "International Shipping",
+      "freight": "Bulk Shipping",
+      "ecommerce": "E-commerce Solutions",
+      "whiteGlove": "White Glove Service"
+    },
+    "locations": {
+      "title": "Our Locations",
+      "dubai": "Dubai",
+      "abuDhabi": "Abu Dhabi",
+      "sharjah": "Sharjah",
+      "ajman": "Ajman"
+    },
+    "helpLegal": {
+      "title": "Help & Legal",
+      "helpCenter": "Help Center",
+      "claims": "Claims",
+      "alerts": "Alerts",
+      "pdpl": "PDPL",
+      "terms": "Terms",
+      "policy": "Policy",
+      "ally": "Ally"
+    }
+  },
+  "calculator": {
+    "subtitle": "Get instant, accurate shipping quotes in seconds",
+    "title": "Courier Quotation Calculator",
+    "badges": {
+      "noHiddenFees": "No hidden fees",
+      "secure": "Secure & insured",
+      "instant": "Instant calculation"
+    },
+    "stats": {
+      "countries": "Countries",
+      "support": "Support",
+      "ontime": "On-time"
+    },
+    "formTitle": "Calculate Your Shipping Cost",
+    "leftPanel": {
+      "title": "Select Origin & Destination"
+    },
+    "rightPanel": {
+      "title": "Shipment Details"
+    },
+    "tabs": {
+      "domestic": "Domestic",
+      "international": "International",
+      "document": "Document",
+      "parcel": "Parcel"
+    },
+    "from": {
+      "label": "From (Origin)"
+    },
+    "to": {
+      "label": "To (Destination)"
+    },
+    "dropdownDefault": "Select an option",
+    "infoBanner": "Maximum allowed size Length 120(cm) x Width 80(cm) x Height 60(cm)",
+    "weight": {
+      "label": "Weight",
+      "placeholder": "e.g, 45"
+    },
+    "shipmentValue": {
+      "label": "Shipment Value",
+      "placeholder": "e.g, 45"
+    },
+    "unsureSize": "Unsure about the sizes?",
+    "boxes": {
+      "small": { "label": "Small Box" },
+      "medium": { "label": "Medium Box" },
+      "large": { "label": "Large Box" }
+    },
+    "dims": {
+      "length": "Length",
+      "width": "Width (CM)",
+      "height": "Height (CM)"
+    },
+    "submitBtn": "Calculate Shipping Cost",
+    "locations": {
+      "dubai": "Dubai",
+      "abuDhabi": "Abu Dhabi",
+      "sharjah": "Sharjah",
+      "ajman": "Ajman",
+      "rasAlKhaimah": "Ras Al Khaimah",
+      "fujairah": "Fujairah",
+      "ummAlQuwain": "Umm Al Quwain",
+      "saudiArabia": "Saudi Arabia",
+      "qatar": "Qatar",
+      "kuwait": "Kuwait",
+      "bahrain": "Bahrain",
+      "oman": "Oman",
+      "jordan": "Jordan",
+      "egypt": "Egypt",
+      "usa": "USA",
+      "uk": "UK",
+      "india": "India"
+    }
+  },
+  "trackShipment": {
+    "title": "Track Your Shipment",
+    "subtitle": "Enter your AWB number or mobile number to get instant\nupdates on your package location and delivery status",
+    "tabs": {
+      "awb": "AWB Number",
+      "mobile": "Mobile Number"
+    },
+    "labels": {
+      "awb": "AWB / Tracking Number",
+      "mobile": "Mobile Number"
+    },
+    "placeholders": {
+      "awb": "eg: ZAJEL123456789",
+      "mobile": "eg: +971 50 123 4567"
+    },
+    "button": "Track Shipment",
+    "helperText": "Track multiple shipments by separating AWB numbers with commas"
+  },
+  "domesticHero": {
+    "title": "Domestic\nCourier Service",
+    "description": "Seamless delivery with full tracking, powered by a fleet of 100+ vans and bikes. Trusted by eCommerce, SMEs, and government for express delivery within 24 hours.",
+    "button": "Get a Quote"
+  },
+  "globalFreight": {
+    "heading": "Global Freight Solutions\nBuilt for Speed",
+    "cards": [
+      {
+        "titleLine1": "On Demand",
+        "titleLine2": "Express Delivery",
+        "description": "Reach over 200 countries with end-to-end tracking and customs support.",
+        "buttonLabel": "Book Now"
+      },
+      {
+        "titleLine1": "International",
+        "titleLine2": "Shipping",
+        "description": "Reach over 200 countries with end-to-end tracking and customs support.",
+        "buttonLabel": "Get a Quote"
+      }
+    ]
   }
+}

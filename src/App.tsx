@@ -34,6 +34,9 @@ import DownloadAppPage from './pages/Download';
 import ShipmentTimeline from './pages/ShipmentTimeline';
 import ProofOfDelivery from './pages/ProofOfDelivery';
 
+import LoginPage from "./pages/LoginPage";
+
+
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
@@ -96,6 +99,7 @@ function App() {
           <Route path="/download" element={<DownloadAppPage/>} />
           <Route path="/shipment-timeline" element={<ShipmentTimeline />} />
           <Route path="/proof-of-delivery" element={<ProofOfDelivery />} />
+          <Route path="/login" element={<LoginPage />} />
         </Routes>
       </main>
     </Router>

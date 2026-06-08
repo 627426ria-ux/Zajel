@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const AdvantageSection: React.FC = () => {
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === 'ar';
+
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -144,8 +148,8 @@ const AdvantageSection: React.FC = () => {
         }
 
         .globe-img {
-          width: clamp(160px, 36vw, 500px); /* INCREASED */
-          max-width: 110%; /* INCREASED */
+          width: clamp(160px, 36vw, 500px);
+          max-width: 110%;
           object-fit: contain;
           position: relative;
           z-index: 10;
@@ -154,7 +158,7 @@ const AdvantageSection: React.FC = () => {
 
         @media (min-width: 768px) {
           .globe-img {
-            width: clamp(220px, 100%, 450px); /* INCREASED */
+            width: clamp(220px, 100%, 450px);
           }
         }
 
@@ -204,6 +208,12 @@ const AdvantageSection: React.FC = () => {
           z-index: 0;
         }
 
+        /* Flipping the right-aligned image logic if layout is RTL */
+        [dir="rtl"] .handling-img-wrap {
+          right: auto;
+          left: 0;
+        }
+
         .handling-img-wrap img {
           width: 100%;
           height: 100%;
@@ -224,6 +234,15 @@ const AdvantageSection: React.FC = () => {
           pointer-events: none;
         }
 
+        [dir="rtl"] .handling-gradient {
+          background: linear-gradient(to left,
+            #36B936 0%,
+            rgba(54,185,54,0.85) 30%,
+            rgba(54,185,54,0.2) 65%,
+            transparent 100%
+          );
+        }
+
         /* ── Shared card typography ── */
         .card-title {
           font-size: clamp(1.1rem, 2.2vw, 2.25rem);
@@ -231,6 +250,7 @@ const AdvantageSection: React.FC = () => {
           color: white;
           line-height: 1.15;
           margin-bottom: clamp(6px, 0.8vw, 14px);
+          white-space: pre-line; /* Allows using \n in the translation JSON instead of HTML tags */
         }
 
         .card-desc {
@@ -241,15 +261,15 @@ const AdvantageSection: React.FC = () => {
         }
       `}</style>
 
-      <section ref={sectionRef} className="advantage-section">
+      <section ref={sectionRef} className="advantage-section" dir={isRtl ? 'rtl' : 'ltr'}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
 
           {/* ── Heading ── */}
           <div className={`text-center ${ease} ${isVisible ? visible : hidden}`}
                style={{ marginBottom: 'clamp(28px, 4vw, 64px)' }}>
-            <h2 className="adv-heading">The ZAJEL Advantage.</h2>
+            <h2 className="adv-heading">{t('advantage.heading')}</h2>
             <p className="adv-subtext">
-              We combine technology, expertise, and dedication to deliver exceptional courier services you can trust.
+              {t('advantage.subtext')}
             </p>
           </div>
 
@@ -259,9 +279,9 @@ const AdvantageSection: React.FC = () => {
             {/* 1 — Globe: wide on mobile (2col), tall on desktop (1col × 2row) */}
             <div className={`adv-card card-globe ${ease} delay-100 ${isVisible ? visible : hidden}`}>
               <div className="globe-text">
-                <h3 className="card-title">Wide<br />Coverage</h3>
+                <h3 className="card-title">{t('advantage.cards.coverage.title')}</h3>
                 <p className="card-desc">
-                  Extensive network covering all major domestic cities and seamlessly connecting 200+ countries globally.
+                  {t('advantage.cards.coverage.desc')}
                 </p>
               </div>
               <div className="globe-image-wrap">
@@ -276,26 +296,26 @@ const AdvantageSection: React.FC = () => {
 
             {/* 2 — Real-Time Tracking */}
             <div className={`adv-card card-text-only ${ease} delay-200 ${isVisible ? visible : hidden}`}>
-              <h3 className="card-title">Real-Time<br />Tracking</h3>
+              <h3 className="card-title">{t('advantage.cards.tracking.title')}</h3>
               <p className="card-desc">
-                Track your shipments 24/7 with live milestone updates and automated delivery notifications.
+                {t('advantage.cards.tracking.desc')}
               </p>
             </div>
 
             {/* 3 — Transparent Pricing */}
             <div className={`adv-card card-text-only ${ease} delay-300 ${isVisible ? visible : hidden}`}>
-              <h3 className="card-title">Transparent Pricing</h3>
+              <h3 className="card-title">{t('advantage.cards.pricing.title')}</h3>
               <p className="card-desc">
-                No hidden fees. Get instant, intelligent quotes and know exactly what you will pay upfront.
+                {t('advantage.cards.pricing.desc')}
               </p>
             </div>
 
             {/* 4 — Professional Handling: spans 2 cols always */}
             <div className={`adv-card card-handling ${ease} delay-[400ms] ${isVisible ? visible : hidden}`}>
               <div className="handling-text">
-                <h3 className="card-title">Professional<br />Handling</h3>
+                <h3 className="card-title">{t('advantage.cards.handling.title')}</h3>
                 <p className="card-desc">
-                  Trained staff ensuring your packages are handled with care from pickup to delivery.
+                  {t('advantage.cards.handling.desc')}
                 </p>
               </div>
               <div className="handling-img-wrap">

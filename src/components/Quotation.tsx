@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 // ── Icons ───────────────────────────────────────────────────────────────────
-
 const HomeIcon = () => (
   <svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M14.6336 6.61583L8.3836 0.365827C8.1492 0.131584 7.83139 0 7.50001 0C7.16863 0 6.85081 0.131584 6.61641 0.365827L0.366414 6.61583C0.249777 6.7316 0.157319 6.8694 0.0944168 7.02123C0.0315145 7.17305 -0.000577075 7.33586 7.85428e-06 7.5002V15.0002C7.85428e-06 15.166 0.065856 15.3249 0.183066 15.4421C0.300276 15.5594 0.459247 15.6252 0.625008 15.6252H5.62501C5.79077 15.6252 5.94974 15.5594 6.06695 15.4421C6.18416 15.3249 6.25001 15.166 6.25001 15.0002V10.6252H8.75001V15.0002C8.75001 15.166 8.81586 15.3249 8.93307 15.4421C9.05028 15.5594 9.20925 15.6252 9.37501 15.6252H14.375C14.5408 15.6252 14.6997 15.5594 14.817 15.4421C14.9342 15.3249 15 15.166 15 15.0002V7.5002C15.0006 7.33586 14.9685 7.17305 14.9056 7.02123C14.8427 6.8694 14.7502 6.7316 14.6336 6.61583ZM13.75 14.3752H10V10.0002C10 9.83444 9.93416 9.67547 9.81695 9.55826C9.69974 9.44105 9.54077 9.3752 9.37501 9.3752H5.62501C5.45925 9.3752 5.30028 9.44105 5.18307 9.55826C5.06586 9.67547 5.00001 9.83444 5.00001 10.0002V14.3752H1.25001V7.5002L7.50001 1.2502L13.75 7.5002V14.3752Z" fill="currentColor"/>
@@ -65,16 +65,16 @@ const ChevronDown = () => (
 );
 
 // ── Shared tab styles ───────────────────────────────────────────────────────
-// wrapper: rounded-full  →  gives the outer track fully rounded pill shape
-// button:  rounded-full  →  tight inner pill matching the wrapper shape
 const TAB_WRAPPER = 'flex bg-[#EFEFEF] rounded-full p-1 gap-1';
-const TAB_BTN_ACTIVE = 'bg-[#064423] text-[#36B936]';   // dark bg, light green text
+const TAB_BTN_ACTIVE = 'bg-[#064423] text-[#36B936]';   
 const TAB_BTN_INACTIVE = 'text-[#064423]/40 hover:text-[#064423]/70';
 const TAB_BTN_BASE = `flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-full text-[13px] font-light transition-all duration-200`;
 
 // ── Main Component ──────────────────────────────────────────────────────────
-
 const CourierCalculator: React.FC = () => {
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === 'ar';
+
   const [routeType, setRouteType]       = useState<'domestic' | 'international'>('domestic');
   const [shipmentType, setShipmentType] = useState<'document' | 'parcel'>('document');
   const [weightUnit, setWeightUnit]     = useState<'Kg' | 'G'>('Kg');
@@ -85,257 +85,287 @@ const CourierCalculator: React.FC = () => {
   const [length, setLength]             = useState('');
   const [width, setWidth]               = useState('');
   const [height, setHeight]             = useState('');
-  const [selectedBox, setSelectedBox] = useState<string | null>(null);
+  const [selectedBox, setSelectedBox]   = useState<string | null>(null);
+
   const BOX_SIZES = [
-    { label: 'Small Box',  dims: 'L23 x W14 x H4CM'  },
-    { label: 'Medium Box', dims: 'L35 x W20 x H15CM' },
-    { label: 'Large Box',  dims: 'L75 x W35 x H35CM' },
+    { labelKey: 'calculator.boxes.small.label',  dims: 'L23 x W14 x H4CM'  },
+    { labelKey: 'calculator.boxes.medium.label', dims: 'L35 x W20 x H15CM' },
+    { labelKey: 'calculator.boxes.large.label',  dims: 'L75 x W35 x H35CM' },
   ];
-  const UAE_CITIES = ['Dubai','Abu Dhabi','Sharjah','Ajman','Ras Al Khaimah','Fujairah','Umm Al Quwain'];
-  const COUNTRIES  = ['Saudi Arabia','Qatar','Kuwait','Bahrain','Oman','Jordan','Egypt','USA','UK','India'];
-  const options    = routeType === 'domestic' ? UAE_CITIES : COUNTRIES;
+
+  // Translation keys for options
+  const UAE_CITIES = ['dubai','abuDhabi','sharjah','ajman','rasAlKhaimah','fujairah','ummAlQuwain'];
+  const COUNTRIES  = ['saudiArabia','qatar','kuwait','bahrain','oman','jordan','egypt','usa','uk','india'];
+  
+  const options = routeType === 'domestic' ? UAE_CITIES : COUNTRIES;
 
   const inputCls = 'w-full border border-[#E8EBE8] rounded-xl px-3 py-3 text-[13px] font-light text-[#064423] placeholder-[#B0BAB0] bg-white focus:outline-none focus:border-[#36B936] transition-colors';
 
   return (
-    <div
-      className="w-full min-h-screen bg-white flex flex-col items-center px-4 pt-28 pb-16"
-      style={{ fontFamily: '"Manrope", sans-serif' }}
-    >
-      {/* ── Header ─────────────────────────────────────────────────────── */}
-      <div className="text-center mb-10 w-full max-w-[900px]">
-        <p className="text-[#064423]/40 text-[13px] font-light mb-3 tracking-wide">
-          Get instant, accurate shipping quotes in seconds
-        </p>
-        <h1
-          className="text-[#064423] font-light leading-tight mb-7 tracking-tight"
-          style={{ fontSize: 'clamp(1.9rem, 5vw, 3rem)' }}
-        >
-          Courier Quotation Calculator
-        </h1>
+    <>
+      <style>{`
+        /* Swap chevron position dynamically based on direction */
+        [dir="rtl"] .select-chevron { left: 0.75rem; right: auto; }
+        [dir="ltr"] .select-chevron { right: 0.75rem; left: auto; }
+      `}</style>
 
-        {/* Badge pills */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
-          {['No hidden fees', 'Secure & insured', 'Instant calculation'].map((label) => (
-            <span
-              key={label}
-              className="flex items-center gap-1.5 border border-[#36B936]/20 text-[#064423]/60 text-[12px] font-light px-4 py-1.5 rounded-full"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#36B936] inline-block" />
-              {label}
-            </span>
-          ))}
-        </div>
+      <div
+        dir={isRtl ? 'rtl' : 'ltr'}
+        className="w-full min-h-screen bg-white flex flex-col items-center px-4 pt-28 pb-16"
+        style={{ fontFamily: '"Manrope", sans-serif' }}
+      >
+        {/* ── Header ─────────────────────────────────────────────────────── */}
+        <div className="text-center mb-10 w-full max-w-[900px]">
+          <p className="text-[#064423]/40 text-[13px] font-light mb-3 tracking-wide">
+            {t('calculator.subtitle')}
+          </p>
+          <h1
+            className="text-[#064423] font-light leading-tight mb-7 tracking-tight"
+            style={{ fontSize: 'clamp(1.9rem, 5vw, 3rem)' }}
+          >
+            {t('calculator.title')}
+          </h1>
 
-        {/* Stats */}
-        <div className="flex items-center justify-center gap-14">
-          {[{ value: '200+', label: 'Countries' }, { value: '24/7', label: 'Support' }, { value: '99.5%', label: 'On-time' }].map(({ value, label }) => (
-            <div key={label} className="text-center">
-              <p className="text-[#064423] text-[1.7rem] font-light leading-none">{value}</p>
-              <p className="text-[#064423]/40 text-[12px] font-light mt-1">{label}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* ── Calculator Card ─────────────────────────────────────────────── */}
-      <div className="w-full max-w-[980px] bg-[#EEF5EE] rounded-[2rem] p-6 md:p-8">
-        <h2 className="text-[#064423] text-[1.15rem] font-light text-center mb-6 tracking-tight">
-          Calculate Your Shipping Cost
-        </h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-
-          {/* ── LEFT: Origin & Destination ──────────────────────────────── */}
-          <div className="bg-white rounded-[1.5rem] p-6 flex flex-col gap-5">
-            <h3 className="text-[#064423]/80 text-[13px] font-normal text-center">
-              Select Origin &amp; Destination
-            </h3>
-
-            {/* Route toggle */}
-            <div className={TAB_WRAPPER}>
-              {(['domestic', 'international'] as const).map((type) => (
-                <button
-                  key={type}
-                  onClick={() => setRouteType(type)}
-                  className={`${TAB_BTN_BASE} ${routeType === type ? TAB_BTN_ACTIVE : TAB_BTN_INACTIVE}`}
-                >
-                  {type === 'domestic' ? <HomeIcon /> : <GlobeIcon />}
-                  {type.charAt(0).toUpperCase() + type.slice(1)}
-                </button>
-              ))}
-            </div>
-
-            {/* From / To */}
-            <div className="flex flex-col gap-4">
-              {/* From */}
-              <div className="flex items-start gap-3">
-                <div className="flex flex-col items-center mt-1 flex-shrink-0">
-                  <PinFromIcon />
-                  <div style={{ width: '2px', height: '44px', borderLeft: '2px dashed #36B936', marginTop: '4px' }} />
-                </div>
-                <div className="flex-1">
-                  <label className="text-[#064423]/70 text-[11px] font-normal mb-1.5 flex items-center gap-0.5">
-                    From (Origin) <span className="text-[#36B936] ml-0.5">*</span>
-                  </label>
-                  <div className="relative">
-                    <select value={from} onChange={(e) => setFrom(e.target.value)} className={inputCls + ' appearance-none cursor-pointer'}>
-                      <option value="">Select an option</option>
-                      {options.map((o) => <option key={o} value={o}>{o}</option>)}
-                    </select>
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"><ChevronDown /></span>
-                  </div>
-                </div>
-              </div>
-
-              {/* To */}
-              <div className="flex items-start gap-3">
-                <div className="flex-shrink-0 mt-1">
-                  <PinToIcon />
-                </div>
-                <div className="flex-1">
-                  <label className="text-[#064423]/70 text-[11px] font-normal mb-1.5 flex items-center gap-0.5">
-                    To (Destination) <span className="text-[#36B936] ml-0.5">*</span>
-                  </label>
-                  <div className="relative">
-                    <select value={to} onChange={(e) => setTo(e.target.value)} className={inputCls + ' appearance-none cursor-pointer'}>
-                      <option value="">Select an option</option>
-                      {options.map((o) => <option key={o} value={o}>{o}</option>)}
-                    </select>
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"><ChevronDown /></span>
-                  </div>
-                </div>
-              </div>
-            </div>
+          {/* Badge pills */}
+          <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
+            {[t('calculator.badges.noHiddenFees'), t('calculator.badges.secure'), t('calculator.badges.instant')].map((label) => (
+              <span
+                key={label}
+                className="flex items-center gap-1.5 border border-[#36B936]/20 text-[#064423]/60 text-[12px] font-light px-4 py-1.5 rounded-full"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-[#36B936] inline-block" />
+                {label}
+              </span>
+            ))}
           </div>
 
-          {/* ── RIGHT: Shipment Details ──────────────────────────────────── */}
-          <div className="bg-white rounded-[1.5rem] p-6 flex flex-col gap-4">
-            <h3 className="text-[#064423]/80 text-[13px] font-normal text-center">
-              Shipment Details
-            </h3>
+          {/* Stats */}
+          <div className="flex items-center justify-center gap-14">
+            {[
+              { value: isRtl ? '٢٠٠+' : '200+', label: t('calculator.stats.countries') }, 
+              { value: isRtl ? '٢٤/٧' : '24/7', label: t('calculator.stats.support') }, 
+              { value: isRtl ? '٩٩.٥٪' : '99.5%', label: t('calculator.stats.ontime') }
+            ].map(({ value, label }) => (
+              <div key={label} className="text-center">
+                <p className="text-[#064423] text-[1.7rem] font-light leading-none">{value}</p>
+                <p className="text-[#064423]/40 text-[12px] font-light mt-1">{label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
 
-            {/* Shipment type toggle */}
-            <div className={TAB_WRAPPER}>
-              {(['document', 'parcel'] as const).map((type) => (
-                <button
-                  key={type}
-                  onClick={() => setShipmentType(type)}
-                  className={`${TAB_BTN_BASE} ${shipmentType === type ? TAB_BTN_ACTIVE : TAB_BTN_INACTIVE}`}
-                >
-                  {type === 'document' ? <DocumentIcon /> : <ParcelIcon />}
-                  {type.charAt(0).toUpperCase() + type.slice(1)}
-                </button>
-              ))}
-            </div>
+        {/* ── Calculator Card ─────────────────────────────────────────────── */}
+        <div className="w-full max-w-[980px] bg-[#EEF5EE] rounded-[2rem] p-6 md:p-8">
+          <h2 className="text-[#064423] text-[1.15rem] font-light text-center mb-6 tracking-tight">
+            {t('calculator.formTitle')}
+          </h2>
 
-            {/* Info banner */}
-            <div className="flex items-center gap-2 bg-[#F6FCF6] border border-[#36B936]/10 rounded-xl px-3 py-2.5">
-              <InfoIcon />
-              <p className="text-[#064423]/50 text-[11px] font-light leading-snug">
-                Maximum allowed size Length 120(cm) x Width 80(cm) x Height 60(cm)
-              </p>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
 
-            {/* Weight + Shipment Value */}
-            <div className="flex gap-3">
-              <div className="flex-1">
-                <label className="text-[#064423]/70 text-[11px] font-normal mb-1.5 flex items-center gap-0.5">
-                  Weight <span className="text-[#36B936] ml-0.5">*</span>
-                </label>
-                <div className="flex items-center gap-2">
-                  <input
-                    type="number" value={weight} onChange={(e) => setWeight(e.target.value)}
-                    placeholder="e.g, 45"
-                    className={inputCls + ' flex-1 min-w-0'}
-                  />
-                  {/* Kg / G toggle */}
-                  <div className="flex bg-[#EFEFEF] rounded-full p-1 flex-shrink-0">
-                    {(['Kg', 'G'] as const).map((u) => (
-                      <button
-                        key={u}
-                        onClick={() => setWeightUnit(u)}
-                        className={`px-3 py-1.5 rounded-full text-[11px] font-light transition-all duration-200 ${
-                          weightUnit === u ? 'bg-[#064423] text-[#36B936] shadow-sm' : 'text-[#064423]/40 hover:text-[#064423]/70'
-                        }`}
-                      >
-                        {u}
-                      </button>
-                    ))}
+            {/* ── LEFT: Origin & Destination ──────────────────────────────── */}
+            <div className="bg-white rounded-[1.5rem] p-6 flex flex-col gap-5">
+              <h3 className="text-[#064423]/80 text-[13px] font-normal text-center">
+                {t('calculator.leftPanel.title')}
+              </h3>
+
+              {/* Route toggle */}
+              <div className={TAB_WRAPPER}>
+                {(['domestic', 'international'] as const).map((type) => (
+                  <button
+                    key={type}
+                    onClick={() => setRouteType(type)}
+                    className={`${TAB_BTN_BASE} ${routeType === type ? TAB_BTN_ACTIVE : TAB_BTN_INACTIVE}`}
+                  >
+                    {type === 'domestic' ? <HomeIcon /> : <GlobeIcon />}
+                    {t(`calculator.tabs.${type}`)}
+                  </button>
+                ))}
+              </div>
+
+              {/* From / To */}
+              <div className="flex flex-col gap-4">
+                {/* From */}
+                <div className="flex items-start gap-3">
+                  <div className="flex flex-col items-center mt-1 flex-shrink-0">
+                    <PinFromIcon />
+                    <div style={{ width: '2px', height: '44px', borderLeft: '2px dashed #36B936', marginTop: '4px' }} />
+                  </div>
+                  <div className="flex-1">
+                    <label className="text-[#064423]/70 text-[11px] font-normal mb-1.5 flex items-center gap-0.5">
+                      {t('calculator.from.label')} <span className="text-[#36B936] mx-0.5">*</span>
+                    </label>
+                    <div className="relative">
+                      <select value={from} onChange={(e) => setFrom(e.target.value)} className={inputCls + ' appearance-none cursor-pointer'}>
+                        <option value="">{t('calculator.dropdownDefault')}</option>
+                        {options.map((o) => (
+                          <option key={o} value={o}>
+                            {t(`calculator.locations.${o}`)}
+                          </option>
+                        ))}
+                      </select>
+                      <span className="select-chevron absolute top-1/2 -translate-y-1/2 pointer-events-none">
+                        <ChevronDown />
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* To */}
+                <div className="flex items-start gap-3">
+                  <div className="flex-shrink-0 mt-1">
+                    <PinToIcon />
+                  </div>
+                  <div className="flex-1">
+                    <label className="text-[#064423]/70 text-[11px] font-normal mb-1.5 flex items-center gap-0.5">
+                      {t('calculator.to.label')} <span className="text-[#36B936] mx-0.5">*</span>
+                    </label>
+                    <div className="relative">
+                      <select value={to} onChange={(e) => setTo(e.target.value)} className={inputCls + ' appearance-none cursor-pointer'}>
+                        <option value="">{t('calculator.dropdownDefault')}</option>
+                        {options.map((o) => (
+                          <option key={o} value={o}>
+                            {t(`calculator.locations.${o}`)}
+                          </option>
+                        ))}
+                      </select>
+                      <span className="select-chevron absolute top-1/2 -translate-y-1/2 pointer-events-none">
+                        <ChevronDown />
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
-
-              <div className="flex-1">
-                <label className="text-[#064423]/70 text-[11px] font-normal mb-1.5 flex items-center gap-0.5">
-                  Shipment Value <span className="text-[#36B936] ml-0.5">*</span>
-                </label>
-                <input
-                  type="number" value={shipmentValue} onChange={(e) => setShipmentValue(e.target.value)}
-                  placeholder="e.g, 45" className={inputCls}
-                />
-              </div>
             </div>
 
-            {/* Unsure about sizes */}
-            {(
-              <div>
-                <p className="text-[#064423]/70 text-[12px] font-light mb-2">Unsure about the sizes?</p>
-                <div className="grid grid-cols-3 gap-2">
-                {(shipmentType === 'document' ? BOX_SIZES.slice(0, 1) : BOX_SIZES).map((box) => {
-                    const isSelected = selectedBox === box.label;
-                    return (
-                      <button
-                        key={box.label}
-                        onClick={() => setSelectedBox(box.label)}
-                        className={`flex flex-col items-center gap-1 px-2 py-3 rounded-2xl border text-center transition-all duration-200 ${
-                          isSelected
-                            ? 'border-[#36B936] bg-[#F0FAF0]'
-                            : 'border-[#E8EBE8] bg-white hover:border-[#36B936]/40'
-                        }`}
-                      >
-                        <BoxPresetIcon />
-                        <p className={`text-[10px] leading-tight ${isSelected ? 'font-semibold text-[#064423]' : 'font-light text-[#064423]/50'}`}>
-                          {box.dims}
-                        </p>
-                        <p className={`text-[11px] ${isSelected ? 'font-semibold text-[#064423]' : 'font-light text-[#064423]/60'}`}>
-                          {box.label}
-                        </p>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
+            {/* ── RIGHT: Shipment Details ──────────────────────────────────── */}
+            <div className="bg-white rounded-[1.5rem] p-6 flex flex-col gap-4">
+              <h3 className="text-[#064423]/80 text-[13px] font-normal text-center">
+                {t('calculator.rightPanel.title')}
+              </h3>
 
-            {/* Dimensions */}
-            <div className="grid grid-cols-3 gap-3">
-              {[
-                { label: 'Length',     value: length, set: setLength },
-                { label: 'Width (CM)', value: width,  set: setWidth  },
-                { label: 'Height (CM)',value: height, set: setHeight },
-              ].map(({ label, value, set }) => (
-                <div key={label}>
+              {/* Shipment type toggle */}
+              <div className={TAB_WRAPPER}>
+                {(['document', 'parcel'] as const).map((type) => (
+                  <button
+                    key={type}
+                    onClick={() => setShipmentType(type)}
+                    className={`${TAB_BTN_BASE} ${shipmentType === type ? TAB_BTN_ACTIVE : TAB_BTN_INACTIVE}`}
+                  >
+                    {type === 'document' ? <DocumentIcon /> : <ParcelIcon />}
+                    {t(`calculator.tabs.${type}`)}
+                  </button>
+                ))}
+              </div>
+
+              {/* Info banner */}
+              <div className="flex items-center gap-2 bg-[#F6FCF6] border border-[#36B936]/10 rounded-xl px-3 py-2.5">
+                <InfoIcon />
+                <p className="text-[#064423]/50 text-[11px] font-light leading-snug">
+                  {t('calculator.infoBanner')}
+                </p>
+              </div>
+
+              {/* Weight + Shipment Value */}
+              <div className="flex gap-3">
+                <div className="flex-1">
                   <label className="text-[#064423]/70 text-[11px] font-normal mb-1.5 flex items-center gap-0.5">
-                    {label} <span className="text-[#36B936] ml-0.5">*</span>
+                    {t('calculator.weight.label')} <span className="text-[#36B936] mx-0.5">*</span>
+                  </label>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="number" value={weight} onChange={(e) => setWeight(e.target.value)}
+                      placeholder={t('calculator.weight.placeholder')}
+                      className={inputCls + ' flex-1 min-w-0'}
+                    />
+                    {/* Kg / G toggle */}
+                    <div className="flex bg-[#EFEFEF] rounded-full p-1 flex-shrink-0">
+                      {(['Kg', 'G'] as const).map((u) => (
+                        <button
+                          key={u}
+                          onClick={() => setWeightUnit(u)}
+                          className={`px-3 py-1.5 rounded-full text-[11px] font-light transition-all duration-200 ${
+                            weightUnit === u ? 'bg-[#064423] text-[#36B936] shadow-sm' : 'text-[#064423]/40 hover:text-[#064423]/70'
+                          }`}
+                        >
+                          {u}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex-1">
+                  <label className="text-[#064423]/70 text-[11px] font-normal mb-1.5 flex items-center gap-0.5">
+                    {t('calculator.shipmentValue.label')} <span className="text-[#36B936] mx-0.5">*</span>
                   </label>
                   <input
-                    type="number" value={value} onChange={(e) => set(e.target.value)}
-                    placeholder="e.g, 45" className={inputCls}
+                    type="number" value={shipmentValue} onChange={(e) => setShipmentValue(e.target.value)}
+                    placeholder={t('calculator.shipmentValue.placeholder')} className={inputCls}
                   />
                 </div>
-              ))}
+              </div>
+
+              {/* Unsure about sizes */}
+              {(
+                <div>
+                  <p className="text-[#064423]/70 text-[12px] font-light mb-2">{t('calculator.unsureSize')}</p>
+                  <div className="grid grid-cols-3 gap-2">
+                  {(shipmentType === 'document' ? BOX_SIZES.slice(0, 1) : BOX_SIZES).map((box) => {
+                      const label = t(box.labelKey);
+                      const isSelected = selectedBox === label;
+                      return (
+                        <button
+                          key={label}
+                          onClick={() => setSelectedBox(label)}
+                          className={`flex flex-col items-center gap-1 px-2 py-3 rounded-2xl border text-center transition-all duration-200 ${
+                            isSelected
+                              ? 'border-[#36B936] bg-[#F0FAF0]'
+                              : 'border-[#E8EBE8] bg-white hover:border-[#36B936]/40'
+                          }`}
+                        >
+                          <BoxPresetIcon />
+                          <p className={`text-[10px] leading-tight ${isSelected ? 'font-semibold text-[#064423]' : 'font-light text-[#064423]/50'}`}>
+                            {box.dims}
+                          </p>
+                          <p className={`text-[11px] mt-1 ${isSelected ? 'font-semibold text-[#064423]' : 'font-light text-[#064423]/60'}`}>
+                            {label}
+                          </p>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Dimensions */}
+              <div className="grid grid-cols-3 gap-3">
+                {[
+                  { labelKey: 'calculator.dims.length', value: length, set: setLength },
+                  { labelKey: 'calculator.dims.width',  value: width,  set: setWidth  },
+                  { labelKey: 'calculator.dims.height', value: height, set: setHeight },
+                ].map(({ labelKey, value, set }) => (
+                  <div key={labelKey}>
+                    <label className="text-[#064423]/70 text-[11px] font-normal mb-1.5 flex items-center gap-0.5">
+                      {t(labelKey)} <span className="text-[#36B936] mx-0.5">*</span>
+                    </label>
+                    <input
+                      type="number" value={value} onChange={(e) => set(e.target.value)}
+                      placeholder={t('calculator.weight.placeholder')} className={inputCls}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              {/* CTA */}
+              <button className="w-full bg-[#36B936] hover:bg-[#2da52d] active:scale-[0.99] text-white font-light text-[14px] py-4 rounded-full transition-all duration-200 mt-1">
+                {t('calculator.submitBtn')}
+              </button>
             </div>
 
-            {/* CTA */}
-            <button className="w-full bg-[#36B936] hover:bg-[#2da52d] active:scale-[0.99] text-white font-light text-[14px] py-4 rounded-full transition-all duration-200 mt-1">
-              Calculate Shipping Cost
-            </button>
           </div>
-
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

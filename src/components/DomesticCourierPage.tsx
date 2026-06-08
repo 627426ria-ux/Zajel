@@ -1,4 +1,5 @@
-
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 /* ─────────────────────────────────────────────────────────────────
    Fluid Design Token System
@@ -108,6 +109,14 @@ const CSS = `
     z-index: 2;
   }
 
+  [dir="rtl"] .dh-scrim-left {
+    background: linear-gradient(
+      to left,
+      rgba(0,0,0,0.32) 0%,
+      transparent      55%
+    );
+  }
+
   /* ── Content block ── */
   .dh-content {
     position: absolute;
@@ -121,6 +130,11 @@ const CSS = `
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  [dir="rtl"] .dh-content {
+    left: auto;
+    right: 0;
   }
 
   /* ── Eyebrow tag ── */
@@ -170,6 +184,7 @@ const CSS = `
     letter-spacing: -0.028em;
     color: #fff;
     margin: 0 0 var(--space-sm);
+    white-space: pre-line; /* Enables \n from translation JSON */
     animation: dh-up 0.8s 0.32s cubic-bezier(0.22,1,0.36,1) both;
   }
 
@@ -246,6 +261,12 @@ const CSS = `
     animation: dh-fade 0.9s 0.7s cubic-bezier(0.22,1,0.36,1) both;
   }
 
+  [dir="rtl"] .dh-stats {
+    right: auto;
+    left: var(--content-pad);
+    align-items: flex-start;
+  }
+
   .dh-stat {
     display: flex;
     flex-direction: column;
@@ -258,6 +279,10 @@ const CSS = `
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     min-width: clamp(80px, 8vw, 110px);
+  }
+
+  [dir="rtl"] .dh-stat {
+    align-items: flex-start;
   }
 
   .dh-stat-value {
@@ -299,14 +324,19 @@ const IconPlus = () => (
   </svg>
 );
 
-
-
 /* ══════════════════════════════════════════════
    Component
    ══════════════════════════════════════════════ */
 const DomesticHero = () => {
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === 'ar';
+
   return (
-    <section className="dh-root dh-section" aria-label="Domestic courier hero">
+    <section 
+      dir={isRtl ? 'rtl' : 'ltr'} 
+      className="dh-root dh-section" 
+      aria-label="Domestic courier hero"
+    >
       <style>{CSS}</style>
 
       <div className="dh-card" role="img" aria-label="Delivery driver handing over a parcel">
@@ -327,27 +357,22 @@ const DomesticHero = () => {
 
         {/* ── Layer 3: Content ── */}
         <div className="dh-content">
-
-          
-
           <h1 className="dh-h1">
-            Domestic<br/>
-            Courier Service
+            {t('domesticHero.title')}
           </h1>
 
           <p className="dh-body">
-            Seamless delivery with full tracking, powered by a fleet of 100+ vans and bikes. Trusted by eCommerce, SMEs, and government for express delivery within 24 hours.
+            {t('domesticHero.description')}
           </p>
 
           <button className="dh-btn">
             <span className="dh-btn-icon"><IconPlus /></span>
-            Get a Quote
+            {t('domesticHero.button')}
           </button>
         </div>
 
         {/* ── Layer 4: Stats — bottom-right ── */}
         
-
       </div>
     </section>
   );

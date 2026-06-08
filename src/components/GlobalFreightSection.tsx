@@ -1,18 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-const cards = [
-  {
-    titleLine1: 'On Demand',
-    titleLine2: 'Express Delivery',
-    description: 'Reach over 200 countries with end-to-end tracking and customs support.',
-    buttonLabel: 'Book Now',
-  },
-  {
-    titleLine1: 'International',
-    titleLine2: 'Shipping',
-    description: 'Reach over 200 countries with end-to-end tracking and customs support.',
-    buttonLabel: 'Get a Quote',
-  },
-];
+import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const PlaneIcon = () => (
   <svg
@@ -30,6 +17,9 @@ const PlaneIcon = () => (
 );
 
 const GlobalFreightSection = () => {
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === 'ar';
+
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -51,9 +41,25 @@ const GlobalFreightSection = () => {
   const hidden = "opacity-0 translate-y-10";
   const vis = "opacity-100 translate-y-0";
 
+  const cards = [
+    {
+      titleLine1: t('globalFreight.cards.0.titleLine1'),
+      titleLine2: t('globalFreight.cards.0.titleLine2'),
+      description: t('globalFreight.cards.0.description'),
+      buttonLabel: t('globalFreight.cards.0.buttonLabel'),
+    },
+    {
+      titleLine1: t('globalFreight.cards.1.titleLine1'),
+      titleLine2: t('globalFreight.cards.1.titleLine2'),
+      description: t('globalFreight.cards.1.description'),
+      buttonLabel: t('globalFreight.cards.1.buttonLabel'),
+    },
+  ];
+
   return (
     <section
       ref={sectionRef}
+      dir={isRtl ? 'rtl' : 'ltr'}
       className="w-full py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-10 bg-white overflow-hidden"
       style={{ fontFamily: '"Manrope", sans-serif' }}
     >
@@ -64,11 +70,8 @@ const GlobalFreightSection = () => {
           className={`text-center mb-10 sm:mb-12 lg:mb-14 ${animateBase} ${isVisible ? vis : hidden}`}
           style={{ transitionDelay: '0ms' }}
         >
-          <h2 className="font-light text-[#0A4D26] leading-[1.15]
-                         text-[2rem] sm:text-[2.6rem] lg:text-[3.2rem]">
-            Global Freight Solutions
-            <br />
-            Built for Speed
+          <h2 className="font-light text-[#0A4D26] leading-[1.15] text-[2rem] sm:text-[2.6rem] lg:text-[3.2rem] whitespace-pre-line">
+            {t('globalFreight.heading')}
           </h2>
         </div>
 

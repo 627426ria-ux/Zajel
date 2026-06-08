@@ -1,22 +1,19 @@
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, CheckCircle2 } from 'lucide-react';
-
-// Import the data you created earlier
-import { SERVICES_DATA } from '../data/servicesData'; 
+import { SERVICES_DATA } from '../data/servicesData';
 
 export default function ServiceDetailPage() {
-  // Grab the 'id' from the URL (e.g., /services/cash-on-delivery -> id = 'cash-on-delivery')
   const { id } = useParams<{ id: string }>();
-
-  // Find the matching service in your data file
   const service = SERVICES_DATA.find((s) => s.id === id);
 
-  // If someone types a wrong URL, show them this error state
   if (!service) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white" style={{ fontFamily: '"Manrope", sans-serif' }}>
+      <div
+        className="min-h-screen flex items-center justify-center bg-white px-5"
+        style={{ fontFamily: '"Manrope", sans-serif' }}
+      >
         <div className="text-center">
-          <h1 className="text-[#0A4D26] text-[2rem] font-light mb-4">Service Not Found</h1>
+          <h1 className="text-[#0A4D26] text-[1.6rem] font-light mb-4">Service Not Found</h1>
           <Link to="/all-services" className="text-[#36B936] hover:underline font-medium text-[15px]">
             Return to All Services
           </Link>
@@ -25,69 +22,236 @@ export default function ServiceDetailPage() {
     );
   }
 
-  // The minimal, single-section layout
   return (
-    <div className="bg-white min-h-screen pt-32 pb-24" style={{ fontFamily: '"Manrope", sans-serif' }}>
-      <div className="max-w-[800px] mx-auto px-6 sm:px-8">
-        
-        {/* Back Link */}
-        <Link 
-          to="/all-services" 
-          className="inline-flex items-center gap-2 text-[#0A4D26]/50 hover:text-[#36B936] transition-colors font-medium text-[13px] sm:text-[14px] mb-12"
-        >
-          <ArrowLeft size={16} /> Back to All Services
-        </Link>
+    <>
+      <style>{`
+        .sdp-root {
+          font-family: 'Manrope', sans-serif;
+          background: white;
+          min-height: 100vh;
+          /* Reduced top padding on mobile so content isn't buried */
+          padding-top: clamp(88px, 14vw, 128px);
+          padding-bottom: clamp(56px, 8vw, 96px);
+        }
 
-        {/* Header Section */}
-        <div className="flex items-center gap-4 mb-6">
-          <div className="w-14 h-14 rounded-full bg-[#36B936]/10 text-[#36B936] flex items-center justify-center shrink-0">
-            {service.icon}
+        .sdp-inner {
+          max-width: 800px;
+          margin: 0 auto;
+          /* Tighter horizontal padding on small screens */
+          padding-left: clamp(16px, 5vw, 32px);
+          padding-right: clamp(16px, 5vw, 32px);
+        }
+
+        /* ── Back link ── */
+        .sdp-back {
+          display: inline-flex;
+          align-items: center;
+          gap: 7px;
+          color: rgba(10, 77, 38, 0.5);
+          font-size: 13px;
+          font-weight: 500;
+          text-decoration: none;
+          margin-bottom: clamp(28px, 6vw, 48px);
+          transition: color 0.2s ease;
+        }
+        .sdp-back:hover { color: #36B936; }
+
+        /* ── Header ── */
+        .sdp-header {
+          display: flex;
+          align-items: flex-start;
+          gap: clamp(12px, 3vw, 18px);
+          margin-bottom: clamp(14px, 3vw, 24px);
+        }
+
+        .sdp-icon {
+          /* Fixed small size on mobile so it doesn't crowd the title */
+          width: clamp(40px, 10vw, 56px);
+          height: clamp(40px, 10vw, 56px);
+          border-radius: 50%;
+          background: rgba(54, 185, 54, 0.10);
+          color: #36B936;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          /* Align to first line of title */
+          margin-top: 4px;
+        }
+
+        .sdp-title {
+          font-size: clamp(1.75rem, 6vw, 3.5rem);
+          font-weight: 300;
+          color: #0A4D26;
+          line-height: 1.1;
+          letter-spacing: -0.025em;
+          margin: 0;
+        }
+
+        .sdp-subtitle {
+          color: #36B936;
+          font-size: clamp(13px, 2.5vw, 18px);
+          font-weight: 500;
+          letter-spacing: 0.02em;
+          margin-bottom: clamp(28px, 6vw, 48px);
+          /* Indent to align with title (icon width + gap) */
+          padding-left: calc(clamp(40px, 10vw, 56px) + clamp(12px, 3vw, 18px));
+        }
+
+        /* ── Overview ── */
+        .sdp-overview {
+          margin-bottom: clamp(28px, 6vw, 48px);
+        }
+        .sdp-overview p {
+          color: #6b7280;
+          font-weight: 300;
+          line-height: 1.75;
+          font-size: clamp(14px, 2vw, 16px);
+          margin: 0;
+        }
+
+        /* ── Key Advantages ── */
+        .sdp-features {
+          margin-bottom: clamp(36px, 8vw, 64px);
+        }
+        .sdp-features-heading {
+          color: #0A4D26;
+          font-size: clamp(1rem, 2.5vw, 1.25rem);
+          font-weight: 500;
+          margin-bottom: clamp(16px, 3vw, 24px);
+          padding-bottom: clamp(12px, 2vw, 16px);
+          border-bottom: 1px solid #f3f4f6;
+        }
+        .sdp-features-list {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          flex-direction: column;
+          gap: clamp(12px, 2.5vw, 18px);
+        }
+        .sdp-feature-item {
+          display: flex;
+          align-items: flex-start;
+          gap: clamp(10px, 2vw, 14px);
+        }
+        .sdp-feature-icon {
+          color: #36B936;
+          flex-shrink: 0;
+          /* Nudge down to align with text baseline */
+          margin-top: 2px;
+          /* Slightly smaller icon on mobile */
+          width: clamp(16px, 3.5vw, 20px);
+          height: clamp(16px, 3.5vw, 20px);
+        }
+        .sdp-feature-text {
+          color: #6b7280;
+          font-weight: 300;
+          line-height: 1.65;
+          font-size: clamp(13px, 2vw, 15px);
+        }
+
+        /* ── CTA Box ── */
+        .sdp-cta {
+          background: #F8FAF8;
+          border-radius: clamp(1.25rem, 4vw, 2rem);
+          /* Stack vertically on mobile, row on sm+ */
+          padding: clamp(20px, 5vw, 40px);
+          display: flex;
+          flex-direction: column;
+          gap: clamp(16px, 3vw, 24px);
+          border: 1px solid #f3f4f6;
+        }
+
+        @media (min-width: 540px) {
+          .sdp-cta {
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+          }
+          .sdp-cta-btn {
+            width: auto !important;
+            white-space: nowrap;
+          }
+        }
+
+        .sdp-cta-heading {
+          color: #0A4D26;
+          font-size: clamp(1rem, 2.5vw, 1.25rem);
+          font-weight: 500;
+          margin: 0 0 6px;
+        }
+        .sdp-cta-sub {
+          color: rgba(10, 77, 38, 0.65);
+          font-size: clamp(12px, 1.8vw, 14px);
+          font-weight: 300;
+          margin: 0;
+        }
+        .sdp-cta-btn {
+          width: 100%;
+          background: #0A4D26;
+          color: #36B936;
+          border: none;
+          border-radius: 9999px;
+          padding: clamp(11px, 2vw, 14px) clamp(22px, 4vw, 32px);
+          font-size: clamp(13px, 1.8vw, 14px);
+          font-weight: 500;
+          cursor: pointer;
+          box-shadow: 0 4px 14px rgba(10,77,38,0.18);
+          transition: background 0.25s ease, transform 0.15s ease;
+          font-family: 'Manrope', sans-serif;
+        }
+        .sdp-cta-btn:hover { background: #000; }
+        .sdp-cta-btn:active { transform: scale(0.97); }
+      `}</style>
+
+      <div className="sdp-root">
+        <div className="sdp-inner">
+
+          {/* Back */}
+          <Link to="/all-services" className="sdp-back">
+            <ArrowLeft size={15} />
+            Back to All Services
+          </Link>
+
+          {/* Header: icon + title on same row */}
+          <div className="sdp-header">
+            <div className="sdp-icon">{service.icon}</div>
+            <h1 className="sdp-title">{service.title}</h1>
           </div>
-          <h1 className="text-[#0A4D26] text-[2.5rem] sm:text-[3rem] lg:text-[3.5rem] font-light leading-[1.1] tracking-tight">
-            {service.title}
-          </h1>
-        </div>
 
-        <h3 className="text-[#36B936] text-[16px] sm:text-[18px] font-medium tracking-wide mb-12">
-          {service.subtitle}
-        </h3>
+          {/* Subtitle — indented to align with title */}
+          <h3 className="sdp-subtitle">{service.subtitle}</h3>
 
-        {/* Overview Paragraph */}
-        <div className="mb-12">
-          <p className="text-gray-600 font-light leading-relaxed text-[15px] sm:text-[16px]">
-            {service.overview}
-          </p>
-        </div>
-
-        {/* Key Features List */}
-        <div className="mb-16">
-          <h4 className="text-[#0A4D26] text-[1.25rem] font-medium mb-6 pb-4 border-b border-gray-100">
-            Key Advantages
-          </h4>
-          <ul className="space-y-4">
-            {service.features.map((feature, idx) => (
-              <li key={idx} className="flex items-start gap-3">
-                <CheckCircle2 size={20} className="text-[#36B936] shrink-0 mt-0.5" />
-                <span className="text-gray-600 font-light leading-relaxed text-[14px] sm:text-[15px]">
-                  {feature}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Minimal Call to Action Box */}
-        <div className="bg-[#F8FAF8] rounded-[2rem] p-8 sm:p-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 border border-gray-100">
-          <div>
-            <h4 className="text-[#0A4D26] text-[1.25rem] font-medium mb-2">Ready to ship with us?</h4>
-            <p className="text-[#0A4D26]/70 font-light text-[14px]">Get a tailored quote for your specific needs.</p>
+          {/* Overview */}
+          <div className="sdp-overview">
+            <p>{service.overview}</p>
           </div>
-          <button className="w-full sm:w-auto bg-[#0A4D26] hover:bg-black transition-colors duration-300 text-[#36B936] rounded-full px-8 py-3.5 shadow-md active:scale-95 text-[14px] font-medium whitespace-nowrap">
-            Get a Quote
-          </button>
-        </div>
 
+          {/* Key Advantages */}
+          <div className="sdp-features">
+            <h4 className="sdp-features-heading">Key Advantages</h4>
+            <ul className="sdp-features-list">
+              {service.features.map((feature, idx) => (
+                <li key={idx} className="sdp-feature-item">
+                  <CheckCircle2 className="sdp-feature-icon" />
+                  <span className="sdp-feature-text">{feature}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* CTA */}
+          <div className="sdp-cta">
+            <div>
+              <h4 className="sdp-cta-heading">Ready to ship with us?</h4>
+              <p className="sdp-cta-sub">Get a tailored quote for your specific needs.</p>
+            </div>
+            <button className="sdp-cta-btn">Get a Quote</button>
+          </div>
+
+        </div>
       </div>
-    </div>
+    </>
   );
 }

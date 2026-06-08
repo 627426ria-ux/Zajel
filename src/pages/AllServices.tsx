@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
-import { SERVICES_DATA } from '../data/servicesData'; // Adjust path if needed
+import { SERVICES_DATA } from '../data/servicesData';
 
 export default function AllServicesPage() {
   const [activeService, setActiveService] = useState(SERVICES_DATA[0].id);
@@ -10,128 +10,426 @@ export default function AllServicesPage() {
     setActiveService(id);
     const element = document.getElementById(id);
     if (element) {
-      const yOffset = -100;
+      const yOffset = -80;
       const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: 'smooth' });
     }
   };
 
   return (
-    <div className="bg-[#F8FAF8] min-h-screen pb-24" style={{ fontFamily: '"Manrope", sans-serif' }}>
-      
-      {/* HEADER SECTION */}
-      <div className="max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 pt-24 lg:pt-32 pb-12">
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 lg:gap-12 border-b border-gray-200 pb-10">
-          <h1 className="text-[#0A4D26] text-[2rem] sm:text-[2.5rem] lg:text-[3rem] font-light leading-[1.15] tracking-tight max-w-2xl">
-            Comprehensive Courier & Logistics Services in the UAE
-          </h1>
-          <p className="text-[#0A4D26]/70 text-[14px] sm:text-[15px] leading-relaxed max-w-lg font-light">
-            ZAJEL offers a complete range of courier, freight, and logistics services designed to support individuals, SMEs, and large enterprises. From domestic deliveries and e-commerce fulfillment to international freight and customs clearance.
-          </p>
-        </div>
-      </div>
+    <>
+      <style>{`
+        .asp-root {
+          font-family: 'Manrope', sans-serif;
+          background: #F8FAF8;
+          min-height: 100vh;
+          padding-bottom: clamp(48px, 8vw, 96px);
+        }
 
-      {/* MAIN GRID CONTENT */}
-      <div className="max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-          
-          {/* LEFT SIDEBAR (Sticky) */}
-          <div className="lg:col-span-3 flex flex-col gap-6 lg:sticky lg:top-28">
-            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-              <h3 className="text-[#0A4D26] font-semibold text-[13px] tracking-widest uppercase mb-4 px-3">
-                Service Lists
-              </h3>
-              <nav className="flex flex-col gap-1">
-                {SERVICES_DATA.map((service) => (
-                  <button
-                    key={service.id}
-                    onClick={() => handleScrollTo(service.id)}
-                    className={`flex items-center gap-3 w-full text-left px-4 py-3 rounded-xl transition-all duration-200 ${
-                      activeService === service.id 
-                        ? 'bg-[#36B936]/10 text-[#0A4D26] font-medium' 
-                        : 'text-gray-500 hover:bg-gray-50 hover:text-[#0A4D26] font-light'
-                    }`}
-                  >
-                    <span className={activeService === service.id ? 'text-[#36B936]' : 'text-gray-400'}>
-                      {service.icon}
-                    </span>
-                    <span className="text-[13px]">{service.title}</span>
-                  </button>
-                ))}
-              </nav>
+        /* ── Header ── */
+        .asp-header-wrap {
+          max-width: 1400px;
+          margin: 0 auto;
+          padding: clamp(88px, 14vw, 128px) clamp(16px, 5vw, 48px) clamp(32px, 5vw, 48px);
+        }
+
+        .asp-header-inner {
+          display: flex;
+          flex-direction: column;
+          gap: clamp(12px, 3vw, 24px);
+          border-bottom: 1px solid #e5e7eb;
+          padding-bottom: clamp(24px, 4vw, 40px);
+        }
+
+        @media (min-width: 1024px) {
+          .asp-header-inner {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+          }
+        }
+
+        .asp-header-title {
+          color: #0A4D26;
+          font-size: clamp(1.6rem, 5vw, 3rem);
+          font-weight: 300;
+          line-height: 1.15;
+          letter-spacing: -0.02em;
+          max-width: 640px;
+          margin: 0;
+        }
+
+        .asp-header-desc {
+          color: rgba(10,77,38,0.65);
+          font-size: clamp(13px, 1.8vw, 15px);
+          line-height: 1.7;
+          max-width: 480px;
+          font-weight: 300;
+          margin: 0;
+        }
+
+        /* ── Main grid ── */
+        .asp-body {
+          max-width: 1400px;
+          margin: 0 auto;
+          padding: 0 clamp(16px, 5vw, 48px);
+        }
+
+        /* Mobile: no sidebar, just cards */
+        .asp-grid {
+          display: flex;
+          flex-direction: column;
+          gap: clamp(16px, 3vw, 24px);
+        }
+
+        /* Mobile contact form — shown below cards on mobile only */
+        .asp-mobile-contact {
+          display: block;
+          margin-top: clamp(24px, 5vw, 40px);
+        }
+        @media (min-width: 1024px) {
+          .asp-mobile-contact { display: none; }
+        }
+
+        /* Desktop: show sidebar + 9-col content */
+        @media (min-width: 1024px) {
+          .asp-pill-nav { display: none; }
+          .asp-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: clamp(24px, 3vw, 48px);
+            align-items: start;
+          }
+        }
+
+        /* ── Sidebar ── */
+        .asp-sidebar {
+          display: none;
+        }
+        @media (min-width: 1024px) {
+          .asp-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: sticky;
+            top: 112px;
+          }
+        }
+
+        .asp-sidebar-nav-card,
+        .asp-sidebar-contact-card {
+          background: white;
+          border-radius: 1rem;
+          padding: clamp(16px, 2vw, 24px);
+          box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+          border: 1px solid #f3f4f6;
+        }
+
+        .asp-sidebar-label {
+          color: #0A4D26;
+          font-weight: 700;
+          font-size: 11px;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          margin-bottom: 12px;
+          padding: 0 12px;
+        }
+
+        .asp-nav-btn {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          width: 100%;
+          text-align: left;
+          padding: 10px 14px;
+          border-radius: 10px;
+          font-size: 13px;
+          cursor: pointer;
+          border: none;
+          background: transparent;
+          transition: all 0.2s ease;
+          font-family: 'Manrope', sans-serif;
+        }
+        .asp-nav-active {
+          background: rgba(54,185,54,0.10);
+          color: #0A4D26;
+          font-weight: 500;
+        }
+        .asp-nav-active .asp-nav-icon { color: #36B936; }
+        .asp-nav-inactive { color: #9ca3af; font-weight: 300; }
+        .asp-nav-inactive .asp-nav-icon { color: #d1d5db; }
+        .asp-nav-inactive:hover { background: #f9fafb; color: #0A4D26; }
+
+        .asp-contact-heading {
+          color: #0A4D26;
+          font-size: 15px;
+          font-weight: 600;
+          margin-bottom: 16px;
+        }
+
+        .asp-field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
+        .asp-label { font-size: 11px; color: #9ca3af; font-weight: 500; }
+        .asp-input {
+          width: 100%;
+          background: #f9fafb;
+          border: 1px solid #e5e7eb;
+          border-radius: 8px;
+          padding: 9px 12px;
+          font-size: 13px;
+          font-family: 'Manrope', sans-serif;
+          outline: none;
+          transition: border-color 0.2s ease, background 0.2s ease;
+          box-sizing: border-box;
+        }
+        .asp-input:focus { border-color: #36B936; background: white; }
+        .asp-input::placeholder { color: #d1d5db; }
+
+        .asp-submit {
+          width: 100%;
+          background: #36B936;
+          color: white;
+          border: none;
+          border-radius: 8px;
+          padding: 11px;
+          font-size: 13px;
+          font-weight: 500;
+          cursor: pointer;
+          font-family: 'Manrope', sans-serif;
+          transition: background 0.25s ease;
+          margin-top: 4px;
+        }
+        .asp-submit:hover { background: #0A4D26; }
+
+        /* ── Service Cards ── */
+        .asp-cards-col {
+          display: flex;
+          flex-direction: column;
+          gap: clamp(14px, 2.5vw, 20px);
+        }
+
+        .asp-card {
+          background: white;
+          border-radius: clamp(1rem, 2.5vw, 1.5rem);
+          border: 1px solid #f3f4f6;
+          box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+          transition: box-shadow 0.25s ease;
+        }
+        .asp-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.09); }
+
+        @media (min-width: 560px) {
+          .asp-card { flex-direction: row; }
+        }
+
+        /* Image */
+        .asp-card-img-link {
+          display: block;
+          position: relative;
+          overflow: hidden;
+          /* Full width strip on mobile */
+          width: 100%;
+          height: 180px;
+          flex-shrink: 0;
+          background: #e5e7eb;
+        }
+
+        @media (min-width: 560px) {
+          .asp-card-img-link {
+            width: clamp(160px, 24vw, 280px);
+            height: auto;
+          }
+        }
+
+        .asp-card-img {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.5s ease;
+        }
+        .asp-card-img-link:hover .asp-card-img { transform: scale(1.05); }
+
+        /* Body */
+        .asp-card-body {
+          padding: clamp(16px, 3vw, 28px) clamp(16px, 3vw, 28px) clamp(18px, 3.5vw, 32px);
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+        }
+
+        .asp-card-title-link { text-decoration: none; width: max-content; max-width: 100%; }
+        .asp-card-title-link:hover { opacity: 0.75; }
+
+        .asp-card-title {
+          color: #0A4D26;
+          font-size: clamp(1rem, 2.5vw, 1.4rem);
+          font-weight: 500;
+          margin: 0 0 4px;
+          line-height: 1.25;
+        }
+
+        .asp-card-subtitle {
+          color: #36B936;
+          font-size: 12px;
+          font-weight: 500;
+          margin-bottom: 10px;
+        }
+
+        .asp-card-desc {
+          color: #9ca3af;
+          font-weight: 300;
+          font-size: clamp(12px, 1.8vw, 14px);
+          line-height: 1.7;
+          margin-bottom: clamp(14px, 2.5vw, 24px);
+        }
+
+        .asp-card-footer {
+          margin-top: auto;
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: space-between;
+          gap: 10px;
+          padding-top: clamp(10px, 1.8vw, 16px);
+          border-top: 1px solid #f3f4f6;
+        }
+
+        .asp-card-bestfor {
+          font-size: clamp(11px, 1.5vw, 13px);
+        }
+        .asp-card-bestfor-label { font-weight: 600; color: #0A4D26; }
+        .asp-card-bestfor-val { color: #9ca3af; font-weight: 300; }
+
+        .asp-learn-more {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          color: #36B936;
+          text-decoration: none;
+          font-size: 13px;
+          font-weight: 500;
+          transition: color 0.2s ease;
+        }
+        .asp-learn-more:hover { color: #0A4D26; }
+        .asp-learn-more:hover .asp-learn-arrow {
+          transform: translate(2px, -2px);
+        }
+        .asp-learn-arrow { transition: transform 0.2s ease; }
+      `}</style>
+
+      <div className="asp-root">
+
+        {/* Header */}
+        <div className="asp-header-wrap">
+          <div className="asp-header-inner">
+            <h1 className="asp-header-title">
+              Comprehensive Courier &amp; Logistics Services in the UAE
+            </h1>
+            <p className="asp-header-desc">
+              ZAJEL offers a complete range of courier, freight, and logistics services designed to support individuals, SMEs, and large enterprises. From domestic deliveries and e-commerce fulfillment to international freight and customs clearance.
+            </p>
+          </div>
+        </div>
+
+        <div className="asp-body">
+
+          <div className="asp-grid">
+
+            {/* Sidebar — desktop only */}
+            <aside className="asp-sidebar">
+              {/* Nav list */}
+              <div className="asp-sidebar-nav-card">
+                <p className="asp-sidebar-label">Service Lists</p>
+                <nav style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                  {SERVICES_DATA.map((s) => (
+                    <button
+                      key={s.id}
+                      onClick={() => handleScrollTo(s.id)}
+                      className={`asp-nav-btn ${activeService === s.id ? 'asp-nav-active' : 'asp-nav-inactive'}`}
+                    >
+                      <span className="asp-nav-icon">{s.icon}</span>
+                      {s.title}
+                    </button>
+                  ))}
+                </nav>
+              </div>
+
+              {/* Contact widget */}
+              <div className="asp-sidebar-contact-card">
+                <p className="asp-contact-heading">Have any Question?</p>
+                <form onSubmit={(e) => e.preventDefault()}>
+                  <div className="asp-field">
+                    <label className="asp-label">Full Name</label>
+                    <input type="text" className="asp-input" />
+                  </div>
+                  <div className="asp-field">
+                    <label className="asp-label">Email address</label>
+                    <input type="email" placeholder="Enter your email address" className="asp-input" />
+                  </div>
+                  <button type="submit" className="asp-submit">Submit</button>
+                </form>
+              </div>
+            </aside>
+
+            {/* Cards */}
+            <div className="asp-cards-col">
+              {SERVICES_DATA.map((service) => (
+                <div key={service.id} id={service.id} className="asp-card">
+
+                  {/* Image */}
+                  <Link to={`/services/${service.id}`} className="asp-card-img-link">
+                    <img src={service.image} alt={service.title} className="asp-card-img" />
+                  </Link>
+
+                  {/* Content */}
+                  <div className="asp-card-body">
+                    <Link to={`/services/${service.id}`} className="asp-card-title-link">
+                      <h2 className="asp-card-title">{service.title}</h2>
+                    </Link>
+                    <h4 className="asp-card-subtitle">{service.subtitle}</h4>
+                    <p className="asp-card-desc">{service.description}</p>
+
+                    <div className="asp-card-footer">
+                      <p className="asp-card-bestfor">
+                        <span className="asp-card-bestfor-label">Best for: </span>
+                        <span className="asp-card-bestfor-val">{service.bestFor}</span>
+                      </p>
+                      <Link to={`/services/${service.id}`} className="asp-learn-more">
+                        <span>Learn More</span>
+                        <ArrowUpRight size={14} className="asp-learn-arrow" />
+                      </Link>
+                    </div>
+                  </div>
+
+                </div>
+              ))}
             </div>
 
-            {/* Contact Form Widget */}
-            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-              <h3 className="text-[#0A4D26] font-semibold text-[15px] mb-5">
-                Have any Question?
-              </h3>
-              <form className="flex flex-col gap-4" onSubmit={(e) => e.preventDefault()}>
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-[12px] text-gray-500 font-medium">Full Name</label>
-                  <input type="text" className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-[13px] focus:outline-none focus:border-[#36B936] focus:bg-white transition-colors" />
+          </div>
+
+          {/* Contact form — mobile only, shown below cards */}
+          <div className="asp-mobile-contact">
+            <div className="asp-sidebar-contact-card">
+              <p className="asp-contact-heading">Have any Question?</p>
+              <form onSubmit={(e) => e.preventDefault()}>
+                <div className="asp-field">
+                  <label className="asp-label">Full Name</label>
+                  <input type="text" className="asp-input" />
                 </div>
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-[12px] text-gray-500 font-medium">Email address</label>
-                  <input type="email" placeholder="Enter your email address" className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-[13px] focus:outline-none focus:border-[#36B936] focus:bg-white transition-colors placeholder:text-gray-400" />
+                <div className="asp-field">
+                  <label className="asp-label">Email address</label>
+                  <input type="email" placeholder="Enter your email address" className="asp-input" />
                 </div>
-                <button type="submit" className="w-full bg-[#36B936] hover:bg-[#0A4D26] text-white font-medium py-3 rounded-lg text-[13px] transition-colors duration-300 shadow-sm mt-1">
-                  Submit
-                </button>
+                <button type="submit" className="asp-submit">Submit</button>
               </form>
             </div>
           </div>
 
-          {/* RIGHT CONTENT (Service Cards) */}
-          <div className="lg:col-span-9 flex flex-col gap-6">
-            {SERVICES_DATA.map((service) => (
-              <div 
-                key={service.id} 
-                id={service.id}
-                className="bg-white rounded-[1.5rem] border border-gray-100 shadow-sm overflow-hidden flex flex-col sm:flex-row hover:shadow-md transition-shadow duration-300"
-              >
-                {/* Card Image */}
-                <Link to={`/services/${service.id}`} className="w-full sm:w-[280px] md:w-[320px] h-[200px] sm:h-auto bg-gray-100 shrink-0 relative block overflow-hidden group">
-                  <img 
-                    src={service.image} 
-                    alt={service.title}
-                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </Link>
-
-                {/* Card Content */}
-                <div className="p-6 sm:p-8 flex flex-col flex-1">
-                  <Link to={`/services/${service.id}`} className="hover:opacity-80 transition-opacity w-max">
-                    <h2 className="text-[#0A4D26] text-[1.25rem] sm:text-[1.4rem] font-medium mb-1">
-                      {service.title}
-                    </h2>
-                  </Link>
-                  <h4 className="text-[#36B936] text-[13px] font-medium mb-3">
-                    {service.subtitle}
-                  </h4>
-                  <p className="text-gray-500 font-light text-[13px] sm:text-[14px] leading-relaxed mb-6">
-                    {service.description}
-                  </p>
-                  
-                  <div className="mt-auto flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-gray-100">
-                    <div className="text-[12px] sm:text-[13px]">
-                      <span className="font-semibold text-[#0A4D26]">Best for: </span>
-                      <span className="text-gray-500 font-light">{service.bestFor}</span>
-                    </div>
-                    
-                    {/* THIS LINK NOW ROUTES TO THE DYNAMIC DETAIL PAGE */}
-                    <Link to={`/services/${service.id}`} className="flex items-center gap-1.5 text-[#36B936] hover:text-[#0A4D26] transition-colors group">
-                      <span className="text-[13px] font-medium">Learn More</span>
-                      <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
         </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -1,7 +1,11 @@
-import { Link } from 'react-router-dom';
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const StorySection: React.FC = () => {
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === 'ar';
+
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -20,17 +24,18 @@ const StorySection: React.FC = () => {
   }, []);
 
   const smoothEase = "transition-all duration-1000 ease-[cubic-bezier(0.2,0.8,0.2,1)]";
+  
+  // Slide from the opposite side in RTL
+  const slideDirection = isRtl ? '-translate-x-8' : 'translate-x-8';
+  
+  // Flip gradient direction for RTL
+  const gradientAngle = isRtl ? '270deg' : '90deg';
 
   return (
     <>
       <style>{`
         .story-section {
           font-family: 'Manrope', sans-serif;
-          /*
-           * margin-top: gap between this and the section above.
-           * padding-top: runway space so the image rising above the card
-           *              doesn't overlap the section above — same logic as AppDownloadSection.
-           */
           margin-top: clamp(40px, 6vw, 80px);
           padding-top: clamp(100px, 18vw, 260px);
           padding-left: clamp(16px, 4vw, 48px);
@@ -38,27 +43,12 @@ const StorySection: React.FC = () => {
           padding-bottom: clamp(40px, 6vw, 80px);
         }
 
-        /*
-         * Banner card — same overflow: visible pattern as AppDownloadSection.
-         * overflow: visible lets the image escape above the top edge.
-         * The inner gradient layer has its own overflow: hidden for clean corners.
-         */
         .story-banner {
           height: clamp(160px, 28vw, 340px);
           overflow: visible;
           position: relative;
         }
 
-        /*
-         * Image wrap — INSIDE the banner, anchored bottom-left.
-         *
-         * MENTAL MODEL (mirror of AppDownloadSection, left side):
-         *   bottom: 0  → image base sits on the card's bottom edge.
-         *   left: 0    → image starts at the left edge of the card.
-         *   The image is taller than the card, so it rises UP above the card top.
-         *   overflow: visible on the banner lets it show above freely.
-         *   No translateY — bottom: 0 alone is the correct anchor.
-         */
         .story-image-wrap {
           position: absolute;
           bottom: 0;
@@ -66,6 +56,12 @@ const StorySection: React.FC = () => {
           width: clamp(140px, 26vw, 400px);
           z-index: 20;
           pointer-events: none;
+        }
+
+        /* RTL support for image positioning */
+        [dir="rtl"] .story-image-wrap {
+          left: auto;
+          right: clamp(-8px, -1vw, 0px);
         }
 
         .story-image-wrap img {
@@ -76,9 +72,7 @@ const StorySection: React.FC = () => {
           filter: drop-shadow(0 20px 30px rgba(0,0,0,0.28));
         }
 
-        /* Text column — occupies the right portion, fluid padding */
         .story-text-col {
-          /* Push text right to avoid the image area on the left */
           margin-left: clamp(140px, 28vw, 420px);
           padding: clamp(20px, 3.5vw, 64px) clamp(20px, 3vw, 56px);
           display: flex;
@@ -90,6 +84,12 @@ const StorySection: React.FC = () => {
           z-index: 10;
         }
 
+        /* RTL support for text column margins */
+        [dir="rtl"] .story-text-col {
+          margin-left: 0;
+          margin-right: clamp(140px, 28vw, 420px);
+        }
+
         .story-heading {
           font-size: clamp(0.95rem, 2.6vw, 3rem);
           font-weight: 300;
@@ -98,6 +98,7 @@ const StorySection: React.FC = () => {
           color: white;
           margin-bottom: clamp(12px, 2vw, 32px);
           text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+          white-space: pre-line;
         }
 
         .story-cta {
@@ -122,6 +123,7 @@ const StorySection: React.FC = () => {
 
       <section
         ref={sectionRef}
+        dir={isRtl ? 'rtl' : 'ltr'}
         className="story-section w-full bg-white"
       >
         <div className="w-full max-w-[1200px] mx-auto relative">
@@ -135,12 +137,12 @@ const StorySection: React.FC = () => {
             <div
               className="absolute inset-0 rounded-[1.75rem] md:rounded-[2.5rem] overflow-hidden z-0"
               style={{
-                background: 'linear-gradient(90deg, #FFFFFF 0%, #36B936 41%, #36B936 100%)'
+                background: `linear-gradient(${gradientAngle}, #FFFFFF 0%, #36B936 41%, #36B936 100%)`
               }}
             >
-              {/* Corner fold accent */}
+              {/* Corner fold accent — dynamically placed left or right based on RTL */}
               <svg
-                className="absolute bottom-0 right-0 w-16 h-16 sm:w-20 sm:h-20 md:w-28 md:h-28 text-[#D2EBD2]"
+                className={`absolute bottom-0 w-16 h-16 sm:w-20 sm:h-20 md:w-28 md:h-28 text-[#D2EBD2] ${isRtl ? 'left-0 transform -scale-x-100' : 'right-0'}`}
                 viewBox="0 0 100 100"
                 preserveAspectRatio="none"
                 aria-hidden="true"
@@ -149,28 +151,20 @@ const StorySection: React.FC = () => {
               </svg>
             </div>
 
-            {/* Layer 2 — text, sits right of the image */}
+            {/* Layer 2 — text, sits opposite of the image */}
             <div
-              className={`story-text-col transform ${smoothEase} ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}
+              className={`story-text-col transform ${smoothEase} ${isVisible ? 'opacity-100 translate-x-0' : `opacity-0 ${slideDirection}`}`}
               style={{ transitionDelay: '300ms' }}
             >
               <h2 className="story-heading">
-              ZAJEL NOW brings instant, on-demand city-wide pickups and deliveries directly into the app.
+                {t('story.heading')}
               </h2>
               <Link to="/" className="story-cta">
-                Book Now
+                {t('story.cta')}
               </Link>
             </div>
 
-            {/*
-             * Layer 3 — Image (INSIDE the banner, bottom-left anchor).
-             *
-             * bottom: 0  → image base = card base.
-             * left: 0    → image hugs the left edge.
-             * Image is naturally taller than the card so it rises above the card top.
-             * overflow: visible on .story-banner lets it show above freely.
-             * padding-top on the section provides the clearance space above the card.
-             */}
+            {/* Layer 3 — Image */}
             <div
               className={`story-image-wrap transform ${smoothEase} ${isVisible ? 'opacity-100' : 'opacity-0'}`}
               style={{ transitionDelay: '500ms' }}
