@@ -1,6 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const EcommerceDetails: React.FC = () => {
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === 'ar';
+
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement | null>(null);
 
@@ -24,17 +28,18 @@ const EcommerceDetails: React.FC = () => {
   }`;
 
   const listItems = [
-    "End-to-end fulfillment and secure warehousing",
-    "Seamless integration with major e-commerce platforms",
-    "Automated inventory management and real-time updates",
-    "Fast and reliable last-mile delivery to your customers",
-    "Hassle-free reverse logistics and returns management",
-    "Dedicated 24/7 support for growing online businesses"
+    t('ecommerceDetails.benefits.0'),
+    t('ecommerceDetails.benefits.1'),
+    t('ecommerceDetails.benefits.2'),
+    t('ecommerceDetails.benefits.3'),
+    t('ecommerceDetails.benefits.4'),
+    t('ecommerceDetails.benefits.5')
   ];
 
   return (
     <section
       ref={sectionRef}
+      dir={isRtl ? 'rtl' : 'ltr'}
       className="w-full py-16 sm:py-20 lg:py-32 px-4 sm:px-6 lg:px-12 bg-white"
       style={{ fontFamily: '"Manrope", sans-serif' }}
     >
@@ -46,7 +51,7 @@ const EcommerceDetails: React.FC = () => {
             className={`text-[#064423] text-[2rem] sm:text-[2.5rem] lg:text-[3.5rem] font-light mb-6 sm:mb-10 leading-[1.1] tracking-tight ${revealClass}`}
             style={{ transitionDelay: '200ms' }}
           >
-            Why Choose This Service?
+            {t('ecommerceDetails.benefitsHeading')}
           </h2>
 
           <ul className="space-y-0">
@@ -72,16 +77,16 @@ const EcommerceDetails: React.FC = () => {
         >
 
           {/* Mobile Text (Top) / Desktop Overlay (Bottom) */}
-          <div className="flex flex-col p-6 sm:p-8 lg:absolute lg:bottom-12 lg:left-10 lg:right-10 lg:p-0 z-10 order-1 lg:order-none">
+          <div className={`flex flex-col p-6 sm:p-8 lg:absolute lg:bottom-12 lg:p-0 z-10 order-1 lg:order-none ${isRtl ? 'lg:right-10 lg:left-10' : 'lg:left-10 lg:right-10'}`}>
             <h3 className="text-[#064423] lg:text-white text-2xl sm:text-3xl lg:text-[3rem] font-light leading-tight tracking-tight mb-3 sm:mb-4">
-              Ready to Scale Your Store?
+              {t('ecommerceDetails.ctaHeading')}
             </h3>
             <p className="text-[#064423]/70 lg:text-white/90 text-[14px] sm:text-[15px] lg:text-lg mb-6 sm:mb-10 max-w-md font-light leading-relaxed">
-              Get a tailored fulfillment strategy for your online business or speak with our e-commerce experts to learn more.
+              {t('ecommerceDetails.ctaSubtext')}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              {/* PRIMARY BUTTON (Matched) */}
+              {/* PRIMARY BUTTON */}
               <button
                 className="w-full sm:w-auto justify-center bg-[#05361A] hover:bg-[#03200F] transition-all duration-300 text-[#36B936] rounded-full flex items-center shadow-sm hover:shadow-md lg:hover:scale-105 lg:active:scale-95"
                 style={{
@@ -92,10 +97,10 @@ const EcommerceDetails: React.FC = () => {
                 }}
               >
                 <span className="font-extralight text-base leading-none">+</span>
-                <span className="font-medium tracking-wide">Get a Quote</span>
+                <span className="font-medium tracking-wide">{t('ecommerceDetails.btnQuote')}</span>
               </button>
 
-              {/* SECONDARY BUTTON (Matched structural clamping) */}
+              {/* SECONDARY BUTTON */}
               <button
                 className="w-full sm:w-auto justify-center bg-transparent lg:bg-white border border-gray-300 lg:border-none text-[#05361A] hover:bg-gray-100 lg:hover:bg-gray-50 transition-all duration-300 rounded-full flex items-center shadow-sm lg:shadow-lg hover:shadow-md lg:hover:scale-105 lg:active:scale-95"
                 style={{
@@ -106,7 +111,7 @@ const EcommerceDetails: React.FC = () => {
                 }}
               >
                 <span className="font-extralight text-base leading-none">+</span>
-                <span className="font-medium tracking-wide">Contact Sales</span>
+                <span className="font-medium tracking-wide">{t('ecommerceDetails.btnContact')}</span>
               </button>
             </div>
           </div>
@@ -115,7 +120,7 @@ const EcommerceDetails: React.FC = () => {
           <div className="relative w-full h-[220px] sm:h-[300px] lg:h-[600px] order-2 lg:order-none">
             <img
               src="/ChatGPT Image May 12, 2026 at 01_55_01 AM.png"
-              alt="Zajel E-commerce Fulfillment"
+              alt={t('ecommerceDetails.imgAlt')}
               className="w-full h-full object-cover"
             />
             <div className="hidden lg:block absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />

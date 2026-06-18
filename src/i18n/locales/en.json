@@ -218,7 +218,7 @@
       "mobile": "Mobile Number"
     },
     "placeholders": {
-      "awb": "eg: ZAJEL123456789",
+      "awb": "eg: 123456789",
       "mobile": "eg: +971 50 123 4567"
     },
     "button": "Track Shipment",
@@ -227,6 +227,92 @@
   "domesticHero": {
     "title": "Domestic\nCourier Service",
     "description": "Seamless delivery with full tracking, powered by a fleet of 100+ vans and bikes. Trusted by eCommerce, SMEs, and government for express delivery within 24 hours.",
+    "button": "Get a Quote"
+  },
+  "whyChoose": {
+    "heading": "Why Choose Zajel",
+    "cards": {
+      "deliveries": { "value": "1M+", "label": "Deliveries Completed" },
+      "countries": { "value": "200+", "label": "Countries Reached" },
+      "sameDay": { "value": "Same Day", "label": "Pickup Available" }
+    }
+  },
+  "serviceDetails": {
+    "ctaHeading": "Ready to Get Started?",
+    "ctaSubtext": "Get a personalized quote for your shipping needs or speak with our team to learn more.",
+    "btnQuote": "Get a Quote",
+    "btnTrack": "Track Shipment",
+    "imgAlt": "Zajel delivery handover",
+    "benefitsHeading": "Why Choose This Service?",
+    "benefits": [
+      "Nationwide coverage reaching major cities and remote locations.",
+      "Flexible pickup schedules designed around your business hours.",
+      "Dedicated account managers for corporate clients",
+      "Advanced real-time shipment tracking with full delivery visibility.",
+      "Secure proof of delivery with digital signature confirmation.",
+      "Transparent pricing with no hidden fees."
+    ]
+  },
+  "internationalHero": {
+    "title": "International\nCourier Service",
+    "description": "Reach over 200 countries with end-to-end tracking, customs support, and express air freight — trusted by businesses worldwide for reliable cross-border deliveries.",
+    "button": "Get a Quote"
+  },
+  "internationalDetails": {
+    "benefitsHeading": "Why Choose This Service?",
+    "benefits": [
+      "Network spanning 200+ countries and territories",
+      "Competitive rates with major international carriers",
+      "Real-time tracking across all destinations",
+      "Expert customs brokerage services",
+      "Flexible delivery options including hold for pickup",
+      "24/7 customer support for international queries"
+    ],
+    "ctaHeading": "Ready to Get Started?",
+    "ctaSubtext": "Get a personalized quote for your shipping needs or speak with our team to learn more.",
+    "btnQuote": "Get a Quote",
+    "btnTrack": "Track Shipment",
+    "imgAlt": "Zajel International Cargo"
+  },
+  "ecommerceHero": {
+    "title": "E-commerce\nSolutions",
+    "description": "End-to-end fulfillment, seamless platform integrations, and rapid last-mile delivery — built to scale your online business and delight your customers.",
+    "button": "Get a Quote"
+  },
+  "ecommerceDetails": {
+    "benefitsHeading": "Why Choose This Service?",
+    "benefits": [
+      "End-to-end fulfillment and secure warehousing",
+      "Seamless integration with major e-commerce platforms",
+      "Automated inventory management and real-time updates",
+      "Fast and reliable last-mile delivery to your customers",
+      "Hassle-free reverse logistics and returns management",
+      "Dedicated 24/7 support for growing online businesses"
+    ],
+    "ctaHeading": "Ready to Scale Your Store?",
+    "ctaSubtext": "Get a tailored fulfillment strategy for your online business or speak with our e-commerce experts to learn more.",
+    "btnQuote": "Get a Quote",
+    "btnContact": "Contact Sales",
+    "imgAlt": "Zajel E-commerce Fulfillment"
+  },
+  "ecommerceSection": {
+    "heading": "E-commerce Solutions\nBuilt for Growth",
+    "cards": [
+      {
+        "title": "Seamless\nFulfillment",
+        "description": "End-to-end inventory management and order processing for your online store.",
+        "buttonLabel": "Learn More"
+      },
+      {
+        "title": "Last-Mile\nDelivery",
+        "description": "Fast, reliable delivery directly to your customers' doorsteps.",
+        "buttonLabel": "Get a Quote"
+      }
+    ]
+  },
+  "freightHero": {
+    "title": "Freight\nForwarding Services",
+    "description": "Whether you're an SME or a large enterprise, our services connect you seamlessly with your customers — with complete visibility over every parcel and document.",
     "button": "Get a Quote"
   },
   "globalFreight": {
@@ -245,5 +331,211 @@
         "buttonLabel": "Get a Quote"
       }
     ]
+  },
+  "gov": {
+    "hero": {
+      "eyebrow": "Public Sector Logistics",
+      "title": "Government &\nInstitutional Flows",
+      "description": "Highly compliant document handling for UAE’s largest public institutions. We provide the structural logistics needed for high-volume legal and official mandates.",
+      "btnPrimary": "Initiate Partnership",
+      "btnSecondary": "Compliance Manual"
+    },
+    "compliance": {
+      "title1": "Precision and\n",
+      "title2": "Full Compliance.",
+      "description": "Zajel's institutional framework is designed to align with the stringent regulatory requirements of the UAE government, ensuring data privacy and operational continuity.",
+      "features": [
+        {
+          "title": "Standardized SLAs",
+          "desc": "Rigid Service Level Agreements (SLAs) tailored for public sector performance metrics and timeframes."
+        },
+        {
+          "title": "Bulk Handling",
+          "desc": "Equipped to handle daily volumes exceeding 50,000+ official documents with individual scan-point tracking."
+        },
+        {
+          "title": "API Synchronization",
+          "desc": "Direct integration with government ERP and CRM portals for automated dispatch and return receipting."
+        },
+        {
+          "title": "Archive Integration",
+          "desc": "Logistics flows that support long-term physical document storage and retrieval requirements."
+        }
+      ]
+    },
+    "protocol": {
+      "title": "Structural Governance",
+      "subtitle": "Managed logistics ecosystems for the public sector.",
+      "cards": [
+        {
+          "title": "Dedicated\nHubs",
+          "content": "On-site sorting and dispatch facilities embedded within major institutional headquarters."
+        },
+        {
+          "title": "Verified\nSubmissions",
+          "content": "Standardized POD (Proof of Delivery) recognized by all major UAE Ministries."
+        },
+        {
+          "title": "Audit\nTrails",
+          "content": "Comprehensive data logs providing a 100% auditable history of every document's movement."
+        }
+      ]
+    }
+  },
+  "secureId": {
+    "hero": {
+      "eyebrow": "Identity Logistics",
+      "title": "Official Identity\n& Passport Delivery",
+      "description": "Secure last-mile fulfillment for Emirates IDs and Passports. Utilizing biometric-ready logistics to ensure your most vital documents reach you with absolute certainty.",
+      "btnTrack": "Track My ID",
+      "btnSupport": "Support Desk"
+    },
+    "verification": {
+      "title1": "Securing the UAE's\n",
+      "title2": "Identity Path.",
+      "description": "As the chosen logistics partner for key government authorities, ZAJEL delivers millions of identification documents every year with a 99.9% accuracy rate.",
+      "features": [
+        {
+          "title": "Last-Mile Accuracy",
+          "desc": "Every Emirates ID delivery is verified using state-of-the-art GPS coordinates and digital handshake technology."
+        },
+        {
+          "title": "Passport Security",
+          "desc": "Specialized transit cases for international passports, ensuring they remain pristine and secure."
+        },
+        {
+          "title": "Identity Validation",
+          "desc": "Handover protocols that strictly require physical verification of the recipient before document release."
+        },
+        {
+          "title": "ICP Integration",
+          "desc": "Seamless backend synchronization with ICP systems for real-time status updates to residents."
+        }
+      ]
+    },
+    "protocol": {
+      "title": "Chain of Verification",
+      "subtitle": "Rigorous protocols designed to protect the integrity of official identification documents.",
+      "cards": [
+        {
+          "title": "Tamper-Proof\nHandling",
+          "content": "Proprietary secure envelopes designed to show any unauthorized attempt at opening during transit."
+        },
+        {
+          "title": "Recipient\nVerification",
+          "content": "Documents are only released after biometric or original document verification at the doorstep."
+        },
+        {
+          "title": "Digital\nHandover",
+          "content": "Instant digital confirmation sent to relevant authorities the moment your ID is safely delivered."
+        }
+      ]
+    }
+  },
+  "secureDocs": {
+    "hero": {
+      "eyebrow": "Official Logistics",
+      "title": "Secure Docs\n& Legal Filings",
+      "description": "Priority handling for UAE Courts, MOFA attestations, and Customs documentation. We ensure your critical legal papers are delivered with zero-risk.",
+      "btnPrimary": "Request Document Pickup",
+      "btnSecondary": "Contact Legal Desk"
+    },
+    "compliance": {
+      "title1": "Government &\n",
+      "title2": "Court Integration.",
+      "description": "As a trusted partner for official entities, ZAJEL provides the specific logistics needed for time-sensitive judicial and attestation workflows.",
+      "features": [
+        {
+          "title": "Judicial Filings",
+          "desc": "Direct delivery to UAE Courts with verified proof of submission and timestamped receipts."
+        },
+        {
+          "title": "MOFA Attestations",
+          "desc": "End-to-end handling of document legalization and Ministry of Foreign Affairs attestation rounds."
+        },
+        {
+          "title": "Customs Clearances",
+          "desc": "Priority routing for bill of lading, manifests, and critical import/export documentation to avoid port delays."
+        },
+        {
+          "title": "Chain of Custody",
+          "desc": "Strict tracking for original deeds, passports, and high-value legal instruments."
+        }
+      ]
+    },
+    
+    "protocol": {
+      "title": "Official Channels",
+      "subtitle": "Verified logistics paths engineered for the UAE’s governing and judicial bodies.",
+      "cards": [
+        {
+          "title": "Court\nSubmissions",
+          "content": "Direct-to-clerk filing services for legal firms and individual litigants across the emirates."
+        },
+        {
+          "title": "Ministry\nRounds",
+          "content": "Standardized round-trips for MOFA, Chamber of Commerce, and Embassy attestations."
+        },
+        {
+          "title": "Customs\nLogistics",
+          "content": "Accelerated physical delivery of original manifests and shipping documents to Port Authorities."
+        }
+      ]
+    }
+    
+  },
+  "secureMail": {
+  "hero": {
+    "eyebrow": "Mailroom Logistics",
+    "title": "Secure Mail\n& Mailroom Services",
+    "description": "End-to-end mailroom management and secure document delivery for businesses and institutions. Trusted handling from collection to final recipient.",
+    "btnPrimary": "Request a Pickup",
+    "btnSecondary": "Contact Us"
+  },
+  "details": {
+    "title": "Precision Mail\nManagement.",
+    "description": "Our secure mail services are built around the strict requirements of modern businesses, ensuring every item is tracked, handled, and delivered with full accountability.",
+    "features": [
+      {
+        "title": "Certified Collection",
+        "desc": "Scheduled and on-demand collection from your premises with full chain-of-custody documentation from the moment of pickup."
+      },
+      {
+        "title": "Barcode & Scan Tracking",
+        "desc": "Every item is barcoded at intake and scanned at each handling point, giving you complete real-time visibility throughout transit."
+      },
+      {
+        "title": "Secure Storage",
+        "desc": "Access-controlled mailroom facilities ensure your documents and parcels are held safely until the intended recipient is available."
+      },
+      {
+        "title": "Verified Delivery",
+        "desc": "Deliveries are completed only upon recipient verification, with digital proof of delivery instantly available in your dashboard."
+      }
+    ]
+  },
+  "protocol": {
+    "title": "Our Mailroom Protocol",
+    "subtitle": "A structured process built for security and accountability.",
+    "cards": [
+      {
+        "title": "Intake &\nLogging",
+        "content": "All incoming mail and parcels are logged, barcoded, and photographed at the point of receipt to establish an immediate audit trail."
+      },
+      {
+        "title": "Secure\nFacilities",
+        "content": "Items are held in access-controlled, monitored mailroom environments with segregated storage for sensitive and high-value documents."
+      },
+      {
+        "title": "Confidential\nHandling",
+        "content": "Staff are trained in document confidentiality protocols, ensuring no unauthorized access or disclosure at any stage of the process."
+      }
+    ]
   }
+},
+"ratesSection": {
+  "heading": "Rates and estimates",
+  "description": "Search our up-to-date and cost-efficient rates and estimates for domestic and international delivery.",
+  "button": "Make a Call"
+}
 }

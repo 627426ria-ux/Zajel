@@ -47,26 +47,19 @@ function App() {
   const [loading, setLoading] = useState(
     !sessionStorage.getItem("introPlayed")
   );
-  useEffect(() => {
-
-    if (!loading) return;
   
-    const timer = setTimeout(() => {
-  
-      sessionStorage.setItem("introPlayed", "true");
-  
-      setLoading(false);
-  
-    }, 3000);
-  
-    return () => clearTimeout(timer);
-  
-  }, [loading]);
   
   
   return (
     <>
-      {loading && <LogoLoader />}
+      {loading && (
+  <LogoLoader
+    onComplete={() => {
+      sessionStorage.setItem("introPlayed", "true");
+      setLoading(false);
+    }}
+  />
+)}
     <Router>
       <ScrollToTop />
       <Navbar />

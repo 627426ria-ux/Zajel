@@ -1,19 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-
-const cards = [
-  {
-    titleLine1: 'Seamless',
-    titleLine2: 'Fulfillment',
-    description: 'End-to-end inventory management and order processing for your online store.',
-    buttonLabel: 'Learn More',
-  },
-  {
-    titleLine1: 'Last-Mile',
-    titleLine2: 'Delivery',
-    description: 'Fast, reliable delivery directly to your customers\' doorsteps.',
-    buttonLabel: 'Get a Quote',
-  },
-];
+import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const BagIcon = () => (
   <svg
@@ -33,6 +19,9 @@ const BagIcon = () => (
 );
 
 const EcommerceSection = () => {
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === 'ar';
+
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -54,9 +43,24 @@ const EcommerceSection = () => {
   const hidden = "opacity-0 translate-y-10";
   const vis = "opacity-100 translate-y-0";
 
+  // Moved inside to access the translation hook
+  const cards = [
+    {
+      title: t('ecommerceSection.cards.0.title'),
+      description: t('ecommerceSection.cards.0.description'),
+      buttonLabel: t('ecommerceSection.cards.0.buttonLabel'),
+    },
+    {
+      title: t('ecommerceSection.cards.1.title'),
+      description: t('ecommerceSection.cards.1.description'),
+      buttonLabel: t('ecommerceSection.cards.1.buttonLabel'),
+    },
+  ];
+
   return (
     <section
       ref={sectionRef}
+      dir={isRtl ? 'rtl' : 'ltr'}
       className="w-full py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-10 bg-white overflow-hidden"
       style={{ fontFamily: '"Manrope", sans-serif' }}
     >
@@ -67,11 +71,8 @@ const EcommerceSection = () => {
           className={`text-center mb-10 sm:mb-12 lg:mb-14 ${animateBase} ${isVisible ? vis : hidden}`}
           style={{ transitionDelay: '0ms' }}
         >
-          <h2 className="font-light text-[#0A4D26] leading-[1.15]
-                         text-[2rem] sm:text-[2.6rem] lg:text-[3.2rem]">
-            E-commerce Solutions
-            <br />
-            Built for Growth
+          <h2 className="font-light text-[#0A4D26] leading-[1.15] text-[2rem] sm:text-[2.6rem] lg:text-[3.2rem] whitespace-pre-line">
+            {t('ecommerceSection.heading')}
           </h2>
         </div>
 
@@ -96,15 +97,13 @@ const EcommerceSection = () => {
 
               {/* Title */}
               <h3
-                className={`text-white font-light leading-tight mt-4 sm:mt-5
+                className={`text-white font-light leading-tight mt-4 sm:mt-5 whitespace-pre-line
                             text-[1rem] sm:text-[1.2rem] lg:text-[1.4rem]
                             transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)]
                             ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}
                 style={{ transitionDelay: `${400 + i * 150}ms` }}
               >
-                {card.titleLine1}
-                <br />
-                {card.titleLine2}
+                {card.title}
               </h3>
 
               {/* Description */}

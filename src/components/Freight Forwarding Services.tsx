@@ -1,8 +1,13 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const FreightHero: React.FC = () => {
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === 'ar';
+
   return (
     <section
+      dir={isRtl ? 'rtl' : 'ltr'}
       className="w-full"
       style={{
         fontFamily: '"Manrope", sans-serif',
@@ -24,13 +29,13 @@ const FreightHero: React.FC = () => {
 
         {/* Mobile Image (Hidden on medium screens and larger) */}
         <div
-          className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat z-0 block md:hidden"
+          className={`absolute inset-0 w-full h-full bg-cover bg-no-repeat z-0 block md:hidden ${isRtl ? 'bg-right' : 'bg-center'}`}
           style={{ backgroundImage: "url('/ChatGPT Image May 12, 2026 at 02_10_47 AM.png')" }}
         />
 
         {/* Desktop Image (Hidden on small screens) */}
         <div
-          className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat z-0 hidden md:block"
+          className={`absolute inset-0 w-full h-full bg-cover bg-no-repeat z-0 hidden md:block ${isRtl ? 'bg-right' : 'bg-center'}`}
           style={{ backgroundImage: "url('/ChatGPT Image Apr 24, 2026 at 01_16_23 PM.png')" }}
         />
 
@@ -51,7 +56,7 @@ const FreightHero: React.FC = () => {
           }}
         >
           <h1
-            className="text-white font-light"
+            className="text-white font-light whitespace-pre-line"
             style={{
               fontSize: 'clamp(2rem, 0.8rem + 5.8vw, 5.5rem)',
               lineHeight: 1.05,
@@ -59,7 +64,7 @@ const FreightHero: React.FC = () => {
               marginBottom: 'clamp(0.75rem, 1.5vw, 1.25rem)',
             }}
           >
-            Freight <br /> Forwarding Services
+            {t('freightHero.title')}
           </h1>
 
           <p
@@ -71,7 +76,7 @@ const FreightHero: React.FC = () => {
               maxWidth: '46ch',
             }}
           >
-            Whether you're an SME or a large enterprise, our services connect you seamlessly with your customers — with complete visibility over every parcel and document.
+            {t('freightHero.description')}
           </p>
 
           <button
@@ -84,7 +89,7 @@ const FreightHero: React.FC = () => {
             }}
           >
             <span className="font-extralight text-base leading-none">+</span>
-            <span className="font-medium tracking-wide">Get a Quote</span>
+            <span className="font-medium tracking-wide">{t('freightHero.button')}</span>
           </button>
         </div>
       </div>

@@ -1,8 +1,13 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const EcommerceHero: React.FC = () => {
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === 'ar';
+
   return (
     <section
+      dir={isRtl ? 'rtl' : 'ltr'}
       className="w-full"
       style={{
         fontFamily: '"Manrope", sans-serif',
@@ -24,13 +29,13 @@ const EcommerceHero: React.FC = () => {
 
         {/* Mobile Image (Hidden on medium screens and larger) */}
         <div
-          className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat z-0 block md:hidden"
+          className={`absolute inset-0 w-full h-full bg-cover bg-no-repeat z-0 block md:hidden ${isRtl ? 'bg-right' : 'bg-center'}`}
           style={{ backgroundImage: "url('/ChatGPT Image May 12, 2026 at 02_04_41 AM.png')" }}
         />
 
         {/* Desktop Image (Hidden on small screens) */}
         <div
-          className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat z-0 hidden md:block"
+          className={`absolute inset-0 w-full h-full bg-cover bg-no-repeat z-0 hidden md:block ${isRtl ? 'bg-right' : 'bg-center'}`}
           style={{ backgroundImage: "url('/ChatGPT Image May 12, 2026 at 01_42_28 AM.png')" }}
         />
 
@@ -51,7 +56,7 @@ const EcommerceHero: React.FC = () => {
           }}
         >
           <h1
-            className="text-white font-light"
+            className="text-white font-light whitespace-pre-line"
             style={{
               fontSize: 'clamp(2rem, 0.8rem + 5.8vw, 5.5rem)',
               lineHeight: 1.05,
@@ -59,7 +64,7 @@ const EcommerceHero: React.FC = () => {
               marginBottom: 'clamp(0.75rem, 1.5vw, 1.25rem)',
             }}
           >
-            <span style={{ whiteSpace: 'nowrap' }}>E-commerce</span> <br /> Solutions
+            {t('ecommerceHero.title')}
           </h1>
 
           <p
@@ -71,7 +76,7 @@ const EcommerceHero: React.FC = () => {
               maxWidth: '46ch',
             }}
           >
-            End-to-end fulfillment, seamless platform integrations, and rapid last-mile delivery — built to scale your online business and delight your customers.
+            {t('ecommerceHero.description')}
           </p>
 
           <button
@@ -84,7 +89,7 @@ const EcommerceHero: React.FC = () => {
             }}
           >
             <span className="font-extralight text-base leading-none">+</span>
-            <span className="font-medium tracking-wide">Get a Quote</span>
+            <span className="font-medium tracking-wide">{t('ecommerceHero.button')}</span>
           </button>
         </div>
       </div>

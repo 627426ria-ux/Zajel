@@ -1,4 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 const PlaneIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
     stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
@@ -16,27 +18,10 @@ const CartIcon = () => (
   </svg>
 );
 
-const cards = [
-  {
-    Icon: PlaneIcon,
-    title: 'Global Freight\nSolutions',
-    type: 'bullets',
-    bullets: ['Air Freight', 'Sea Freight', 'GCC Road Freight'],
-    buttonLabel: 'Book Now',
-    delay: 150,
-  },
-  {
-    Icon: CartIcon,
-    title: 'E-Commerce',
-    type: 'description',
-    description:
-      'Powered by an extensive fleet and regional network, our road freight services connect businesses across the GCC with consistent, on-time deliveries.',
-    buttonLabel: 'Get a Quote',
-    delay: 300,
-  },
-];
-
 const GlobalFreightSection = () => {
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === 'ar';
+
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -53,9 +38,34 @@ const GlobalFreightSection = () => {
   const hidden = "opacity-0 translate-y-10";
   const vis = "opacity-100 translate-y-0";
 
+  // Moved inside to access the translation hook
+  const cards = [
+    {
+      Icon: PlaneIcon,
+      title: t('globalFreight.cards.0.title'),
+      type: 'bullets',
+      bullets: [
+        t('globalFreight.cards.0.bullets.0'),
+        t('globalFreight.cards.0.bullets.1'),
+        t('globalFreight.cards.0.bullets.2')
+      ],
+      buttonLabel: t('globalFreight.cards.0.buttonLabel'),
+      delay: 150,
+    },
+    {
+      Icon: CartIcon,
+      title: t('globalFreight.cards.1.title'),
+      type: 'description',
+      description: t('globalFreight.cards.1.description'),
+      buttonLabel: t('globalFreight.cards.1.buttonLabel'),
+      delay: 300,
+    },
+  ];
+
   return (
     <section
       ref={sectionRef}
+      dir={isRtl ? 'rtl' : 'ltr'}
       className="w-full py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-10 bg-white overflow-hidden"
       style={{ fontFamily: '"Manrope", sans-serif' }}
     >
@@ -66,11 +76,8 @@ const GlobalFreightSection = () => {
           className={`text-center mb-10 sm:mb-12 lg:mb-14 ${animateBase} ${isVisible ? vis : hidden}`}
           style={{ transitionDelay: '0ms' }}
         >
-          <h2 className="font-light text-[#0A4D26] leading-[1.15]
-                         text-[2rem] sm:text-[2.6rem] lg:text-[3.2rem]">
-            Global Freight Solutions
-            <br />
-            Built for Speed
+          <h2 className="font-light text-[#0A4D26] leading-[1.15] text-[2rem] sm:text-[2.6rem] lg:text-[3.2rem] whitespace-pre-line">
+            {t('globalFreight.heading')}
           </h2>
         </div>
 
@@ -96,15 +103,13 @@ const GlobalFreightSection = () => {
 
               {/* Title */}
               <h3
-                className={`text-white font-light leading-tight mt-4 sm:mt-5
+                className={`text-white font-light leading-tight mt-4 sm:mt-5 whitespace-pre-line
                             text-[1rem] sm:text-[1.2rem] lg:text-[1.4rem]
                             transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)]
                             ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}
                 style={{ transitionDelay: `${card.delay + 200}ms` }}
               >
-                {card.title.split('\n').map((line, j, arr) => (
-                  <span key={j}>{line}{j < arr.length - 1 && <br />}</span>
-                ))}
+                {card.title}
               </h3>
 
               {/* Bullets or Description */}
@@ -141,7 +146,7 @@ const GlobalFreightSection = () => {
                   className="bg-[#05361A] hover:bg-[#03200F] hover:scale-105
                              transition-all duration-200
                              text-[#36B936] rounded-full
-                             flex items-center gap-1.5
+                             flex items-center justify-center gap-1.5
                              px-3.5 py-2 sm:px-4 sm:py-2.5
                              text-[10px] sm:text-[11px] lg:text-[12px]"
                 >

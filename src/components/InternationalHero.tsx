@@ -1,8 +1,13 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const InternationalHero: React.FC = () => {
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === 'ar';
+
   return (
     <section
+      dir={isRtl ? 'rtl' : 'ltr'}
       className="w-full"
       style={{
         fontFamily: '"Manrope", sans-serif',
@@ -30,7 +35,7 @@ const InternationalHero: React.FC = () => {
 
         {/* Desktop Image (Hidden on small screens) */}
         <div
-          className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat z-0 hidden md:block"
+          className={`absolute inset-0 w-full h-full bg-cover bg-no-repeat z-0 hidden md:block ${isRtl ? 'bg-right' : 'bg-center'}`}
           style={{ backgroundImage: "url('/ChatGPT Image May 12, 2026 at 02_03_10 AM.png')" }}
         />
 
@@ -41,6 +46,7 @@ const InternationalHero: React.FC = () => {
         />
 
         {/* LAYER 3: Content pinned to bottom */}
+        {/* Tailwind's items-start automatically aligns right in RTL and left in LTR */}
         <div
           className="relative z-20 flex flex-col items-start"
           style={{
@@ -51,7 +57,7 @@ const InternationalHero: React.FC = () => {
           }}
         >
           <h1
-            className="text-white font-light"
+            className="text-white font-light whitespace-pre-line"
             style={{
               fontSize: 'clamp(2rem, 0.8rem + 5.8vw, 5.5rem)',
               lineHeight: 1.05,
@@ -59,7 +65,7 @@ const InternationalHero: React.FC = () => {
               marginBottom: 'clamp(0.75rem, 1.5vw, 1.25rem)',
             }}
           >
-            International <br /> Courier Service
+            {t('internationalHero.title')}
           </h1>
 
           <p
@@ -71,7 +77,7 @@ const InternationalHero: React.FC = () => {
               maxWidth: '46ch',
             }}
           >
-            Reach over 200 countries with end-to-end tracking, customs support, and express air freight — trusted by businesses worldwide for reliable cross-border deliveries.
+            {t('internationalHero.description')}
           </p>
 
           <button
@@ -84,7 +90,7 @@ const InternationalHero: React.FC = () => {
             }}
           >
             <span className="font-extralight text-base leading-none">+</span>
-            <span className="font-medium tracking-wide">Get a Quote</span>
+            <span className="font-medium tracking-wide">{t('internationalHero.button')}</span>
           </button>
         </div>
       </div>

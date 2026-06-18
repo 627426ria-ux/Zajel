@@ -1,6 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const InternationalDetails: React.FC = () => {
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === 'ar';
+
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement | null>(null);
 
@@ -24,17 +28,18 @@ const InternationalDetails: React.FC = () => {
   }`;
 
   const listItems = [
-    "Network spanning 200+ countries and territories",
-    "Competitive rates with major international carriers",
-    "Real-time tracking across all destinations",
-    "Expert customs brokerage services",
-    "Flexible delivery options including hold for pickup",
-    "24/7 customer support for international queries"
+    t('internationalDetails.benefits.0'),
+    t('internationalDetails.benefits.1'),
+    t('internationalDetails.benefits.2'),
+    t('internationalDetails.benefits.3'),
+    t('internationalDetails.benefits.4'),
+    t('internationalDetails.benefits.5')
   ];
 
   return (
     <section
       ref={sectionRef}
+      dir={isRtl ? 'rtl' : 'ltr'}
       className="w-full py-16 sm:py-20 lg:py-32 px-4 sm:px-6 lg:px-12 bg-white"
       style={{ fontFamily: '"Manrope", sans-serif' }}
     >
@@ -46,7 +51,7 @@ const InternationalDetails: React.FC = () => {
             className={`text-[#064423] text-[2rem] sm:text-[2.5rem] lg:text-[3.5rem] font-light mb-6 sm:mb-10 leading-[1.1] tracking-tight ${revealClass}`}
             style={{ transitionDelay: '200ms' }}
           >
-            Why Choose This Service?
+            {t('internationalDetails.benefitsHeading')}
           </h2>
 
           <ul className="space-y-0">
@@ -72,23 +77,23 @@ const InternationalDetails: React.FC = () => {
         >
 
           {/* Mobile Text (Top) / Desktop Overlay (Bottom) */}
-          <div className="flex flex-col p-6 sm:p-8 lg:absolute lg:bottom-12 lg:left-10 lg:right-10 lg:p-0 z-10 order-1 lg:order-none">
+          <div className={`flex flex-col p-6 sm:p-8 lg:absolute lg:bottom-12 lg:p-0 z-10 order-1 lg:order-none ${isRtl ? 'lg:right-10 lg:left-10' : 'lg:left-10 lg:right-10'}`}>
             <h3 className="text-[#064423] lg:text-white text-2xl sm:text-3xl lg:text-[3rem] font-light leading-tight tracking-tight mb-3 sm:mb-4">
-              Ready to Get Started?
+              {t('internationalDetails.ctaHeading')}
             </h3>
             <p className="text-[#064423]/70 lg:text-white/90 text-[14px] sm:text-[15px] lg:text-lg mb-6 sm:mb-10 max-w-md font-light leading-relaxed">
-              Get a personalized quote for your shipping needs or speak with our team to learn more.
+              {t('internationalDetails.ctaSubtext')}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <button className="w-full sm:w-auto justify-center bg-transparent lg:bg-[#064423] border border-[#064423] lg:border-none text-[#064423] lg:text-[#36B936] hover:bg-[#064423]/5 lg:hover:bg-[#053a1e] px-6 sm:px-8 py-3.5 lg:py-4 rounded-full text-[14px] sm:text-[15px] flex items-center gap-2 lg:shadow-lg lg:hover:scale-105 lg:active:scale-95 transition-all duration-300">
                 <span className="text-xl font-extralight leading-none">+</span>
-                <span className="font-medium tracking-wide">Get a Quote</span>
+                <span className="font-medium tracking-wide">{t('internationalDetails.btnQuote')}</span>
               </button>
 
               <button className="w-full sm:w-auto justify-center bg-transparent lg:bg-white border border-gray-300 lg:border-none text-[#064423] hover:bg-gray-100 lg:hover:bg-gray-50 px-6 sm:px-8 py-3.5 lg:py-4 rounded-full text-[14px] sm:text-[15px] flex items-center gap-2 lg:shadow-lg lg:hover:scale-105 lg:active:scale-95 transition-all duration-300">
                 <span className="text-xl font-extralight leading-none">+</span>
-                <span className="font-medium tracking-wide">Track Shipment</span>
+                <span className="font-medium tracking-wide">{t('internationalDetails.btnTrack')}</span>
               </button>
             </div>
           </div>
@@ -97,7 +102,7 @@ const InternationalDetails: React.FC = () => {
           <div className="relative w-full h-[220px] sm:h-[300px] lg:h-[600px] order-2 lg:order-none">
             <img
               src="/7be9399d-bd5b-44e2-97ed-97d5efce871c.png"
-              alt="Zajel International Cargo"
+              alt={t('internationalDetails.imgAlt')}
               className="w-full h-full object-cover"
             />
             <div className="hidden lg:block absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
