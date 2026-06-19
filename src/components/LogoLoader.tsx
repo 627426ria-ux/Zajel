@@ -64,7 +64,6 @@ const LogoLoader = ({ onComplete }) => {
       duration: 1.2,
       ease: "expo.inOut"
     });
-
   }, []);
 
   return (
