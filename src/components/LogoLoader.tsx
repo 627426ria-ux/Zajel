@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { gsap } from "gsap";
 import "./LogoLoader.css";
 
-const LogoLoader = ({ onComplete }) => {
+const LogoLoader = ({ onComplete }: { onComplete?: () => void }) => {
 
   useEffect(() => {
     document.body.style.overflow = "hidden"; // stop scrolling while loader plays
