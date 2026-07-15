@@ -1,10 +1,49 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { supabase } from '../supabase';
+import type { HomeStoryContent } from '../admin/sections/homepage/types';
+
+// --- DATA FETCHING HOOK ---
+function useSectionContent<T>(id: string) {
+  const { i18n } = useTranslation();
+  const [data, setData] = useState<T | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchSection = async () => {
+      const { data: section, error } = await supabase
+        .from('page_sections')
+        .select('id, enabled, content_en, content_ar')
+        .eq('id', id)
+        .single<{ id: string; enabled: boolean; content_en: T | string; content_ar: T | string }>();
+
+      if (!isMounted) return;
+
+      if (!error && section?.enabled) {
+        const raw = i18n.language === 'ar' ? section.content_ar : section.content_en;
+        const content: T | null = typeof raw === 'string' ? JSON.parse(raw) : (raw ?? null);
+        setData(content);
+      } else {
+        setData(null);
+      }
+      setLoading(false);
+    };
+
+    fetchSection();
+    return () => { isMounted = false; };
+  }, [id, i18n.language]);
+
+  return { data, loading };
+}
 
 const StorySection: React.FC = () => {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const isRtl = i18n.language === 'ar';
+  
+  // Fetch CMS Data
+  const { data, loading } = useSectionContent<HomeStoryContent>('home_story');
 
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -14,19 +53,25 @@ const StorySection: React.FC = () => {
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-          observer.disconnect();
+          observer.disconnect(); // Triggers ONLY when user scrolls to it
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.25 } // Triggers when 25% of the section is in view
     );
+    
     if (sectionRef.current) observer.observe(sectionRef.current);
+    
     return () => observer.disconnect();
-  }, []);
+  }, [data]); // Re-bind observer if data changes
+
+  if (loading || !data) return null;
 
   const smoothEase = "transition-all duration-1000 ease-[cubic-bezier(0.2,0.8,0.2,1)]";
   
-  // Slide from the opposite side in RTL
-  const slideDirection = isRtl ? '-translate-x-8' : 'translate-x-8';
+  // LTR: Image comes from left, Text comes from right
+  // RTL: Image comes from right, Text comes from left
+  const imageSlideStart = isRtl ? 'translate-x-12' : '-translate-x-12';
+  const textSlideStart = isRtl ? '-translate-x-12' : 'translate-x-12';
   
   // Flip gradient direction for RTL
   const gradientAngle = isRtl ? '270deg' : '90deg';
@@ -140,7 +185,7 @@ const StorySection: React.FC = () => {
                 background: `linear-gradient(${gradientAngle}, #FFFFFF 0%, #36B936 41%, #36B936 100%)`
               }}
             >
-              {/* Corner fold accent — dynamically placed left or right based on RTL */}
+              {/* Corner fold accent */}
               <svg
                 className={`absolute bottom-0 w-16 h-16 sm:w-20 sm:h-20 md:w-28 md:h-28 text-[#D2EBD2] ${isRtl ? 'left-0 transform -scale-x-100' : 'right-0'}`}
                 viewBox="0 0 100 100"
@@ -151,27 +196,27 @@ const StorySection: React.FC = () => {
               </svg>
             </div>
 
-            {/* Layer 2 — text, sits opposite of the image */}
+            {/* Layer 2 — text, slides from the right (or left in RTL) */}
             <div
-              className={`story-text-col transform ${smoothEase} ${isVisible ? 'opacity-100 translate-x-0' : `opacity-0 ${slideDirection}`}`}
+              className={`story-text-col transform ${smoothEase} ${isVisible ? 'opacity-100 translate-x-0' : `opacity-0 ${textSlideStart}`}`}
               style={{ transitionDelay: '300ms' }}
             >
               <h2 className="story-heading">
-                {t('story.heading')}
+                {data.heading}
               </h2>
-              <Link to="/" className="story-cta">
-                {t('story.cta')}
+              <Link to={data.ctaUrl} className="story-cta">
+                {data.ctaLabel}
               </Link>
             </div>
 
-            {/* Layer 3 — Image */}
+            {/* Layer 3 — Image, slides from the left (or right in RTL) */}
             <div
-              className={`story-image-wrap transform ${smoothEase} ${isVisible ? 'opacity-100' : 'opacity-0'}`}
-              style={{ transitionDelay: '500ms' }}
+              className={`story-image-wrap transform ${smoothEase} ${isVisible ? 'opacity-100 translate-x-0' : `opacity-0 ${imageSlideStart}`}`}
+              style={{ transitionDelay: '400ms' }}
             >
               <img
-                src="/delivery-man.png"
-                alt="Zajel Delivery Professional"
+                src={data.image_url}
+                alt={data.imgAlt}
                 draggable="false"
               />
             </div>

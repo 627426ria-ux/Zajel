@@ -1,7 +1,41 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { supabase } from '../supabase'; // <-- Adjust to your supabase client path
+
+// CMS Interfaces
+export interface AboutStatCard {
+  number: string;
+  label: string;
+}
+
+export interface AboutWhoWeAreContent {
+  heading: string;
+  description: string;
+  stats: AboutStatCard[];
+}
 
 const WhoWeAre: React.FC = () => {
+  const [data, setData] = useState<AboutWhoWeAreContent | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch from Supabase on mount
+  useEffect(() => {
+    const fetchSection = async () => {
+      const { data: sectionData, error } = await supabase
+        .from('page_sections')
+        .select('content_en, enabled')
+        .eq('id', 'about_who_we_are')
+        .single();
+
+      if (!error && sectionData?.enabled && sectionData.content_en) {
+        setData(sectionData.content_en as AboutWhoWeAreContent);
+      }
+      setLoading(false);
+    };
+
+    fetchSection();
+  }, []);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -25,6 +59,9 @@ const WhoWeAre: React.FC = () => {
     },
   };
 
+  // If loading or disabled, do not render
+  if (loading || !data) return null;
+
   return (
     <section className="w-full bg-[#FDFDFD] py-24 px-6 lg:px-24 overflow-hidden" style={{ fontFamily: '"Manrope", sans-serif' }}>
       <motion.div 
@@ -38,26 +75,23 @@ const WhoWeAre: React.FC = () => {
         {/* 1. SECTION HEADER */}
         <motion.h2 
           variants={itemVariants}
-          className="text-[#064423] text-[2rem] sm:text-[2.5rem] lg:text-[2.8rem] font-light leading-[1.2] tracking-tight mb-6"
+          className="text-[#064423] text-[2rem] sm:text-[2.5rem] lg:text-[2.8rem] font-light leading-[1.2] tracking-tight mb-6 whitespace-pre-line"
         >
-          Who We Are?
+          {data.heading}
         </motion.h2>
         
         <motion.p 
           variants={itemVariants}
-          className="text-[#396E49] text-[13px] md:text-[14px] font-normal leading-relaxed max-w-[700px] mb-16 px-4"
+          className="text-[#396E49] text-[13px] md:text-[14px] font-normal leading-relaxed max-w-[700px] mb-16 px-4 whitespace-pre-line"
         >
-          Established in 2008, Zajel Courier & Services has grown into one of the UAE's most reliable logistics networks. Our focus is simple — to make delivery smarter, faster, and more secure. From local courier services to cross-border freight, we connect people and businesses through technology and efficiency.
+          {data.description}
         </motion.p>
 
         {/* 2. STATS GRID */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-y-12 gap-x-8 md:gap-16 w-full max-w-[1100px] mt-8">
-          
-          <StatBlock number="17+" label="Years of Success" variants={itemVariants} />
-          <StatBlock number="42M+" label="Deliveries Completed" variants={itemVariants} />
-          <StatBlock number="200+" label="Global Destinations" variants={itemVariants} />
-          <StatBlock number="24/7" label="Customer Support" variants={itemVariants} />
-
+          {data.stats?.map((stat, idx) => (
+            <StatBlock key={idx} number={stat.number} label={stat.label} variants={itemVariants} />
+          ))}
         </div>
 
       </motion.div>
@@ -66,7 +100,6 @@ const WhoWeAre: React.FC = () => {
 };
 
 // --- Sub-Component: Animated Stat Block ---
-
 const StatBlock = ({ number, label, variants }: { number: string; label: string; variants: any }) => (
   <motion.div 
     variants={variants}

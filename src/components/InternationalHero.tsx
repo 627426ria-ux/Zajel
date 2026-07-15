@@ -1,9 +1,54 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+import { supabase } from '../supabase'; // Adjust path
+import type { IntlHeroContent } from '../admin/sections/services-intl/types';
+
+interface PageSectionRow {
+  id: string;
+  enabled: boolean;
+  content_en: IntlHeroContent | string;
+  content_ar: IntlHeroContent | string;
+}
 
 const InternationalHero: React.FC = () => {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const isRtl = i18n.language === 'ar';
+  const [data, setData] = useState<IntlHeroContent | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchHero = async () => {
+      const { data: section, error } = await supabase
+        .from('page_sections')
+        .select('id, enabled, content_en, content_ar')
+        .eq('id', 'intl_service_hero')
+        .single<PageSectionRow>();
+
+      if (!isMounted) return;
+
+      if (!error && section?.enabled) {
+        const raw = i18n.language === 'ar' ? section.content_ar : section.content_en;
+        const content: IntlHeroContent | null =
+          typeof raw === 'string' ? JSON.parse(raw) : (raw ?? null);
+        setData(content);
+      } else {
+        setData(null);
+      }
+
+      setLoading(false);
+    };
+
+    fetchHero();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [i18n.language]);
+
+  if (loading || !data) return null;
 
   return (
     <section
@@ -25,28 +70,23 @@ const InternationalHero: React.FC = () => {
           boxShadow: '0 2px 8px rgba(0,0,0,0.08), 0 16px 48px rgba(0,0,0,0.22), 0 40px 80px rgba(0,0,0,0.14)',
         }}
       >
-        {/* LAYER 1: Background Images */}
-
-        {/* Mobile Image (Hidden on medium screens and larger) */}
         <div
           className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat z-0 block md:hidden"
-          style={{ backgroundImage: "url('/ChatGPT Image May 12, 2026 at 02_04_41 AM.png')" }}
+          style={{ backgroundImage: `url('${data.mobile_image_url}')` }}
         />
-
-        {/* Desktop Image (Hidden on small screens) */}
         <div
-          className={`absolute inset-0 w-full h-full bg-cover bg-no-repeat z-0 hidden md:block ${isRtl ? 'bg-right' : 'bg-center'}`}
-          style={{ backgroundImage: "url('/ChatGPT Image May 12, 2026 at 02_03_10 AM.png')" }}
+          className={`absolute inset-0 w-full h-full bg-cover bg-no-repeat z-0 hidden md:block ${
+            isRtl ? 'bg-right' : 'bg-center'
+          }`}
+          style={{ backgroundImage: `url('${data.desktop_image_url}')` }}
         />
-
-        {/* LAYER 2: Gradient */}
         <div
           className="absolute inset-0 w-full h-full z-10"
-          style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.90) 0%, rgba(0,0,0,0.40) 40%, transparent 100%)' }}
+          style={{
+            background: 'linear-gradient(to top, rgba(0,0,0,0.90) 0%, rgba(0,0,0,0.40) 40%, transparent 100%)',
+          }}
         />
 
-        {/* LAYER 3: Content pinned to bottom */}
-        {/* Tailwind's items-start automatically aligns right in RTL and left in LTR */}
         <div
           className="relative z-20 flex flex-col items-start"
           style={{
@@ -65,11 +105,10 @@ const InternationalHero: React.FC = () => {
               marginBottom: 'clamp(0.75rem, 1.5vw, 1.25rem)',
             }}
           >
-            {t('internationalHero.title')}
+            {data.title}
           </h1>
-
           <p
-            className="text-white/75 font-extralight"
+            className="text-white/75 font-extralight whitespace-pre-line"
             style={{
               fontSize: 'clamp(0.8125rem, 0.74rem + 0.38vw, 1rem)',
               lineHeight: 1.68,
@@ -77,10 +116,10 @@ const InternationalHero: React.FC = () => {
               maxWidth: '46ch',
             }}
           >
-            {t('internationalHero.description')}
+            {data.description}
           </p>
-
-          <button
+          <Link
+            to={data.buttonUrl || '/'}
             className="bg-[#05361A] hover:bg-[#03200F] transition-colors duration-300 text-[#36B936] rounded-full flex items-center shadow-sm hover:shadow-md"
             style={{
               gap: 'clamp(5px, 0.8vw, 8px)',
@@ -90,8 +129,8 @@ const InternationalHero: React.FC = () => {
             }}
           >
             <span className="font-extralight text-base leading-none">+</span>
-            <span className="font-medium tracking-wide">{t('internationalHero.button')}</span>
-          </button>
+            <span className="font-medium tracking-wide">{data.buttonLabel}</span>
+          </Link>
         </div>
       </div>
     </section>

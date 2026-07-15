@@ -1,4 +1,6 @@
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { supabase } from '../supabase'; // TODO: adjust to this file's actual relative path to src/supabase.ts
 
 /* ─────────────────────────────────────────────────────────────────
    Fluid Design Token System
@@ -55,6 +57,7 @@ const CSS = `
     height: var(--card-h);
     border-radius: var(--card-radius);
     overflow: hidden;
+    background: linear-gradient(135deg, var(--green-deep), #0a2e1c);
 
     /* Grounding shadow — soft, not harsh */
     box-shadow:
@@ -213,6 +216,7 @@ const CSS = `
     border-radius: 999px;
     cursor: pointer;
     padding: clamp(0.6rem, 0.9vw, 0.85rem) clamp(1.1rem, 2.0vw, 1.65rem);
+    text-decoration: none;
     transition:
       background 200ms ease,
       transform  240ms cubic-bezier(0.34,1.56,0.64,1),
@@ -324,11 +328,84 @@ const IconPlus = () => (
 );
 
 /* ══════════════════════════════════════════════
-   Component
+   CMS content shape — mirrors DomesticHeroEditor.tsx.
+   Only content + image now come from Supabase; every
+   CSS class, layer, and the JSX structure itself is
+   untouched from the original design.
    ══════════════════════════════════════════════ */
+interface DomesticHeroContent {
+  title: string;
+  description: string;
+  button: string;
+  ctaLink: string;
+  image_url: string;
+}
+
+interface DomesticHeroRow {
+  content_en: DomesticHeroContent;
+  content_ar: DomesticHeroContent;
+}
+
+// Per-language fallbacks. These render IMMEDIATELY (no loading state, no
+// skeleton, no blank flash) and are swapped for real content the moment
+// the fetch resolves — so the design can never appear broken, empty, or
+// collapsed, regardless of network speed or whether the DB row exists yet.
+const FALLBACK_EN: DomesticHeroContent = {
+  title: 'Domestic Courier\nAcross the UAE',
+  description: 'Fast, reliable same-day and next-day delivery for every emirate.',
+  button: 'Get a Quote',
+  ctaLink: '/quotation',
+  image_url: '/ChatGPT Image Apr 24, 2026 at 01_22_49 PM.png',
+};
+
+const FALLBACK_AR: DomesticHeroContent = {
+  title: 'خدمة التوصيل المحلي\nفي جميع أنحاء الإمارات',
+  description: 'توصيل سريع وموثوق في نفس اليوم أو اليوم التالي لجميع الإمارات.',
+  button: 'احصل على عرض سعر',
+  ctaLink: '/quotation',
+  image_url: '/ChatGPT Image Apr 24, 2026 at 01_22_49 PM.png',
+};
+
 const DomesticHero = () => {
-  const { t, i18n } = useTranslation();
-  const isRtl = i18n.language === 'ar';
+  const { i18n } = useTranslation();
+  const isRtl = i18n.language?.toLowerCase().startsWith('ar');
+
+  const [row, setRow] = useState<DomesticHeroRow | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    supabase
+      .from('page_sections')
+      .select('content_en, content_ar')
+      .eq('id', 'domestic_hero')
+      .single()
+      .then(({ data, error }) => {
+        if (cancelled) return;
+        if (error) {
+          console.error('Failed to load domestic hero content:', error.message);
+          return;
+        }
+        if (data) setRow(data as DomesticHeroRow);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const fallback = isRtl ? FALLBACK_AR : FALLBACK_EN;
+  const fetched = isRtl ? row?.content_ar : row?.content_en;
+
+  // Merge field-by-field so a partially-filled CMS row (e.g. title set but
+  // image_url still empty) never leaves a blank gap in the design either.
+  const content: DomesticHeroContent = {
+    title: fetched?.title || fallback.title,
+    description: fetched?.description || fallback.description,
+    button: fetched?.button || fallback.button,
+    ctaLink: fetched?.ctaLink || fallback.ctaLink,
+    image_url: fetched?.image_url || fallback.image_url,
+  };
 
   return (
     <section 
@@ -342,7 +419,7 @@ const DomesticHero = () => {
 
         {/* ── Layer 1: Background image ── */}
         <img
-          src="/ChatGPT Image Apr 24, 2026 at 01_22_49 PM.png"
+          src={content.image_url}
           alt=""
           className="dh-img"
           aria-hidden="true"
@@ -357,17 +434,17 @@ const DomesticHero = () => {
         {/* ── Layer 3: Content ── */}
         <div className="dh-content">
           <h1 className="dh-h1">
-            {t('domesticHero.title')}
+            {content.title}
           </h1>
 
           <p className="dh-body">
-            {t('domesticHero.description')}
+            {content.description}
           </p>
 
-          <button className="dh-btn">
+          <a className="dh-btn" href={content.ctaLink}>
             <span className="dh-btn-icon"><IconPlus /></span>
-            {t('domesticHero.button')}
-          </button>
+            {content.button}
+          </a>
         </div>
 
         {/* ── Layer 4: Stats — bottom-right ── */}

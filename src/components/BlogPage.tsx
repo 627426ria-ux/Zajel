@@ -1,92 +1,57 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { supabase } from '../supabase'; // adjust path to your client
 
-// --- MOCK DATA ---
-const blogPosts = [
-  {
-    id: 1,
-    category: "Courier Tips",
-    date: "21, Jun, 2026",
-    title: "How to Save Time With Smart Pickup Scheduling",
-    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", 
-  },
-  {
-    id: 2,
-    category: "International Shipping",
-    date: "15, Jul, 2026",
-    title: "Understanding Customs, Duties & DDP vs DDU Explained",
-    image: "https://images.unsplash.com/photo-1565891741441-64926e441838?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    id: 3,
-    category: "E-commerce Success",
-    date: "29, May, 2026",
-    title: "How UAE E-commerce Brands Are Scaling With Reliable COD Delivery",
-    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    id: 4,
-    category: "International Shipping",
-    date: "15, Jul, 2026",
-    title: "Understanding Customs, Duties & DDP vs DDU Explained",
-    image: "/8e11b8c1eda3eacc2687a26d1ad82a6d.jpg",
-  },
-  {
-    id: 5,
-    category: "E-commerce Success",
-    date: "29, May, 2026",
-    title: "How UAE E-commerce Brands Are Scaling With Reliable COD Delivery",
-    image: "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    id: 6,
-    category: "Technology in Logistics",
-    date: "10, Aug, 2026",
-    title: "The Future of Smart Logistics in the UAE",
-    image: "https://images.unsplash.com/photo-1565891741441-64926e441838?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    id: 7,
-    category: "E-commerce Success",
-    date: "29, May, 2026",
-    title: "How UAE E-commerce Brands Are Scaling With Reliable COD Delivery",
-    image: "/5fbe9eab02aeb84178124457d287ff63.jpg",
-  },
-  {
-    id: 8,
-    category: "Technology in Logistics",
-    date: "10, Aug, 2026",
-    title: "The Future of Smart Logistics in the UAE",
-    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    id: 9,
-    category: "Courier Tips",
-    date: "21, Jun, 2026",
-    title: "How to Save Time With Smart Pickup Scheduling",
-    image: "https://images.unsplash.com/photo-1615460549969-36fa19521a4f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  }
-];
+interface PostSummary {
+  id: string;
+  slug: string;
+  category: string;
+  featured_image: string | null;
+  publish_date: string | null;
+  created_at: string;
+  title: string;
+  excerpt: string;
+}
 
 const BlogPage: React.FC = () => {
+  const [posts, setPosts] = useState<PostSummary[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    supabase
+      .from('blog_posts')
+      .select('id, slug, category, featured_image, publish_date, created_at, content_en')
+      .or(`status.eq.published,and(status.eq.scheduled,publish_date.lte.${new Date().toISOString()})`)
+      .order('publish_date', { ascending: false, nullsFirst: false })
+      .then(({ data, error }) => {
+        if (!error && data) {
+          setPosts(
+            data.map((p: any) => ({
+              id: p.id,
+              slug: p.slug,
+              category: p.category,
+              featured_image: p.featured_image,
+              publish_date: p.publish_date,
+              created_at: p.created_at,
+              title: p.content_en?.title || 'Untitled',
+              excerpt: p.content_en?.excerpt || '',
+            }))
+          );
+        }
+        setLoading(false);
+      });
+  }, []);
+
   return (
     <section className="w-full min-h-screen bg-[#FDFDFD] pt-24 pb-16 px-6 lg:px-24" style={{ fontFamily: '"Manrope", sans-serif' }}>
       <div className="max-w-[1400px] mx-auto">
-        
-        {/* Header Section */}
         <div className="flex flex-col md:flex-row justify-between items-start mb-20 gap-10">
-          
-          {/* Left: Title & Slim Button */}
           <div className="max-w-2xl">
             <h1 className="text-[#064423] text-[2rem] sm:text-[2.5rem] lg:text-[2.8rem] font-light leading-[1.1] tracking-tight mb-8">
               Insights, Guides & Stories <br className="hidden md:block" />
               from the World of Logistics
             </h1>
-            
-            
           </div>
-
-          {/* Right: Description */}
           <div className="md:w-[350px] lg:w-[400px] pt-2">
             <p className="text-[#064423]/60 text-[13px] lg:text-[14px] leading-relaxed font-light">
               Stay updated with expert advice, trends, and case studies on how Zajel powers smarter deliveries for individuals and businesses across the UAE.
@@ -94,64 +59,70 @@ const BlogPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Blog Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
-          {blogPosts.map((post) => (
-            <BlogCard key={post.id} post={post} />
-          ))}
-        </div>
-
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="rounded-[2rem] border border-[#064423]/5 overflow-hidden animate-pulse">
+                <div className="w-full h-[240px] bg-[#F0F0EC]" />
+                <div className="p-8 space-y-3">
+                  <div className="h-4 bg-[#F0F0EC] rounded w-1/3" />
+                  <div className="h-5 bg-[#F0F0EC] rounded w-full" />
+                  <div className="h-5 bg-[#F0F0EC] rounded w-2/3" />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : posts.length === 0 ? (
+          <p className="text-[#064423]/50 text-sm">No posts published yet.</p>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+            {posts.map((post) => (
+              <BlogCard key={post.id} post={post} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
 };
 
-// --- Sub-component: Minimalist Blog Card ---
+const BlogCard = ({ post }: { post: PostSummary }) => {
+  const dateStr = new Date(post.publish_date || post.created_at).toLocaleDateString('en-GB', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  });
 
-const BlogCard = ({ post }: { post: any }) => {
   return (
-    <Link 
-      to={`/blog/${post.id}`} 
+    <Link
+      to={`/blog/${post.slug}`}
       className="group flex flex-col bg-white rounded-[2rem] border border-[#064423]/5 overflow-hidden hover:shadow-[0_10px_40px_rgba(6,68,35,0.06)] hover:border-[#064423]/15 transition-all duration-500 cursor-pointer block"
     >
-      
-      {/* Image Container */}
       <div className="w-full h-[240px] overflow-hidden bg-[#F9FBF9]">
-        <img 
-          src={post.image} 
-          alt={post.title} 
+        <img
+          src={post.featured_image || ''}
+          alt={post.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
           onError={(e) => { e.currentTarget.style.display = 'none'; }}
         />
       </div>
-
-      {/* Card Content */}
       <div className="p-8 flex flex-col flex-grow">
-        
-        {/* Meta Row: Category & Date */}
         <div className="flex justify-between items-center mb-6">
           <span className="border border-[#064423]/10 text-[#064423]/70 text-[11px] px-3.5 py-1.5 rounded-full font-light tracking-wide">
             {post.category}
           </span>
           <span className="text-[#064423]/50 text-[11px] font-light flex items-center gap-1.5">
             <span className="w-1 h-1 rounded-full bg-[#064423]/20"></span>
-            {post.date}
+            {dateStr}
           </span>
         </div>
-
-        {/* Title */}
         <h3 className="text-[#064423] text-[18px] lg:text-[19px] font-medium leading-[1.35] mb-8 flex-grow group-hover:text-[#36B936] transition-colors">
           {post.title}
         </h3>
-
-        {/* Read More Link */}
         <div className="text-[#064423] text-[13px] font-medium flex items-center gap-2 mt-auto group-hover:text-[#36B936] transition-colors">
-          Read More 
-          <span className="font-light text-lg mb-[2px] group-hover:translate-x-1 transition-transform">
-            →
-          </span>
+          Read More
+          <span className="font-light text-lg mb-[2px] group-hover:translate-x-1 transition-transform">→</span>
         </div>
-
       </div>
     </Link>
   );

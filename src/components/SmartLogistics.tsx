@@ -1,11 +1,48 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { supabase } from '../supabase'; // <-- Adjust to your supabase client path
+
+export interface AboutSmartLogisticsContent {
+  heading: string;
+  description: string;
+  app_image_url: string;
+  card1_title: string;
+  card1_description: string;
+  card1_btn_label: string;
+  card1_btn_url: string;
+  card2_title: string;
+  card2_description: string;
+  card2_btn_label: string;
+  card2_btn_url: string;
+}
 
 const SmartLogistics: React.FC = () => {
+  const [data, setData] = useState<AboutSmartLogisticsContent | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchSection = async () => {
+      const { data: sectionData, error } = await supabase
+        .from('page_sections')
+        .select('content_en, enabled')
+        .eq('id', 'about_smart_logistics')
+        .single();
+
+      if (!error && sectionData?.enabled && sectionData.content_en) {
+        setData(sectionData.content_en as AboutSmartLogisticsContent);
+      }
+      setLoading(false);
+    };
+
+    fetchSection();
+  }, []);
+
   const smoothTransition = { 
     duration: 0.8, 
     ease: [0.04, 0.62, 0.23, 0.98] as [number, number, number, number] 
   };
+
+  if (loading || !data) return null;
 
   return (
     <section className="w-full bg-[#0B1111] py-14 md:py-24 px-4 sm:px-6 lg:px-24 overflow-hidden" style={{ fontFamily: '"Manrope", sans-serif' }}>
@@ -19,11 +56,11 @@ const SmartLogistics: React.FC = () => {
             viewport={{ once: true }}
             transition={smoothTransition}
           >
-            <h2 className="text-white text-[2rem] sm:text-[2.8rem] md:text-[3.8rem] font-light leading-[1.1] tracking-tight mb-5 md:mb-8">
-              Smart Logistics for <br /> a Smarter Future
+            <h2 className="text-white text-[2rem] sm:text-[2.8rem] md:text-[3.8rem] font-light leading-[1.1] tracking-tight mb-5 md:mb-8 whitespace-pre-line">
+              {data.heading}
             </h2>
-            <p className="text-white/50 text-[13px] sm:text-[14px] font-light leading-relaxed max-w-[480px]">
-              Technology drives everything we do — from optimized routes and automated dispatching to real-time tracking dashboards. Our in-house systems give customers complete visibility and control over every shipment.
+            <p className="text-white/50 text-[13px] sm:text-[14px] font-light leading-relaxed max-w-[480px] whitespace-pre-line">
+              {data.description}
             </p>
           </motion.div>
 
@@ -36,7 +73,7 @@ const SmartLogistics: React.FC = () => {
             className="relative bg-gradient-to-br from-[#36B936] to-[#1A5F1A] rounded-[2rem] md:rounded-[2.5rem] aspect-[4/3] flex items-center justify-center overflow-hidden"
           >
             <div className="w-[40%] drop-shadow-2xl translate-y-6 md:translate-y-12">
-              <img src="/image copy 7.png" alt="Zajel Mobile App" className="w-full h-auto" />
+              <img src={data.app_image_url || "/image copy 7.png"} alt="Mobile App" className="w-full h-auto" />
             </div>
           </motion.div>
         </div>
@@ -52,16 +89,23 @@ const SmartLogistics: React.FC = () => {
             transition={{ ...smoothTransition, delay: 0.1 }}
             className="md:col-span-5 bg-gradient-to-br from-[#36B936] to-[#247A24] rounded-[1.5rem] md:rounded-[2rem] p-6 md:p-10 flex flex-col justify-between relative overflow-hidden group"
           >
-            <div className="relative z-10">
-              <h3 className="text-white text-[18px] md:text-[24px] font-light leading-tight mb-3 md:mb-4 max-w-[280px]">
-                Integrated Management <br /> System (IMS) Policy
-              </h3>
-              <p className="text-white/80 text-[12px] md:text-[13px] font-light leading-relaxed max-w-[250px] mb-6 md:mb-8">
-                Our commitment to quality, safety, and environmental sustainability in every operation.
-              </p>
-              <button className="bg-white text-[#36B936] px-5 md:px-6 py-2.5 md:py-3 rounded-xl text-[13px] font-medium flex items-center gap-2 hover:bg-gray-100 transition-all active:scale-95 shadow-lg">
-                Download PDF <span className="text-lg leading-none">↓</span>
-              </button>
+            <div className="relative z-10 flex flex-col h-full justify-between items-start">
+              <div>
+                <h3 className="text-white text-[18px] md:text-[24px] font-light leading-tight mb-3 md:mb-4 max-w-[280px] whitespace-pre-line">
+                  {data.card1_title}
+                </h3>
+                <p className="text-white/80 text-[12px] md:text-[13px] font-light leading-relaxed max-w-[250px] mb-6 md:mb-8 whitespace-pre-line">
+                  {data.card1_description}
+                </p>
+              </div>
+              <a 
+                href={data.card1_btn_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white text-[#36B936] px-5 md:px-6 py-2.5 md:py-3 rounded-xl text-[13px] font-medium flex items-center gap-2 hover:bg-gray-100 transition-all active:scale-95 shadow-lg"
+              >
+                {data.card1_btn_label} <span className="text-lg leading-none">↓</span>
+              </a>
             </div>
             
             <div className="absolute right-0 bottom-0 opacity-20 group-hover:rotate-45 transition-transform duration-1000 scale-110 translate-x-4 translate-y-4">
@@ -79,16 +123,21 @@ const SmartLogistics: React.FC = () => {
           >
             <div className="flex flex-col justify-between h-full relative z-10 w-full md:w-auto">
               <div>
-                <h3 className="text-white text-[18px] md:text-[24px] font-light leading-tight mb-3 md:mb-4">
-                  Zajel Company Profile
+                <h3 className="text-white text-[18px] md:text-[24px] font-light leading-tight mb-3 md:mb-4 whitespace-pre-line">
+                  {data.card2_title}
                 </h3>
-                <p className="text-white/40 text-[12px] md:text-[13px] font-light leading-relaxed max-w-[280px]">
-                  Learn about our journey, operations, service portfolio, and key milestones.
+                <p className="text-white/40 text-[12px] md:text-[13px] font-light leading-relaxed max-w-[280px] whitespace-pre-line">
+                  {data.card2_description}
                 </p>
               </div>
-              <button className="bg-[#064423] text-[#36B936] border border-[#36B936]/20 px-5 md:px-6 py-2.5 md:py-3 rounded-xl text-[13px] font-medium flex items-center gap-2 hover:bg-[#085a2e] transition-all active:scale-95 w-fit mt-8 md:mt-0 shadow-xl">
-                Download PDF <span className="text-lg leading-none">↓</span>
-              </button>
+              <a 
+                href={data.card2_btn_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#064423] text-[#36B936] border border-[#36B936]/20 px-5 md:px-6 py-2.5 md:py-3 rounded-xl text-[13px] font-medium flex items-center gap-2 hover:bg-[#085a2e] transition-all active:scale-95 w-fit mt-8 md:mt-0 shadow-xl"
+              >
+                {data.card2_btn_label} <span className="text-lg leading-none">↓</span>
+              </a>
             </div>
 
             <div className="hidden sm:flex opacity-20 group-hover:scale-105 transition-transform duration-700 items-end">

@@ -1,5 +1,41 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { supabase } from '../supabase';
+import type { HomeTrustedContent } from '../admin/sections/homepage/types';
+
+// --- DATA FETCHING HOOK ---
+function useSectionContent<T>(id: string) {
+  const { i18n } = useTranslation();
+  const [data, setData] = useState<T | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchSection = async () => {
+      const { data: section, error } = await supabase
+        .from('page_sections')
+        .select('id, enabled, content_en, content_ar')
+        .eq('id', id)
+        .single<{ id: string; enabled: boolean; content_en: T | string; content_ar: T | string }>();
+
+      if (!isMounted) return;
+
+      if (!error && section?.enabled) {
+        const raw = i18n.language === 'ar' ? section.content_ar : section.content_en;
+        const content: T | null = typeof raw === 'string' ? JSON.parse(raw) : (raw ?? null);
+        setData(content);
+      } else {
+        setData(null);
+      }
+      setLoading(false);
+    };
+
+    fetchSection();
+    return () => { isMounted = false; };
+  }, [id, i18n.language]);
+
+  return { data, loading };
+}
 
 // --- ANIMATED COUNTER HOOK/COMPONENT ---
 const AnimatedCounter = ({ 
@@ -7,7 +43,7 @@ const AnimatedCounter = ({
   suffix = "", 
   duration = 2000, 
   isVisible,
-  isArabic = false // Added isArabic prop
+  isArabic = false 
 }: { 
   end: number, 
   suffix?: string, 
@@ -18,7 +54,7 @@ const AnimatedCounter = ({
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    if (!isVisible) return;
+    if (!isVisible) return; // Does not start counting until scrolled into view
     
     let startTimestamp: number | null = null;
     const step = (timestamp: number) => {
@@ -48,30 +84,37 @@ const AnimatedCounter = ({
 };
 
 const TrustedSection: React.FC = () => {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const isRtl = i18n.language === 'ar';
+  
+  // Fetch CMS Data
+  const { data, loading } = useSectionContent<HomeTrustedContent>('home_trusted');
 
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
   // --- SCROLL REVEAL LOGIC ---
   useEffect(() => {
+    // Prevent observer from attaching before data is loaded and DOM is ready
+    if (loading || !data || !sectionRef.current) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-          observer.disconnect(); // Fires only once
+          observer.disconnect(); // Fires only once when scrolled into view
         }
       },
-      { threshold: 0.2 } // Triggers when 20% of the section is visible
+      { threshold: 0.25 } // Triggers when 25% of the section is visible on screen
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
+    observer.observe(sectionRef.current);
 
     return () => observer.disconnect();
-  }, []);
+  }, [loading, data]); // Re-run effect ONLY when data finishes loading
+
+  // Show nothing if loading or if section is disabled/missing in DB
+  if (loading || !data) return null;
 
   // Smooth easing bezier curve
   const smoothEase = "transition-all duration-1000 ease-[cubic-bezier(0.2,0.8,0.2,1)]";
@@ -79,6 +122,10 @@ const TrustedSection: React.FC = () => {
   // RTL adjustments
   const borderSide = isRtl ? 'border-l' : 'border-r';
   const originSide = isRtl ? 'origin-right' : 'origin-left';
+
+  // Ensure we have exactly 4 stats for the grid, using fallbacks if array is incomplete
+  const safeStats = data.stats || [];
+  const getStat = (index: number) => safeStats[index] || { value: 0, suffix: '', label: '' };
 
   return (
     <section 
@@ -94,14 +141,14 @@ const TrustedSection: React.FC = () => {
           
           {/* Left: Main Heading */}
           <h2 className="text-[#0A4D26] text-[1.8rem] md:text-[2.2rem] lg:text-[2.8rem] font-light leading-[1.1] tracking-tight">
-            {t('trusted.heading1')} <br className="hidden sm:block" />
-            <span className="text-[#36B936]">{t('trusted.headingHighlight')}</span> <br className="hidden sm:block" />
-            {t('trusted.heading2')}
+            {data.heading1} <br className="hidden sm:block" />
+            <span className="text-[#36B936]">{data.headingHighlight}</span> <br className="hidden sm:block" />
+            {data.heading2}
           </h2>
           
-          {/* Right: Subheading */}
+          {/* Right: Subtext */}
           <p className="text-[#0A4D26]/80 text-[13px] md:text-[14px] lg:text-[15px] font-light leading-relaxed max-w-full md:max-w-[280px] pb-1">
-            {t('trusted.subtext')}
+            {data.subtext}
           </p>
           
         </div>
@@ -111,43 +158,43 @@ const TrustedSection: React.FC = () => {
           
           <div className="grid grid-cols-2 md:grid-cols-2">
             
-            {/* Cell 1: Top Left/Right (Depends on RTL) */}
+            {/* Cell 1 */}
             <div className={`group flex flex-col justify-center p-5 sm:p-7 md:p-9 lg:p-12 border-b ${borderSide} border-[#36B936]/30 transition-colors duration-500 hover:bg-[#36B936]/[0.03] cursor-default`}>
               <div className={`text-[#36B936] text-[2rem] sm:text-[2.5rem] lg:text-[3rem] font-light leading-none tracking-tight mb-1 md:mb-2 transition-transform duration-500 group-hover:scale-105 group-hover:text-[#0A4D26] ${originSide}`}>
-                <AnimatedCounter end={42} suffix={t('trusted.stats.shipments.suffix')} isVisible={isVisible} isArabic={isRtl} />
+                <AnimatedCounter end={getStat(0).value} suffix={getStat(0).suffix} isVisible={isVisible} isArabic={isRtl} />
               </div>
               <div className="text-[#0A4D26] text-[11px] md:text-[13px] lg:text-[15px] font-light transition-colors duration-300">
-                {t('trusted.stats.shipments.label')}
+                {getStat(0).label}
               </div>
             </div>
 
-            {/* Cell 2: Top Right/Left */}
+            {/* Cell 2 */}
             <div className="group flex flex-col justify-center p-5 sm:p-7 md:p-9 lg:p-12 border-b border-[#36B936]/30 transition-colors duration-500 hover:bg-[#36B936]/[0.03] cursor-default">
               <div className={`text-[#36B936] text-[2rem] sm:text-[2.5rem] lg:text-[3rem] font-light leading-none tracking-tight mb-1 md:mb-2 transition-transform duration-500 group-hover:scale-105 group-hover:text-[#0A4D26] ${originSide}`}>
-                <AnimatedCounter end={200} suffix={t('trusted.stats.countries.suffix')} isVisible={isVisible} isArabic={isRtl} />
+                <AnimatedCounter end={getStat(1).value} suffix={getStat(1).suffix} isVisible={isVisible} isArabic={isRtl} />
               </div>
               <div className="text-[#0A4D26] text-[11px] md:text-[13px] lg:text-[15px] font-light transition-colors duration-300">
-                {t('trusted.stats.countries.label')}
+                {getStat(1).label}
               </div>
             </div>
 
-            {/* Cell 3: Bottom Left/Right */}
+            {/* Cell 3 */}
             <div className={`group flex flex-col justify-center p-5 sm:p-7 md:p-9 lg:p-12 ${borderSide} border-[#36B936]/30 transition-colors duration-500 hover:bg-[#36B936]/[0.03] cursor-default`}>
               <div className={`text-[#36B936] text-[2rem] sm:text-[2.5rem] lg:text-[3rem] font-light leading-none tracking-tight mb-1 md:mb-2 transition-transform duration-500 group-hover:scale-105 group-hover:text-[#0A4D26] ${originSide}`}>
-                <AnimatedCounter end={15} suffix={t('trusted.stats.years.suffix')} isVisible={isVisible} isArabic={isRtl} />
+                <AnimatedCounter end={getStat(2).value} suffix={getStat(2).suffix} isVisible={isVisible} isArabic={isRtl} />
               </div>
               <div className="text-[#0A4D26] text-[11px] md:text-[13px] lg:text-[15px] font-light transition-colors duration-300">
-                {t('trusted.stats.years.label')}
+                {getStat(2).label}
               </div>
             </div>
 
-            {/* Cell 4: Bottom Right/Left */}
+            {/* Cell 4 */}
             <div className="group flex flex-col justify-center p-5 sm:p-7 md:p-9 lg:p-12 transition-colors duration-500 hover:bg-[#36B936]/[0.03] cursor-default">
               <div className={`text-[#36B936] text-[2rem] sm:text-[2.5rem] lg:text-[3rem] font-light leading-none tracking-tight mb-1 md:mb-2 transition-transform duration-500 group-hover:scale-105 group-hover:text-[#0A4D26] ${originSide}`}>
-                <AnimatedCounter end={500} suffix={t('trusted.stats.destinations.suffix')} isVisible={isVisible} isArabic={isRtl} />
+                <AnimatedCounter end={getStat(3).value} suffix={getStat(3).suffix} isVisible={isVisible} isArabic={isRtl} />
               </div>
               <div className="text-[#0A4D26] text-[11px] md:text-[13px] lg:text-[15px] font-light transition-colors duration-300">
-                {t('trusted.stats.destinations.label')}
+                {getStat(3).label}
               </div>
             </div>
 

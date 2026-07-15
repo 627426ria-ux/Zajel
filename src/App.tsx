@@ -1,10 +1,8 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation, Outlet } from 'react-router-dom';
+import { useEffect } from 'react';
 
 // Import Global Components
 import Navbar from './components/Navbar';
-
-import LogoLoader from './components/LogoLoader';
 
 // Import your Pages
 import HomePage from './pages/HomePage';
@@ -33,8 +31,12 @@ import GovInstitutionalPage from './pages/Govt';
 import DownloadAppPage from './pages/Download';
 import ShipmentTimeline from './pages/ShipmentTimeline';
 import ProofOfDelivery from './pages/ProofOfDelivery';
-
 import LoginPage from "./pages/LoginPage";
+
+// --- Admin Placeholders ---
+import AdminLogin from './pages/AdminLogin';
+import AdminDashboard from './pages/AdminDashboard';
+
 
 
 function ScrollToTop() {
@@ -43,36 +45,33 @@ function ScrollToTop() {
   return null;
 }
 
-function App() {
-  const [loading, setLoading] = useState(
-    !sessionStorage.getItem("introPlayed")
-  );
-  
-  
-  
+// --- Public Layout Wrapper ---
+// This ensures the Navbar only appears on the public website, not the CMS
+const PublicLayout = () => {
   return (
     <>
-      {loading && (
-  <LogoLoader
-    onComplete={() => {
-      sessionStorage.setItem("introPlayed", "true");
-      setLoading(false);
-    }}
-  />
-)}
+      <Navbar />
+      <main>
+        <Outlet />
+      </main>
+    </>
+  );
+};
+
+function App() {
+  return (
     <Router>
       <ScrollToTop />
-      <Navbar />
-      
-      <main>
-        <Routes>
+      <Routes>
+        {/* ─── PUBLIC WEBSITE (Uses Navbar) ─── */}
+        <Route element={<PublicLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/domestic-courier" element={<DomesticCourierPage />} />
           <Route path="/international-courier" element={<InternationalCourierPage />} />
           <Route path="/freight-courier" element={<FreightCourierPage/>} />
           <Route path="/support" element={<SupportPage />} />
           <Route path="/blog" element={<BlogPage/>} />
-          <Route path="/blog/:id" element={<BlogDetailPage/>} />
+          <Route path="/blog/:slug" element={<BlogDetailPage/>} />
           <Route path="/contact" element={<ContactPage/>} />
           <Route path="/faq" element={<FaqPage />} />
           <Route path="/about" element={<AboutPage/>} />
@@ -93,10 +92,14 @@ function App() {
           <Route path="/shipment-timeline" element={<ShipmentTimeline />} />
           <Route path="/proof-of-delivery" element={<ProofOfDelivery />} />
           <Route path="/login" element={<LoginPage />} />
-        </Routes>
-      </main>
+        </Route>
+
+        {/* ─── ADMIN CMS ROUTES (No Navbar) ─── */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin" element={<AdminDashboard />} />
+        
+      </Routes>
     </Router>
-    </>
   );
 }
 

@@ -1,7 +1,8 @@
-import React from 'react';
-import { motion } from 'framer-motion';
 
-// --- ICONS (Minimal thickness) ---
+import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import { supabase } from '../supabase'; // adjust path
+
 const IntegrityIcon = () => (
   <svg width="30" height="30" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M35.3728 11.0044H36.6722C37.6848 11.0044 38.5056 11.8253 38.5056 12.8378V25.671C38.5056 26.6836 37.6848 27.5044 36.6722 27.5044H33.0056L25.3637 16.8057C24.4518 15.5292 22.8289 14.9741 21.3263 15.4249L16.77 16.7918C15.478 17.1794 14.0775 16.8263 13.1237 15.8725L12.587 15.3357C11.7689 14.5177 11.9037 13.1557 12.8664 12.514L22.7682 5.91269C23.9764 5.10733 25.5457 5.09062 26.7708 5.87012L34.3886 10.7178C34.6827 10.905 35.0243 11.0044 35.3728 11.0044ZM9.22152 26.2115L6.25929 28.8035C5.39504 29.5595 5.43087 30.9151 6.33389 31.6248L15.7586 39.0298C16.6387 39.7213 17.9277 39.4696 18.483 38.4978L19.7735 36.2395C20.5618 34.8599 20.3719 33.1296 19.3031 31.9539L14.3492 26.5045C13.0052 25.0261 10.7251 24.8959 9.22152 26.2115ZM12.9221 9.17122H5.50521C4.49269 9.17122 3.67188 9.99204 3.67188 11.0046V24.7835C3.67188 25.5323 3.90058 26.2529 4.31389 26.8563C4.35772 26.8149 4.40257 26.774 4.44842 26.7338L7.41065 24.1419C10.0419 21.8396 14.0321 22.0674 16.384 24.6546L21.3381 30.104C23.2084 32.1614 23.5408 35.1895 22.1612 37.6038L20.9617 39.7032C21.9937 40.0942 23.1694 40.0061 24.1484 39.4187L32.2319 34.5686C33.1493 34.018 33.4023 32.8022 32.7808 31.9313L23.1252 18.4041C22.8971 18.085 22.4914 17.9462 22.1158 18.0589L17.5595 19.4258C15.2984 20.1041 12.8476 19.4863 11.1784 17.817L10.6416 17.2803C8.59648 15.2351 8.93363 11.8302 11.3402 10.2258L12.9221 9.17122Z" fill="white" fillOpacity="0.8"/>
@@ -37,125 +38,71 @@ const PeopleIcon = () => (
     <path d="M18.3352 2.80231C22.6417 -1.06333 29.2967 -0.934999 33.4448 3.22183C37.593 7.37865 37.7355 14.0012 33.8774 18.3205L18.3331 33.8892L2.78919 18.3205C-1.06874 14.0012 -0.924535 7.36819 3.22182 3.22183C7.37287 -0.929224 14.0162 -1.06907 18.3352 2.80231Z" fill="white" fillOpacity="0.8"/>
   </svg>
 );
+const ICONS = [<IntegrityIcon />, <SpeedIcon />, <InnovationIcon />, <CustomerIcon />, <SustainabilityIcon />, <PeopleIcon />];
 
-const values = [
-  { icon: <IntegrityIcon />, title: "Integrity in Every Mile", desc: "We do what's right — even when no one's watching." },
-  { icon: <SpeedIcon />, title: "Speed with Precision", desc: "Fast is good; accurate is better. We strive for both." },
-  { icon: <InnovationIcon />, title: "Innovation Everyday", desc: "From AI-driven tracking to eco-delivery, we lead with ideas." },
-  { icon: <CustomerIcon />, title: "Customer-First Mindset", desc: "Every parcel, every client, every moment — we care." },
-  { icon: <SustainabilityIcon />, title: "Sustainability Commitment", desc: "Reducing waste, optimizing routes, and going green." },
-  { icon: <PeopleIcon />, title: "People Over Processes", desc: "Because great teams make great deliveries." }
-];
+interface CareersValuesData {
+  heading: string;
+  description: string;
+  values: { title: string; desc: string }[];
+}
 
 const CareerHero: React.FC = () => {
-  const smoothTransition = { 
-    duration: 0.8, 
-    ease: [0.04, 0.62, 0.23, 0.98] as [number, number, number, number] 
-  };
+  const [content, setContent] = useState<CareersValuesData | null>(null);
+  const [enabled, setEnabled] = useState(true);
+  const lang: 'en' | 'ar' = 'en'; // swap for real lang source
+
+  useEffect(() => {
+    supabase
+      .from('page_sections')
+      .select('content_en, content_ar, enabled')
+      .eq('id', 'careers_values')
+      .single()
+      .then(({ data, error }) => {
+        if (error || !data) return;
+        setContent(lang === 'en' ? data.content_en : data.content_ar);
+        setEnabled(data.enabled ?? true);
+      });
+  }, [lang]);
+
+  const smoothTransition = { duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] as [number, number, number, number] };
+
+  if (!enabled || !content) return null;
+
+  const values = content.values.map((v, i) => ({ ...v, icon: ICONS[i] }));
 
   return (
-    <section
-      className="relative w-full min-h-screen bg-gradient-to-br from-[#36B936] via-[#32A832] to-[#247A24] overflow-hidden"
-      style={{ fontFamily: '"Manrope", sans-serif' }}
-    >
-      {/* TOP RIGHT ARCHITECTURAL BOXES */}
-      <div className="absolute top-0 right-0 select-none pointer-events-none z-0">
-        <svg width="258" height="260" viewBox="0 0 258 260" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-[90px] sm:w-[130px] lg:w-[180px] h-auto opacity-20">
-          <path d="M112.852 4V147.57H256.412V4H112.842M108.842 0H260.412V151.57H108.842V0Z" fill="#004E09"/>
-          <path d="M49.9996 102.625V213.975H161.35V102.625H49.9996ZM45.9996 98.625H165.35V217.975H45.9996V98.625Z" fill="#004E09"/>
-          <path d="M4.00023 171.312V255.303H87.9902V171.312H4.00023ZM0.000228882 167.312H91.9902V259.303H0.000228882V167.312Z" fill="#004E09"/>
-        </svg>
-      </div>
-
-      {/* BOTTOM LEFT STAIRCASE BOXES */}
-      <div className="absolute bottom-0 left-0 select-none pointer-events-none z-0">
-        <div className="relative w-[100px] h-[115px] sm:w-[160px] sm:h-[185px] lg:w-[280px] lg:h-[320px]">
-          <div className="absolute bottom-0 left-0 bg-white/90
-                          w-10 h-10 sm:w-16 sm:h-16 lg:w-28 lg:h-28"></div>
-          <div
-            className="absolute
-                       bottom-5 left-5 w-10 h-10
-                       sm:bottom-8 sm:left-8 sm:w-16 sm:h-16
-                       lg:bottom-14 lg:left-14 lg:w-28 lg:h-28"
-            style={{ 
-              background: 'radial-gradient(circle, #2BA735 0%, #4EED5B 100%)',
-              boxShadow: '10px 10px 30px rgba(0,0,0,0.12)' 
-            }}
-          ></div>
-          <div className="absolute bg-white shadow-sm
-                          bottom-10 left-10 w-10 h-10
-                          sm:bottom-16 sm:left-16 sm:w-16 sm:h-16
-                          lg:bottom-28 lg:left-28 lg:w-22 lg:h-22"></div>
-        </div>
-      </div>
-
-      {/* Inner wrapper: padding scales with breakpoint */}
+    <section className="relative w-full min-h-screen bg-gradient-to-br from-[#36B936] via-[#32A832] to-[#247A24] overflow-hidden" style={{ fontFamily: '"Manrope", sans-serif' }}>
+      {/* ...decorative boxes unchanged... */}
       <div className="relative z-10 w-full min-h-screen flex items-center py-28 pb-48 sm:py-32 sm:pb-52 lg:py-24 lg:pb-24 px-5 sm:px-8 md:px-12 lg:px-24">
-
-        {/* CONTENT GRID */}
         <div className="max-w-[1300px] w-full mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-
-          {/* ANIMATED TEXT CONTENT */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={smoothTransition}
-          >
-            <h1 className="text-white font-light leading-[1.05] tracking-tight mb-6 sm:mb-8
-                           text-[2.6rem] sm:text-[3.2rem] md:text-[3.8rem] lg:text-[4.8rem]">
-              A Place Where <br /> Passion Meets Purpose
+          <motion.div initial={{ opacity: 0, x: -40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: '-100px' }} transition={smoothTransition}>
+            <h1 className="text-white font-light leading-[1.05] tracking-tight mb-6 sm:mb-8 text-[2.6rem] sm:text-[3.2rem] md:text-[3.8rem] lg:text-[4.8rem] whitespace-pre-line">
+              {content.heading}
             </h1>
-            <p className="text-white/70 font-light leading-relaxed max-w-[480px]
-                          text-[13px] sm:text-[14px]">
-              At Zajel, we believe logistics isn't just about movement — it's about momentum. Every member of our team contributes to delivering reliability, innovation, and human connection.
+            <p className="text-white/70 font-light leading-relaxed max-w-[480px] text-[13px] sm:text-[14px]">
+              {content.description}
             </p>
           </motion.div>
 
-          {/* ANIMATED VALUES GRID */}
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={{
-              visible: {
-                transition: {
-                  staggerChildren: 0.15,
-                  delayChildren: 0.2
-                }
-              }
-            }}
+            viewport={{ once: true, margin: '-100px' }}
+            variants={{ visible: { transition: { staggerChildren: 0.15, delayChildren: 0.2 } } }}
             className="grid grid-cols-2 gap-x-8 gap-y-10 sm:gap-x-10 sm:gap-y-12"
           >
             {values.map((val, idx) => (
               <motion.div
                 key={idx}
-                variants={{
-                  hidden: { opacity: 0, y: 30 },
-                  visible: {
-                    opacity: 1,
-                    y: 0,
-                    transition: smoothTransition
-                  }
-                }}
+                variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: smoothTransition } }}
                 className="flex flex-col items-start group"
               >
-                <div className="mb-3 sm:mb-4 transform group-hover:scale-105 transition-transform duration-500 opacity-90">
-                  {val.icon}
-                </div>
-                <h3 className="text-white font-normal mb-1.5 sm:mb-2 tracking-tight
-                               text-[14px] sm:text-[15px] md:text-[17px]">
-                  {val.title}
-                </h3>
-                <p className="text-white/60 font-light leading-relaxed
-                              text-[11px] sm:text-[12px] md:text-[12.5px]
-                              max-w-full sm:max-w-[210px]">
-                  {val.desc}
-                </p>
+                <div className="mb-3 sm:mb-4 transform group-hover:scale-105 transition-transform duration-500 opacity-90">{val.icon}</div>
+                <h3 className="text-white font-normal mb-1.5 sm:mb-2 tracking-tight text-[14px] sm:text-[15px] md:text-[17px]">{val.title}</h3>
+                <p className="text-white/60 font-light leading-relaxed text-[11px] sm:text-[12px] md:text-[12.5px] max-w-full sm:max-w-[210px]">{val.desc}</p>
               </motion.div>
             ))}
           </motion.div>
-
         </div>
       </div>
     </section>

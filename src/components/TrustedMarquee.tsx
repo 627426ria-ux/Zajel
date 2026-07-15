@@ -1,16 +1,47 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { supabase } from '../supabase';
+import type { HomeMarqueeContent } from '../admin/sections/homepage/types';
 
-// --- CONFIGURATION DATA ---
-const LOGOS = [
-  { id: 1, src: '/logo1.png', alt: 'Dubai Customs' },
-  { id: 2, src: '/logo2.png', alt: 'Jafza' },
-  { id: 3, src: '/logo3.png', alt: 'Dubai Courts' },
-  { id: 4, src: '/logo4.png', alt: 'Public Prosecution' },
-  { id: 5, src: '/logo5.png', alt: 'Dubai Police' },
-  { id: 6, src: '/logo6.png', alt: 'Identity and Citizenship' },
-];
+// --- DATA FETCHING HOOK ---
+function useSectionContent<T>(id: string) {
+  const { i18n } = useTranslation();
+  const [data, setData] = useState<T | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchSection = async () => {
+      const { data: section, error } = await supabase
+        .from('page_sections')
+        .select('id, enabled, content_en, content_ar')
+        .eq('id', id)
+        .single<{ id: string; enabled: boolean; content_en: T | string; content_ar: T | string }>();
+
+      if (!isMounted) return;
+
+      if (!error && section?.enabled) {
+        const raw = i18n.language === 'ar' ? section.content_ar : section.content_en;
+        const content: T | null = typeof raw === 'string' ? JSON.parse(raw) : (raw ?? null);
+        setData(content);
+      } else {
+        setData(null);
+      }
+      setLoading(false);
+    };
+
+    fetchSection();
+    return () => { isMounted = false; };
+  }, [id, i18n.language]);
+
+  return { data, loading };
+}
 
 const TrustedMarquee: React.FC = () => {
+  const { data, loading } = useSectionContent<HomeMarqueeContent>('home_marquee');
+
+  if (loading || !data || !data.logos || data.logos.length === 0) return null;
+
   return (
     <>
       <style>
@@ -40,7 +71,7 @@ const TrustedMarquee: React.FC = () => {
         {/* Section Heading */}
         <div className="flex items-center justify-center mb-6 sm:mb-8 lg:mb-10">
           <h3 className="text-[#0A4D26] text-[12px] sm:text-[13px] lg:text-[14px] font-bold tracking-[0.15em] uppercase">
-            Trusted by Contractors
+            {data.heading}
           </h3>
         </div>
 
@@ -52,22 +83,22 @@ const TrustedMarquee: React.FC = () => {
           <div className="flex animate-infinite-scroll w-max">
             {/* Track 1 */}
             <div className="flex items-center justify-around min-w-full gap-6 sm:gap-10 md:gap-16 px-4 sm:px-6 md:px-10">
-              {LOGOS.map((logo) => (
+              {data.logos.map((logo, idx) => (
                 <img
-                  key={`t1-${logo.id}`}
-                  src={logo.src}
-                  alt={logo.alt}
+                  key={`t1-${idx}`}
+                  src={logo.image_url}
+                  alt={logo.altText}
                   className="h-6 sm:h-8 md:h-10 lg:h-12 w-auto max-w-[80px] sm:max-w-[100px] md:max-w-none object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-pointer"
                 />
               ))}
             </div>
             {/* Track 2 */}
             <div className="flex items-center justify-around min-w-full gap-6 sm:gap-10 md:gap-16 px-4 sm:px-6 md:px-10" aria-hidden="true">
-              {LOGOS.map((logo) => (
+              {data.logos.map((logo, idx) => (
                 <img
-                  key={`t2-${logo.id}`}
-                  src={logo.src}
-                  alt={logo.alt}
+                  key={`t2-${idx}`}
+                  src={logo.image_url}
+                  alt={logo.altText}
                   className="h-6 sm:h-8 md:h-10 lg:h-12 w-auto max-w-[80px] sm:max-w-[100px] md:max-w-none object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-pointer"
                 />
               ))}
