@@ -1,8 +1,8 @@
 import type { ComponentType } from 'react';
 
-import ServicesEditor from '../sections/homepage/ServicesEditor';
-import AdvantageEditor from '../sections/homepage/AdvantageEditor';
-import TrustedEditor from '../sections/homepage/TrustedEditor';
+// import ServicesEditor from '../sections/homepage/ServicesEditor';
+// import AdvantageEditor from '../sections/homepage/AdvantageEditor';
+// import TrustedEditor from '../sections/homepage/TrustedEditor';
 
 
 import CareersHeroEditor from '../sections/careers/CareersHeroEditor';
