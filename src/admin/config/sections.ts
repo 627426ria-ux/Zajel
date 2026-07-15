@@ -46,13 +46,13 @@ import SecureMailHeroEditor from '../sections/services-secure-mail/SecureMailHer
 import SecureMailDetailsEditor from '../sections/services-secure-mail/SecureMailDetailsEditor';
 import SecureMailProtocolEditor from '../sections/services-secure-mail/SecureMailProtocolEditor';
 
-import MarqueeEditor from '../sections/homepage/MarqueeEditor';
+// import MarqueeEditor from '../sections/homepage/MarqueeEditor';
 
-import StoryEditor from '../sections/homepage/StoryEditor';
+// import StoryEditor from '../sections/homepage/StoryEditor';
 
 // 1. Defined as a separate type to keep it clean and readable
 export type SectionGroup =
-  | 'Homepage'
+  // | 'Homepage'
   | 'Domestic Courier'
   | 'About'
   | 'Careers'
@@ -74,9 +74,9 @@ export interface CmsSection {
 }
 
 export const CMS_SECTIONS: CmsSection[] = [
-  { id: 'home-services', label: 'Services / What We Do', group: 'Homepage', Editor: ServicesEditor },
-  { id: 'home-advantage', label: 'Advantage / Content & SEO', group: 'Homepage', Editor: AdvantageEditor },
-  { id: 'home-trusted', label: 'Trusted By & Stats', group: 'Homepage', Editor: TrustedEditor },
+  // { id: 'home-services', label: 'Services / What We Do', group: 'Homepage', Editor: ServicesEditor },
+  // { id: 'home-advantage', label: 'Advantage / Content & SEO', group: 'Homepage', Editor: AdvantageEditor },
+  // { id: 'home-trusted', label: 'Trusted By & Stats', group: 'Homepage', Editor: TrustedEditor },
   
   
 
@@ -120,8 +120,8 @@ export const CMS_SECTIONS: CmsSection[] = [
   { id: 'securemail-hero', label: 'Hero / Content & SEO', group: 'Secure Mail', Editor: SecureMailHeroEditor },
   { id: 'securemail-details', label: 'Mailroom Details', group: 'Secure Mail', Editor: SecureMailDetailsEditor },
   { id: 'securemail-protocol', label: 'Mailroom Protocol', group: 'Secure Mail', Editor: SecureMailProtocolEditor },
-  { id: 'home-marquee', label: 'Trusted Partners Marquee', group: 'Homepage', Editor: MarqueeEditor },
-  { id: 'home-story', label: 'Story & CTA Banner', group: 'Homepage', Editor: StoryEditor },
+  // { id: 'home-marquee', label: 'Trusted Partners Marquee', group: 'Homepage', Editor: MarqueeEditor },
+  // { id: 'home-story', label: 'Story & CTA Banner', group: 'Homepage', Editor: StoryEditor },
 ];
 
 // Categories that live under the "Services" nav tab, not the general "Pages" list.
