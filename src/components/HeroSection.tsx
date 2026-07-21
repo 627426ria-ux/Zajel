@@ -215,7 +215,7 @@ const HeroSection: React.FC = () => {
                 <Link to="/quotation" className="flex flex-col items-center justify-center gap-1.5 group outline-none">
                   <Calculator className="w-6 h-6 text-[#36B936] group-hover:scale-110 transition-transform duration-300" strokeWidth={1.75} />
                   <span className="n1-style text-[13px] md:text-[14px]">
-                    {t('hero.actions.rate.label', 'Quotation')}
+                    {t('hero.actions.ratecalculator.label', 'Rate Calculator')}
                   </span>
                 </Link>
               </div>
