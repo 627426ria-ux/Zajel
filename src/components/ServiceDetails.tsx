@@ -148,10 +148,10 @@ const ServiceDetails: React.FC = () => {
               </>
             ) : (
               <>
-                <h3 className="text-[#064423] lg:text-white text-2xl sm:text-3xl lg:text-[3rem] font-light leading-tight tracking-tight mb-3 sm:mb-4">
+                <h3 className="text-[#064423] lg:text-white lg:drop-shadow-md text-2xl sm:text-3xl lg:text-[3rem] font-light leading-tight tracking-tight mb-3 sm:mb-4">
                   {content.ctaHeading}
                 </h3>
-                <p className="text-[#064423]/70 lg:text-white/90 text-[14px] sm:text-[15px] lg:text-lg mb-6 sm:mb-10 max-w-md font-light leading-relaxed">
+                <p className="text-[#064423]/70 lg:text-white/95 lg:drop-shadow-md text-[14px] sm:text-[15px] lg:text-lg mb-6 sm:mb-10 max-w-md font-light leading-relaxed">
                   {content.ctaDescription}
                 </p>
               </>
@@ -187,8 +187,8 @@ const ServiceDetails: React.FC = () => {
                 className="w-full h-full object-cover"
               />
             )}
-            {/* Desktop Gradient Overlay - Hidden entirely on mobile for a clean minimal look */}
-            <div className="hidden lg:block absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+            {/* Desktop Gradient Overlay - Softened to make the image clearly visible */}
+            <div className="hidden lg:block absolute inset-0 bg-gradient-to-t from-black/50 via-black/5 to-transparent pointer-events-none" />
           </div>
 
         </div>

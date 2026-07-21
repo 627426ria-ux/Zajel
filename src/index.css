@@ -1,1 +1,27 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
+
+@layer base {
+  html, body {
+    font-family: 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  }
+
+  /* ══ Brand Type Hierarchy (per Brand Book / Typography) ══ */
+  h1 {
+    color: #19AA3E;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  h2 {
+    color: #19AA3E;
+    font-weight: 500;
+  }
+  h3 {
+    color: #19AA3E;
+    font-weight: 500;
+  }
+  p {
+    color: #1F2937;
+    font-weight: 400;
+  }
+}

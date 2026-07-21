@@ -135,20 +135,21 @@ const StorySection: React.FC = () => {
           margin-right: clamp(140px, 28vw, 420px);
         }
 
+        /* Matches Hero h1-style: capped at 36px, weight 400 (scaled down at low end for narrow banner) */
         .story-heading {
-          font-size: clamp(0.95rem, 2.6vw, 3rem);
-          font-weight: 300;
-          line-height: 1.2;
-          letter-spacing: -0.02em;
+          font-size: clamp(0.95rem, 2.2vw, 36px);
+          font-weight: 400;
+          line-height: 1.25;
+          letter-spacing: -0.01em;
           color: white;
-          margin-bottom: clamp(12px, 2vw, 32px);
+          margin-bottom: clamp(12px, 2vw, 24px);
           text-shadow: 0 1px 2px rgba(0,0,0,0.1);
           white-space: pre-line;
         }
 
         .story-cta {
-          font-size: clamp(11px, 1.1vw, 16px);
-          font-weight: 700;
+          font-size: clamp(11px, 1.1vw, 15px);
+          font-weight: 400;
           padding: clamp(8px, 0.9vw, 14px) clamp(18px, 2.2vw, 36px);
           border-radius: 9999px;
           background: white;

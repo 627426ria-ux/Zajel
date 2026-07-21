@@ -68,15 +68,18 @@ const AdvantageSection: React.FC = () => {
       </Helmet>
 
       <style>{`
-        /* ... keep all your existing CSS exactly as it is ... */
         .advantage-section {
           font-family: 'Manrope', sans-serif;
           padding: clamp(48px, 8vw, 112px) clamp(16px, 4vw, 48px);
           background: #f9fafb;
           overflow: hidden;
         }
-        .adv-heading { font-size: clamp(2.2rem, 4.2vw, 4.2rem); font-weight: 300; color: #0A4D26; line-height: 1.1; letter-spacing: -0.025em; margin-bottom: clamp(6px, 0.8vw, 14px); }
-        .adv-subtext { font-size: clamp(14px, 1.2vw, 18px); font-weight: 300; color: #6b7280; line-height: 1.6; max-width: 480px; margin: 0 auto; }
+        /* Matches Hero h1-style: 36-44px, weight 400 */
+        .adv-heading { font-size: 36px; font-weight: 400; color: #064423; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 10px; }
+        @media (min-width: 768px) { .adv-heading { font-size: 44px; } }
+        /* Matches Hero bc1-style: 14-16px, weight 400 */
+        .adv-subtext { font-size: 14px; font-weight: 400; color: #6b7280; line-height: 1.6; max-width: 480px; margin: 0 auto; }
+        @media (min-width: 768px) { .adv-subtext { font-size: 16px; } }
         .bento-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(12px, 1.5vw, 20px); }
         @media (min-width: 768px) { .bento-grid { grid-template-columns: repeat(3, 1fr); grid-auto-rows: clamp(200px, 22vw, 300px); } }
         .adv-card { background: #36B936; border-radius: clamp(1.25rem, 2vw, 2.5rem); overflow: hidden; position: relative; box-shadow: 0 4px 20px rgba(0,0,0,0.07); }
@@ -102,8 +105,10 @@ const AdvantageSection: React.FC = () => {
         .handling-img-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: left center; display: block; }
         .handling-gradient { position: absolute; inset: 0; background: linear-gradient(to right, #36B936 0%, rgba(54,185,54,0.85) 30%, rgba(54,185,54,0.2) 65%, transparent 100%); pointer-events: none; }
         [dir="rtl"] .handling-gradient { background: linear-gradient(to left, #36B936 0%, rgba(54,185,54,0.85) 30%, rgba(54,185,54,0.2) 65%, transparent 100%); }
-        .card-title { font-size: clamp(1.1rem, 2.2vw, 2.25rem); font-weight: 300; color: white; line-height: 1.15; margin-bottom: clamp(6px, 0.8vw, 14px); white-space: pre-line; }
-        .card-desc { font-size: clamp(11px, 1.05vw, 13px); font-weight: 300; color: rgba(255, 255, 255, 0.9); line-height: 1.65; }
+        /* Matches Hero h3-style: weight 400, restrained size for card titles */
+        .card-title { font-size: 18px; font-weight: 400; color: white; line-height: 1.25; letter-spacing: -0.01em; margin-bottom: 6px; white-space: pre-line; }
+        @media (min-width: 768px) { .card-title { font-size: 22px; } }
+        .card-desc { font-size: 13px; font-weight: 400; color: rgba(255, 255, 255, 0.9); line-height: 1.6; }
       `}</style>
 
       <section ref={sectionRef} className="advantage-section" dir={isRtl ? 'rtl' : 'ltr'}>

@@ -85,30 +85,32 @@ const AppDownloadSection: React.FC = () => {
           padding-right: clamp(18px, 4vw, 80px);
         }
 
+        /* Matches Hero h1-style: 36-44px, weight 400 (scaled down slightly for banner context) */
         .banner-heading {
-          font-size: clamp(1.05rem, 3.8vw, 4rem);
-          font-weight: 300;
-          line-height: 1.05;
-          letter-spacing: -0.02em;
+          font-size: clamp(1rem, 3vw, 36px);
+          font-weight: 400;
+          line-height: 1.2;
+          letter-spacing: -0.01em;
           color: white;
-          margin-bottom: clamp(6px, 1.2vw, 24px);
+          margin-bottom: clamp(6px, 1.2vw, 16px);
           text-shadow: 0 1px 2px rgba(0,0,0,0.1);
           white-space: pre-line; /* Essential for rendering JSON \n as line breaks */
         }
 
+        /* Matches Hero bc1-style: 14-16px, weight 400 */
         .banner-subtext {
-          font-size: clamp(9px, 1.3vw, 18px);
+          font-size: clamp(9px, 1.1vw, 16px);
           color: rgba(255, 255, 255, 0.9);
-          font-weight: 300;
+          font-weight: 400;
           line-height: 1.5;
-          margin-bottom: clamp(10px, 2vw, 40px);
+          margin-bottom: clamp(10px, 2vw, 32px);
           max-width: 420px;
         }
 
         .download-label {
-          font-size: clamp(10px, 1.4vw, 20px);
+          font-size: clamp(10px, 1.2vw, 14px);
           color: rgba(255, 255, 255, 0.9);
-          font-weight: 300;
+          font-weight: 400;
           margin-bottom: clamp(4px, 0.8vw, 12px);
           display: block;
         }

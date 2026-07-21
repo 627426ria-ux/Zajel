@@ -32,12 +32,11 @@ import DownloadAppPage from './pages/Download';
 import ShipmentTimeline from './pages/ShipmentTimeline';
 import ProofOfDelivery from './pages/ProofOfDelivery';
 import LoginPage from "./pages/LoginPage";
+import SendShipmentPage from './pages/SendShipmentPage'; // <-- IMPORT ADDED HERE
 
 // --- Admin Placeholders ---
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
-
-
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -47,23 +46,23 @@ function ScrollToTop() {
 
 // --- Public Layout Wrapper ---
 // This ensures the Navbar only appears on the public website, not the CMS
-const PublicLayout = () => {
+function PublicLayout() {
   return (
     <>
       <Navbar />
-      <main>
-        <Outlet />
-      </main>
+      {/* Outlet renders the child routes matching the current URL */}
+      <Outlet />
     </>
   );
-};
+}
 
 function App() {
   return (
     <Router>
       <ScrollToTop />
       <Routes>
-        {/* ─── PUBLIC WEBSITE (Uses Navbar) ─── */}
+        
+        {/* ─── PUBLIC WEBSITE (Uses Navbar via PublicLayout) ─── */}
         <Route element={<PublicLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/domestic-courier" element={<DomesticCourierPage />} />
@@ -92,9 +91,10 @@ function App() {
           <Route path="/shipment-timeline" element={<ShipmentTimeline />} />
           <Route path="/proof-of-delivery" element={<ProofOfDelivery />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/send-shipment" element={<SendShipmentPage />} /> {/* <-- ROUTE ADDED HERE */}
         </Route>
 
-        {/* ─── ADMIN CMS ROUTES (No Navbar) ─── */}
+        {/* ─── ADMIN CMS ROUTES (No Navbar, sits completely outside the PublicLayout) ─── */}
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin" element={<AdminDashboard />} />
         
