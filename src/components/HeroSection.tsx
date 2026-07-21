@@ -163,7 +163,7 @@ const HeroSection: React.FC = () => {
         </div>
 
         {/* Relative Container for Overlapping Elements */}
-        <div className="relative w-full max-w-[1100px] px-4 md:px-8">
+        <div className="relative w-full max-w-[1300px] px-4 md:px-8">
           
           {/* ══ Overlapping Search Bar ══ */}
           <div className="anim-search absolute top-6 left-1/2 w-full max-w-[500px] z-30 px-4">
@@ -244,10 +244,10 @@ const HeroSection: React.FC = () => {
                   </span>
                 </Link>
                 <div className="w-[1px] h-[36px] bg-gray-200" />
-                <Link to="/domestic-courier" className="flex flex-col items-center justify-center gap-1.5 group outline-none">
+                <Link to="/freight-courier" className="flex flex-col items-center justify-center gap-1.5 group outline-none">
                   <Truck className="w-6 h-6 text-[#36B936] group-hover:scale-110 transition-transform duration-300" strokeWidth={1.75} />
                   <span className="n1-style text-[13px] md:text-[14px]">
-                    {t('hero.actions.domestic.label', 'Domestic')}
+                    {t('hero.actions.frieghtfowrawring.label', 'Freight Forwarding')}
                   </span>
                 </Link>
               </div>
