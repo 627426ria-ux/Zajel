@@ -25,3 +25,10 @@
     font-weight: 400;
   }
 }
+.footer-logo svg path,
+.footer-logo svg polygon,
+.footer-logo svg rect,
+.footer-logo svg circle,
+.footer-logo svg ellipse {
+  fill: #ffffff !important;
+}
