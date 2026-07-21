@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowRight, ArrowLeft, Check, Package, MapPin, UserCheck, User, Truck, Plane, FileText } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Check, Package,  UserCheck, User, Truck, Plane, FileText } from 'lucide-react';
 
 const SendShipmentPage: React.FC = () => {
   // 0: Auth, 1: Destination, 2: Shipper, 3: Receiver, 4: Shipment Details
